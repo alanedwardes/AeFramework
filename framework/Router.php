@@ -11,11 +11,13 @@ class Router
 	public $error_views = array();
 	public $cache_provider = null;
 	public $cache_key = null;
+	public $base = '/';
+	public $path = '';
 	
-	# Members Functions
-	public function getPath()
+	# Members Functions	
+	public function base($base)
 	{
-		return parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+		$this->base = $base;
 	}
 	
 	public function error($code, View $view)
@@ -49,7 +51,7 @@ class Router
 	
 	public function cacheKey($cacheHash)
 	{
-		return crc32($this->getPath() . $this->cache_key . $cacheHash);
+		return crc32($this->path . $this->cache_key . $cacheHash);
 	}
 	
 	public function fromCache($cacheHash)
@@ -72,13 +74,23 @@ class Router
 		}
 	}
 	
+	public function getPath()
+	{
+		$path = $_SERVER['REQUEST_URI'];
+		$path = ltrim($path, '/');
+		$path = preg_replace('/^' . preg_quote(trim($this->base, '/')) . '/', '', $path);
+		$path = ltrim($path, '/');
+		$path = '/' . $path;
+		return parse_url($path, PHP_URL_PATH);
+	}
+	
 	public function despatch()
 	{
-		$path = $this->getPath();
+		$this->path = $this->getPath();
 		
 		foreach ($this->main_views as $view_path => $view)
 		{
-			if ($view_path === $path)
+			if ($view_path === $this->path)
 			{
 				return $this->serveView($view);
 			}
