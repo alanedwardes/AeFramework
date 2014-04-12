@@ -16,4 +16,3 @@ require_once 'framework/Mapper.php';
 # Vendor Specific
 require_once 'vendor/Memcache.php';
 require_once 'vendor/Twig.php';
-require_once 'vendor/Text.php';
