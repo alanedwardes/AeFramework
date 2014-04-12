@@ -3,6 +3,8 @@ namespace ae\vendor;
 
 require_once 'lib/Twig/lib/Twig/Autoloader.php';
 
+use ae\framework\Util as Util;
+
 \Twig_Autoloader::register();
 
 class Twig extends \ae\framework\View
@@ -12,7 +14,7 @@ class Twig extends \ae\framework\View
 
 	public function __construct($template)
 	{
-		$this->template_dir = dirname(getcwd() . '/' . $template);
+		$this->template_dir = dirname(Util::joinPath(getcwd(), $template));
 		$this->template = basename($template);
 	}
 	
@@ -25,6 +27,6 @@ class Twig extends \ae\framework\View
 	
 	public function cacheHash()
 	{
-		return crc32($this->template . filemtime($this->template_dir . '/' . $this->template));
+		return crc32($this->template . filemtime(Util::joinPath($this->template_dir, $this->template)));
 	}
 }

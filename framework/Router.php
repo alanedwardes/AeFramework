@@ -5,6 +5,7 @@ class Router
 {
 	# Constants
 	const NotFound = 404;
+	const Ok = 200;
 
 	# Properties
 	public $main_views = array();
@@ -96,15 +97,14 @@ class Router
 			}
 		}
 		
-		$this->serveCode(self::NotFound);
+		$this->serveError(HttpCode::NotFound);
 	}
 	
-	public function serveCode($code)
+	public function serveError($code)
 	{
-		http_response_code($code);
-		
 		if (isset($this->error_views[$code]))
 		{
+			$this->error_views[$code]->code = $code;
 			$this->serveView($this->error_views[$code]);
 		}
 		else
@@ -123,12 +123,13 @@ class Router
 		{
 			$rendered = $view->render();
 			$this->toCache($rendered, $view->cacheHash());
-			$this->send($rendered);
+			$this->send($rendered, $view->code);
 		}
 	}
 	
-	public function send($data)
+	public function send($data, $code = HttpCode::Ok)
 	{
+		http_response_code($code);
 		header(sprintf('X-Generate: %.4fs', microtime(true) - AE_START_LOAD_TIME));
 		echo $data;
 	}
