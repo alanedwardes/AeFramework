@@ -55,7 +55,7 @@ class RegexMapper extends Mapper
 		$groups = array();
 		
 		# Perform the match
-		if (preg_match($this->mapping, $path, $groups) === false)
+		if (preg_match($this->mapping, $path, $groups) === 0)
 			return false;
 		
 		# Remove numeric groups, so the output
