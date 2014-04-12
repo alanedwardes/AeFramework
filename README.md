@@ -16,7 +16,7 @@ $router = new ae\framework\Router;
 $router->route('/', new ae\vendor\Text('Hello, world!'));
 
 # Set a 404 view
-$router->error(ae\framework\Router::NotFound, new ae\vendor\Text('File not found'));
+$router->error(ae\framework\HttpCode::NotFound, new ae\vendor\Text('File not found'));
 
 # Optional - Set up Memcache
 $router->cacheProvider(new ae\vendor\Memcache, 'application-unique-cache-key');

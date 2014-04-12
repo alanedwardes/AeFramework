@@ -3,10 +3,6 @@ namespace ae\framework;
 
 class Router
 {
-	# Constants
-	const NotFound = 404;
-	const Ok = 200;
-
 	# Properties
 	public $main_views = array();
 	public $error_views = array();
