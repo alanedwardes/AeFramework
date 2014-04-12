@@ -13,7 +13,7 @@ require_once 'AeFramework/loader.php';
 $router = new ae\framework\Router;
 
 # Map URL "/" to a simple text view saying "Hello, world!"
-$router->route('/', new ae\framework\TextView('Hello, world!'));
+$router->route(new ae\framework\StringMapper('/', new ae\framework\TextView('Hello, world!')));
 
 # Set a 404 view
 $router->error(ae\framework\HttpCode::NotFound, new ae\framework\TextView('File not found'));
