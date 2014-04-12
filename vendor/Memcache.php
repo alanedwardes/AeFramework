@@ -7,6 +7,9 @@ class Memcache extends \ae\framework\Cache
 
 	public function __construct($host = 'localhost', $port = 11211)
 	{
+		if (!class_exists('\Memcache'))
+			throw new \Exception("Can't find memcache. Please see http://www.php.net/manual/en/book.memcache.php to install it.");
+		
 		$this->mc = new \Memcache();
 		$this->mc->connect($host, $port);
 	}
