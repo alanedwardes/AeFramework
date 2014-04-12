@@ -4,7 +4,7 @@ namespace ae\framework;
 class Router
 {
 	# Properties
-	public $main_views = array();
+	public $mappers = array();
 	public $error_views = array();
 	public $cache_provider = null;
 	public $cache_key = null;
@@ -23,10 +23,10 @@ class Router
 		$this->error_views[$code] = $view;
 	}
 	
-	public function route($path, $view)
+	public function route(Mapper $mapper)
 	{
-		$view->router = $this;
-		$this->main_views[$path] = $view;
+		$mapper->view->router = $this;
+		$this->mappers[] = $mapper;
 	}
 	
 	public function cacheProvider(Cache $provider, $cache_key)
@@ -85,11 +85,11 @@ class Router
 	{
 		$this->path = $this->getPath();
 		
-		foreach ($this->main_views as $view_path => $view)
+		foreach ($this->mappers as $mapper)
 		{
-			if ($view_path === $this->path)
+			if ($mapper->match($this->path))
 			{
-				return $this->serveView($view);
+				return $this->serveView($mapper->view);
 			}
 		}
 		

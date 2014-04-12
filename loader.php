@@ -11,6 +11,7 @@ require_once 'framework/HttpCode.php';
 require_once 'framework/Router.php';
 require_once 'framework/Cache.php';
 require_once 'framework/View.php';
+require_once 'framework/Mapper.php';
 
 # Vendor Specific
 require_once 'vendor/Memcache.php';
