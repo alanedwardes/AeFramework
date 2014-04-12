@@ -3,11 +3,9 @@ namespace AeFramework;
 
 require_once '../lib/Twig/Autoloader.php';
 
-use AeFramework\Util as Util;
-
 \Twig_Autoloader::register();
 
-class Twig extends View
+class TwigView extends View
 {
 	public $template_dir;
 	public $template;
