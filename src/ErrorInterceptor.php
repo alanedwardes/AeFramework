@@ -7,8 +7,6 @@ class ErrorInterceptor
 	
 	public function __construct()
 	{
-		error_reporting(false);
-		
 		set_error_handler(function($errno, $errstr, $errfile, $errlin){
 			$this->handleError($errno, $errstr, $errfile, $errlin);
 		});
