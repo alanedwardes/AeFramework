@@ -18,7 +18,7 @@ $cache = new AeFramework\FileCache('.\cache');
 $router = new AeFramework\CachedRouter($cache);
 
 # Create a simple view
-# for twig: $hello_view = new ae\vendor\Twig('templates/hello_world.html');
+# for twig: $hello_view = new AeFramework\TwigView('templates/hello_world.html');
 $hello_view = new AeFramework\TextView('Hello, world!');
 
 # Create a simple path mapper
