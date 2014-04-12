@@ -3,14 +3,14 @@ namespace ae\framework;
 
 abstract class View
 {
-	# The router that served us (TODO: remove)
-	public $router;
-	
 	# An HTTP Status code to return
 	public $code = HttpCode::Ok;
 	
 	# A map of parameters from the mapper
 	public $mapper_params = array();
+	
+	# Path
+	public $path = '';
 	
 	# Render method
 	abstract protected function render();

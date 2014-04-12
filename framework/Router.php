@@ -8,24 +8,16 @@ class Router
 	public $error_views = array();
 	public $cache_provider = null;
 	public $cache_key = null;
-	public $base = '/';
 	public $path = '';
 	
-	# Members Functions	
-	public function base($base)
-	{
-		$this->base = $base;
-	}
-	
+	# Member Functions	
 	public function error($code, View $view)
 	{
-		$view->router = $this;
 		$this->error_views[$code] = $view;
 	}
 	
 	public function route(Mapper $mapper)
 	{
-		$mapper->view->router = $this;
 		$this->mappers[] = $mapper;
 	}
 	
@@ -59,7 +51,7 @@ class Router
 		if ($this->cache_key === null)
 			return false;
 		
-		if ($get = $get = $this->cache_provider->get($this->cacheKey($cacheHash)))
+		if ($get = $this->cache_provider->get($this->cacheKey($cacheHash)))
 		{
 			header('X-Cache: Hit');
 			return $get;
@@ -71,27 +63,13 @@ class Router
 		}
 	}
 	
-	public function getPath()
-	{
-		$path = $_SERVER['REQUEST_URI'];
-		$path = ltrim($path, '/');
-		$path = preg_replace('/^' . preg_quote(trim($this->base, '/')) . '/', '', $path);
-		$path = ltrim($path, '/');
-		$path = '/' . $path;
-		return parse_url($path, PHP_URL_PATH);
-	}
-	
 	public function despatch()
 	{
-		$this->path = $this->getPath();
+		$this->path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 		
 		foreach ($this->mappers as $mapper)
-		{
 			if ($mapper->match($this->path))
-			{
 				return $this->serveView($mapper->view);
-			}
-		}
 		
 		$this->serveError(HttpCode::NotFound);
 	}
@@ -117,6 +95,7 @@ class Router
 		}
 		else
 		{
+			$view->path = $this->path;
 			$rendered = $view->render();
 			$this->toCache($rendered, $view->cacheHash());
 			$this->send($rendered, $view->code);
