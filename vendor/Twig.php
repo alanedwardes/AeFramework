@@ -16,15 +16,11 @@ class Twig extends \ae\framework\View
 		$this->template = basename($template);
 	}
 	
-	public function render()
+	public function render($template_data = array())
 	{
 		$loader = new \Twig_Loader_Filesystem($this->template_dir);
 		$twig = new \Twig_Environment($loader);
-		return $twig->render($this->template, array(
-			'route' => $this->router->path,
-			'base' => $this->router->base,
-			'code' => str_shuffle("IAMESTRANGED"),
-		));
+		return $twig->render($this->template, $template_data);
 	}
 	
 	public function cacheHash()
