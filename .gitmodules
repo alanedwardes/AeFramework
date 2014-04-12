@@ -1,6 +1,3 @@
 [submodule "lib/Twig"]
 	path = lib/Twig
 	url = https://github.com/fabpot/Twig.git
-[submodule "lib/redbean"]
-	path = lib/redbean
-	url = https://github.com/gabordemooij/redbean.git
