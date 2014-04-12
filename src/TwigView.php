@@ -1,7 +1,7 @@
 <?php
 namespace AeFramework;
 
-require_once '../lib/Twig/Autoloader.php';
+require_once Util::joinPath(__DIR__, '..', 'lib', 'Twig', 'lib', 'Twig', 'Autoloader.php');
 
 \Twig_Autoloader::register();
 
