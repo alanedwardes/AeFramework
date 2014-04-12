@@ -39,7 +39,7 @@ class Router
 		}
 		else
 		{
-			echo sprintf("Error %s", $code);
+			throw new \Exception(sprintf("Error %s", $code));
 		}
 	}
 	
