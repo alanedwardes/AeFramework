@@ -12,4 +12,10 @@ class Util
 	{
 		return sprintf('%u', crc32(implode(func_get_args())));
 	}
+	
+	public static function random()
+	{
+		$items = func_get_args();
+		return $items[array_rand($items)];
+	}
 }
