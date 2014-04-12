@@ -20,23 +20,3 @@ abstract class View
 	# of this view
 	abstract protected function cacheHash();
 }
-
-class TextView extends View
-{
-	public $text;
-	
-	public function __construct($text)
-	{
-		$this->text = basename($text);
-	}
-	
-	public function render()
-	{
-		return $this->text;
-	}
-	
-	public function cacheHash()
-	{
-		return crc32($this->text);
-	}
-}

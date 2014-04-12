@@ -27,6 +27,6 @@ class Twig extends \ae\framework\View
 	
 	public function cacheHash()
 	{
-		return crc32($this->template . filemtime(Util::joinPath($this->template_dir, $this->template)));
+		return Util::checksum($this->template, filemtime(Util::joinPath($this->template_dir, $this->template)));
 	}
 }

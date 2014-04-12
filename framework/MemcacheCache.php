@@ -1,7 +1,7 @@
 <?php
-namespace ae\vendor;
+namespace ae\framework;
 
-class Memcache extends \ae\framework\Cache
+class MemcacheCache extends Cache
 {
 	private $mc = null;
 
