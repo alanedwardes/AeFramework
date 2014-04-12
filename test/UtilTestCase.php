@@ -1,5 +1,5 @@
 <?php
-use ae\framework\Util as Util;
+use AeFramework\Util as Util;
 
 class UtilTestCase extends PHPUnit_Framework_TestCase
 {

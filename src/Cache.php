@@ -1,5 +1,5 @@
 <?php
-namespace ae\framework;
+namespace AeFramework;
 
 abstract class Cache
 {

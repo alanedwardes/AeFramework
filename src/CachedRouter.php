@@ -1,5 +1,5 @@
 <?php
-namespace ae\framework;
+namespace AeFramework;
 
 class CachedRouter extends Router
 {

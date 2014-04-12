@@ -1,9 +1,9 @@
 <?php
-class TestRouterServeView extends ae\framework\Router
+class TestRouterServeView extends AeFramework\Router
 {
 	public $served_view;
 	
-	public function serveView(ae\framework\View $view)
+	public function serveView(AeFramework\View $view)
 	{
 		$this->served_view = $view;
 	}
@@ -18,13 +18,13 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		$this->router = new TestRouterServeView;
-		$this->test_view1 = new ae\framework\TextView('test_view1');
-		$this->test_view2 = new ae\framework\TextView('test_view2');
+		$this->test_view1 = new AeFramework\TextView('test_view1');
+		$this->test_view2 = new AeFramework\TextView('test_view2');
 	}
 	
 	public function testRouterRoute()
 	{
-		$this->router->route(new ae\framework\StringMapper('/testing/', $this->test_view1));
+		$this->router->route(new AeFramework\StringMapper('/testing/', $this->test_view1));
 		
 		$_SERVER['REQUEST_URI'] = '/testing/';
 		$this->router->despatch();
@@ -34,8 +34,8 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 	
 	public function testRouterNotFoundRoute()
 	{
-		$this->router->route(new ae\framework\StringMapper('/testing/', $this->test_view1));
-		$this->router->error(ae\framework\HttpCode::NotFound, $this->test_view2);
+		$this->router->route(new AeFramework\StringMapper('/testing/', $this->test_view1));
+		$this->router->error(AeFramework\HttpCode::NotFound, $this->test_view2);
 		
 		$_SERVER['REQUEST_URI'] = '/not-found/';
 		$this->router->despatch();
