@@ -12,54 +12,49 @@ class CachedRouter extends Router
 		$this->cache_key = $cache_key;
 	}
 	
-	public function serveView(View $view)
+	protected function getBody(IView $view)
 	{
-		if ($cache_result = $this->fromCache($view->cacheHash()))
+		if ($view instanceof ICacheable)
 		{
-			$this->send($cache_result);
+			if ($cached_body = $this->fromCache($view->hash()))
+			{
+				if (!headers_sent())
+					header(new HttpHeader('X-Cache', 'hit'));
+				
+				return $cached_body;
+			}
+			else
+			{
+				if (!headers_sent())
+					header(new HttpHeader('X-Cache', 'miss'));
+				
+				$fresh_body = parent::getBody($view);
+				$this->toCache($fresh_body, $view->hash());
+				return $fresh_body;
+			}
 		}
-		else
-		{
-			$view->path = $this->path;
-			$rendered = $view->render();
-			$this->toCache($rendered, $view->cacheHash());
-			$this->send($rendered, $view->code);
-		}
+		
+		return parent::getBody($view);
 	}
 	
-	public function toCache($data, $cacheHash)
+	protected function toCache($data, $hash)
 	{
 		if ($this->cache_provider === null)
 			return false;
-			
-		if ($this->cache_key === null)
-			return false;
 		
-		return $this->cache_provider->set($this->cacheKey($cacheHash), $data);
+		return $this->cache_provider->set($this->cacheKey($hash), $data);
 	}
 	
-	public function cacheKey($cacheHash)
+	protected function cacheKey($hash)
 	{
-		return Util::checksum($this->path, $this->cache_key, $cacheHash);
+		return Util::checksum($this->path, $this->cache_key, $hash);
 	}
 	
-	public function fromCache($cacheHash)
+	protected function fromCache($hash)
 	{
 		if ($this->cache_provider === null)
 			return false;
-			
-		if ($this->cache_key === null)
-			return false;
 		
-		if ($get = $this->cache_provider->get($this->cacheKey($cacheHash)))
-		{
-			header('X-Cache: Hit');
-			return $get;
-		}
-		else
-		{
-			header('X-Cache: Miss');
-			return false;
-		}
+		return $this->cache_provider->get($this->cacheKey($hash));
 	}
 }

@@ -18,4 +18,9 @@ class Util
 		$items = func_get_args();
 		return $items[array_rand($items)];
 	}
+	
+	public static function camelCaseToSpaces($string)
+	{
+		return trim(preg_replace('/(?<=\\w)(?=[A-Z])/',' $1', $string));
+	}
 }

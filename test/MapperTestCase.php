@@ -1,11 +1,36 @@
 <?php
+class TestView implements AeFramework\IView
+{
+	public $mapper_params;
+	
+	public function map($params = array())
+	{
+		$this->mapper_params = $params;
+	}
+	
+	public function code()
+	{
+		return AeFramework\HttpCode::NotImplemented;
+	}
+	
+	public function headers()
+	{
+		return array();
+	}
+	
+	public function body()
+	{
+		return null;
+	}
+}
+
 class MapperTestCase extends PHPUnit_Framework_TestCase
 {
 	protected $test_view;
 
 	protected function setUp()
 	{
-		$this->test_view = new AeFramework\TextView('Testing');
+		$this->test_view = new TestView;
 	}
 
 	public function testStringMapperPathMatch()

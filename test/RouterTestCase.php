@@ -3,7 +3,7 @@ class TestRouterServeView extends AeFramework\Router
 {
 	public $served_view;
 	
-	public function serveView(AeFramework\View $view)
+	public function serveView(AeFramework\IView $view)
 	{
 		$this->served_view = $view;
 	}
@@ -26,8 +26,7 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 	{
 		$this->router->route(new AeFramework\StringMapper('/testing/', $this->test_view1));
 		
-		$_SERVER['REQUEST_URI'] = '/testing/';
-		$this->router->despatch();
+		$this->router->despatch('/testing/');
 		
 		$this->assertSame($this->router->served_view, $this->test_view1);
 	}
@@ -37,8 +36,7 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 		$this->router->route(new AeFramework\StringMapper('/testing/', $this->test_view1));
 		$this->router->error(AeFramework\HttpCode::NotFound, $this->test_view2);
 		
-		$_SERVER['REQUEST_URI'] = '/not-found/';
-		$this->router->despatch();
+		$this->router->despatch('/not-found/');
 		
 		$this->assertSame($this->router->served_view, $this->test_view2);
 	}

@@ -6,7 +6,7 @@ abstract class Mapper
 	public $mapping;
 	public $view;
 	
-	public function __construct($mapping, View $view)
+	public function __construct($mapping, IView $view)
 	{
 		$this->mapping = $mapping;
 		$this->view = $view;

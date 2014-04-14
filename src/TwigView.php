@@ -5,7 +5,7 @@ require_once Util::joinPath(__DIR__, '..', 'lib', 'Twig', 'lib', 'Twig', 'Autolo
 
 \Twig_Autoloader::register();
 
-class TwigView extends View
+class TwigView implements ICacheable, IView
 {
 	public $template_dir;
 	public $template;
@@ -16,14 +16,29 @@ class TwigView extends View
 		$this->template = basename($template);
 	}
 	
-	public function render($template_data = array())
+	public function map($params = array())
+	{
+	
+	}
+	
+	public function code()
+	{
+		return HttpCode::Ok;
+	}
+	
+	public function headers()
+	{
+		return array();
+	}
+	
+	public function body($template_data = array())
 	{
 		$loader = new \Twig_Loader_Filesystem($this->template_dir);
 		$twig = new \Twig_Environment($loader);
 		return $twig->render($this->template, $template_data);
 	}
 	
-	public function cacheHash()
+	public function hash()
 	{
 		return Util::checksum($this->template, filemtime(Util::joinPath($this->template_dir, $this->template)));
 	}
