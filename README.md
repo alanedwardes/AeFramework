@@ -29,7 +29,7 @@ $mapper = new AeFramework\StringMapper('/', $hello_view);
 $router->route($mapper);
 
 # Create a simple not found view
-$notfound_view = new AeFramework\TextView('File not found');
+$notfound_view = new AeFramework\TextView('File not found', AeFramework\HttpCode::NotFound);
 
 # Set the not found view
 $router->error(AeFramework\HttpCode::NotFound, $notfound_view);
