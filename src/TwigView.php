@@ -16,7 +16,7 @@ class TwigView implements ICacheable, IView
 		$this->template = basename($template);
 	}
 	
-	public function map($params = array())
+	public function map($params = [])
 	{
 	
 	}
@@ -28,10 +28,10 @@ class TwigView implements ICacheable, IView
 	
 	public function headers()
 	{
-		return array();
+		return [new HttpHeader('Content-Type', 'text/html')];
 	}
 	
-	public function body($template_data = array())
+	public function body($template_data = [])
 	{
 		$loader = new \Twig_Loader_Filesystem($this->template_dir);
 		$twig = new \Twig_Environment($loader);

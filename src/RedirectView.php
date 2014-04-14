@@ -10,7 +10,7 @@ abstract class RedirectView implements IView
 		$this->location = $location;
 	}
 	
-	function map($params = array())
+	function map($params = [])
 	{
 	}
 	
@@ -18,9 +18,7 @@ abstract class RedirectView implements IView
 	
 	public function headers()
 	{
-		return array(
-			new HttpHeader('Location', $this->location)
-		);
+		return [new HttpHeader('Location', $this->location)];
 	}
 	
 	function body()

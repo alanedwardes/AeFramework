@@ -4,25 +4,27 @@ namespace AeFramework;
 class TextView implements IView
 {
 	public $text;
+	public $code;
 	
-	public function __construct($text)
+	public function __construct($text, $code = HttpCode::Ok)
 	{
 		$this->text = $text;
+		$this->code = $code;
 	}
 	
-	public function map($params = array())
+	public function map($params = [])
 	{
 	
 	}
 	
 	public function code()
 	{
-		return HttpCode::Ok;
+		return $code;
 	}
 	
 	public function headers()
 	{
-		return array();
+		return [new HttpHeader('Content-Type', 'text/plain')];
 	}
 	
 	public function body()

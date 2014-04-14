@@ -4,8 +4,8 @@ namespace AeFramework;
 class Router
 {
 	# Properties
-	public $mappers = array();
-	public $error_views = array();
+	public $mappers = [];
+	public $error_views = [];
 	public $path = '';
 	
 	# Member Functions
@@ -48,7 +48,8 @@ class Router
 	{
 		http_response_code($this->getCode($view));
 		
-		foreach ($this->getHeaders($view) as $header) header($header);
+		foreach ($this->getHeaders($view) as $header)
+			header($header);
 		
 		return $this->getBody($view);
 	}
