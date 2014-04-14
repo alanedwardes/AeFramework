@@ -53,7 +53,6 @@ class Router
 	public function send($data, $code = HttpCode::Ok)
 	{
 		http_response_code($code);
-		header(sprintf('X-Generate: %.4fs', microtime(true) - AE_START_LOAD_TIME));
 		echo $data;
 	}
 }
