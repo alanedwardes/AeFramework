@@ -19,7 +19,7 @@ class TextView implements IView
 	
 	public function code()
 	{
-		return $code;
+		return $this->code;
 	}
 	
 	public function headers()
