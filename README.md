@@ -35,5 +35,5 @@ $notfound_view = new AeFramework\TextView('File not found');
 $router->error(AeFramework\HttpCode::NotFound, $notfound_view);
 
 # Despatch
-$router->despatch();
+echo $router->despatch();
 ```
