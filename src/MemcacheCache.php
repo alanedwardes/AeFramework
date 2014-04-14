@@ -19,8 +19,8 @@ class MemcacheCache extends Cache
 		return $this->mc->get($key);
 	}
 	
-	public function set($key, $data)
+	public function set($key, $data, $expire = 0)
 	{
-		$this->mc->set($key, $data);
+		return $this->mc->set($key, $data, null, $expire);
 	}
 }

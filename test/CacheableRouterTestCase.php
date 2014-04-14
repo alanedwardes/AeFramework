@@ -28,6 +28,11 @@ class CacheableView implements AeFramework\IView, AeFramework\ICacheable
 	{
 		return $this->hash;
 	}
+	
+	public function expire()
+	{
+		return 0;
+	}
 }
 
 class TemporaryMemoryCache extends AeFramework\Cache
@@ -39,7 +44,7 @@ class TemporaryMemoryCache extends AeFramework\Cache
 		return @$this->cache[$key];
 	}
 	
-	public function set($key, $value)
+	public function set($key, $value, $expire = 0)
 	{
 		$this->cache[$key] = $value;
 	}

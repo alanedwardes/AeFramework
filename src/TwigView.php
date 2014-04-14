@@ -26,6 +26,11 @@ class TwigView implements ICacheable, IView
 		return HttpCode::Ok;
 	}
 	
+	public function expire()
+	{
+		return 0;
+	}
+	
 	public function headers()
 	{
 		return [new HttpHeader('Content-Type', 'text/html')];

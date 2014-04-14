@@ -29,7 +29,7 @@ class CachedRouter extends Router
 					header(new HttpHeader('X-Cache', 'miss'));
 				
 				$fresh_body = parent::getBody($view);
-				$this->toCache($fresh_body, $view->hash());
+				$this->toCache($fresh_body, $view->hash(), $view->expire());
 				return $fresh_body;
 			}
 		}
@@ -37,12 +37,12 @@ class CachedRouter extends Router
 		return parent::getBody($view);
 	}
 	
-	protected function toCache($data, $hash)
+	protected function toCache($data, $hash, $expire)
 	{
 		if ($this->cache_provider === null)
 			return false;
 		
-		return $this->cache_provider->set($this->cacheKey($hash), $data);
+		return $this->cache_provider->set($this->cacheKey($hash), $data, $expire);
 	}
 	
 	protected function cacheKey($hash)

@@ -17,11 +17,21 @@ class FileCache extends Cache
 	
 	public function get($key)
 	{
-		$file = $this->cacheFile($key);
-		
-		if (file_exists($file))
+		$cache_file = $this->cacheFile($key);
+		if (file_exists($cache_file))
 		{
-			return file_get_contents($file);
+			$expire_file = $this->getExpireFile($cache_file);
+			if (file_exists($expire_file))
+			{
+				if (file_get_contents($expire_file) < time())
+				{
+					unlink($cache_file);
+					unlink($expire_file);
+					return false;
+				}
+			}
+		
+			return file_get_contents($cache_file);
 		}
 		else
 		{
@@ -29,10 +39,21 @@ class FileCache extends Cache
 		}
 	}
 	
-	public function set($key, $data)
+	public function set($key, $data, $expire = 0)
 	{
-		$file = $this->cacheFile($key);
+		$cache_file = $this->cacheFile($key);
 		
-		file_put_contents($file, $data);
+		file_put_contents($cache_file, $data);
+		
+		if ($expire > 0)
+		{
+			$expire_file = $this->getExpireFile($cache_file);
+			file_put_contents($expire_file, time() + $expire);
+		}
+	}
+	
+	private function getExpireFile($cache_file)
+	{
+		return sprintf('%s-expire', $cache_file);
 	}
 }
