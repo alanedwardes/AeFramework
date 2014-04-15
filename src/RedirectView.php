@@ -4,6 +4,7 @@ namespace AeFramework;
 abstract class RedirectView implements IView
 {
 	public $location;
+	private $mapper_params;
 	
 	function __construct($location)
 	{
@@ -12,13 +13,14 @@ abstract class RedirectView implements IView
 	
 	function map($params = [])
 	{
+		$this->mapper_params = $params;
 	}
 	
 	abstract public function code();
 	
 	public function headers()
 	{
-		return [new HttpHeader('Location', $this->location)];
+		return [new HttpHeader('Location', vsprintf($this->location, $this->mapper_params))];
 	}
 	
 	function body()

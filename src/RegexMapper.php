@@ -11,7 +11,7 @@ class RegexMapper extends Mapper
 		# Next, encapsulate with slashes
 		$mapping = sprintf('/%s/', $mapping);
 		
-		# Fianally, pass it back
+		# Finally, pass it back
 		parent::__construct($mapping, $view);
 	}
 	
