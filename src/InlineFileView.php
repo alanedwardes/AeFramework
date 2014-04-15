@@ -8,12 +8,10 @@ class InlineFileView implements IView
 	
 	public function __construct($file, $content_type)
 	{
-		$file_path = Util::joinPath(getcwd(), $file);
-		
-		if (!file_exists($file_path))
+		if (!file_exists($file))
 			throw new \Exception(sprintf('File "%s" does not exist.', $file));
 		
-		$this->file = $file_path;
+		$this->file = $file;
 		$this->content_type = $content_type;
 	}
 	
