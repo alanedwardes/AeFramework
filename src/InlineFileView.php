@@ -28,7 +28,7 @@ class InlineFileView implements IView
 	
 	public function headers()
 	{
-		return [new HttpHeader('Content-Type', $this->content_type)];
+		return ['Content-Type' => $this->content_type];
 	}
 	
 	public function body()

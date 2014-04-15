@@ -17,7 +17,7 @@ class DownloadFileView extends InlineFileView
 	public function headers()
 	{
 		return array_merge([
-			new HttpHeader('Content-Disposition', sprintf('attachment; filename="%s"', $this->download_name))
+			'Content-Disposition' => sprintf('attachment; filename="%s"', $this->download_name)
 		], parent::headers());
 	}
 }

@@ -24,7 +24,7 @@ class TextView implements IView
 	
 	public function headers()
 	{
-		return [new HttpHeader('Content-Type', 'text/plain')];
+		return ['Content-Type' => 'text/plain'];
 	}
 	
 	public function body()

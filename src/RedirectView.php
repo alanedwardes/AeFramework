@@ -20,7 +20,7 @@ abstract class RedirectView implements IView
 	
 	public function headers()
 	{
-		return [new HttpHeader('Location', vsprintf($this->location, $this->mapper_params))];
+		return ['Location' => vsprintf($this->location, $this->mapper_params)];
 	}
 	
 	function body()

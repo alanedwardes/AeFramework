@@ -33,7 +33,7 @@ class TwigView implements ICacheable, IView
 	
 	public function headers()
 	{
-		return [new HttpHeader('Content-Type', 'text/html')];
+		return ['Content-Type' => 'text/html'];
 	}
 	
 	public function body($template_data = [])

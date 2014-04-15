@@ -19,14 +19,14 @@ class CachedRouter extends Router
 			if ($cached_body = $this->fromCache($view->hash()))
 			{
 				if (!headers_sent())
-					header(new HttpHeader('X-Cache', 'hit'));
+					header('X-Cache: hit');
 				
 				return $cached_body;
 			}
 			else
 			{
 				if (!headers_sent())
-					header(new HttpHeader('X-Cache', 'miss'));
+					header('X-Cache: miss');
 				
 				$fresh_body = parent::getBody($view);
 				$this->toCache($fresh_body, $view->hash(), $view->expire());

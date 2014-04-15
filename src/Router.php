@@ -48,8 +48,8 @@ class Router
 	{
 		http_response_code($this->getCode($view));
 		
-		foreach ($this->getHeaders($view) as $header)
-			header($header);
+		foreach ($this->getHeaders($view) as $name => $value)
+			header(sprintf('%s: %s', $name, $value));
 		
 		return $this->getBody($view);
 	}
