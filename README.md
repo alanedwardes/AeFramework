@@ -1,7 +1,7 @@
 AeFramework
 ===========
 
-A fast, light and succinct PHP MVC framework. *By no means stable or secure yet - use at your own risk.*
+A fast, light and succinct PHP web framework. *By no means stable or secure yet - use at your own risk.*
 
 Basic Usage
 -----------
