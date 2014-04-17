@@ -3,7 +3,7 @@ namespace AeFramework;
 
 class RegexMapper extends Mapper
 {
-	public function __construct($mapping, IView $view)
+	public function __construct($mapping, $view)
 	{
 		# First, escape /
 		$mapping = str_replace('/', '\/', $mapping);
@@ -40,8 +40,7 @@ class RegexMapper extends Mapper
 		# initial group names (see http://www.php.net/preg_match)
 		$this->removeNumericGroups($groups);
 		
-		# Pass to the view
-		$this->view->map($groups);
+		$this->params = $groups;
 		
 		return true;
 	}

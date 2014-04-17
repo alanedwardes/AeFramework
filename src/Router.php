@@ -9,7 +9,7 @@ class Router
 	public $path = '';
 	
 	# Member Functions
-	public function error($code, IView $view)
+	public function error($code, $view)
 	{
 		$this->error_views[$code] = $view;
 	}
@@ -26,7 +26,7 @@ class Router
 		
 		foreach ($this->mappers as $mapper)
 			if ($mapper->match($this->path))
-				return $this->serveView($mapper->view);
+				return $this->serveView($this->getView($mapper->view, $mapper->params));
 		
 		return $this->serveError(HttpCode::NotFound);
 	}
@@ -36,12 +36,25 @@ class Router
 	{
 		if (isset($this->error_views[$code]))
 		{
-			return $this->serveView($this->error_views[$code], $code);
+			return $this->serveView($this->getView($this->error_views[$code]), $code);
 		}
 		else
 		{
 			throw new \Exception(sprintf("Error %s", $code));
 		}
+	}
+	
+	protected function getView($viewdata, array $mapper_params = [])
+	{
+		if ($viewdata instanceof IView)
+			$instance = $viewdata;
+		elseif (isset($viewdata[1]))
+			$instance = ClassFactory::constructClassAndFillMembers($viewdata[0], $viewdata[1]);
+		else
+			$instance = ClassFactory::constructClass($viewdata[0]);
+		
+		$instance->map($mapper_params);
+		return $instance;
 	}
 	
 	protected function serveView(IView $view)

@@ -1,13 +1,5 @@
 <?php
-class TestRouterServeView extends AeFramework\Router
-{
-	public $served_view;
-	
-	public function serveView(AeFramework\IView $view)
-	{
-		$this->served_view = $view;
-	}
-}
+require_once 'Helpers/TestRouterServedView.php';
 
 class RouterTestCase extends PHPUnit_Framework_TestCase
 {
@@ -17,7 +9,7 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 	
 	protected function setUp()
 	{
-		$this->router = new TestRouterServeView;
+		$this->router = new TestRouterServedView;
 		$this->test_view1 = new AeFramework\TextView('test_view1');
 		$this->test_view2 = new AeFramework\TextView('test_view2');
 	}
@@ -39,5 +31,14 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 		$this->router->despatch('/not-found/');
 		
 		$this->assertSame($this->router->served_view, $this->test_view2);
+	}
+	
+	public function testRouterDeferredViewContruction()
+	{
+		$this->router->route(new AeFramework\StringMapper('/testing/', ['AeFramework\TextView', ['test_deferred']]));
+		
+		$this->router->despatch('/testing/');
+		
+		$this->assertSame($this->router->served_view->body(), 'test_deferred');
 	}
 }

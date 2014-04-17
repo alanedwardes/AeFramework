@@ -3,10 +3,11 @@ namespace AeFramework;
 
 abstract class Mapper
 {
-	public $mapping;
-	public $view;
+	public $mapping = '';
+	public $view = null;
+	public $params = [];
 	
-	public function __construct($mapping, IView $view)
+	public function __construct($mapping, $view)
 	{
 		$this->mapping = $mapping;
 		$this->view = $view;
