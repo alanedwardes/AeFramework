@@ -1,10 +1,6 @@
 <?php
 namespace AeFramework;
 
-require_once Util::joinPath(__DIR__, '..', 'lib', 'Twig', 'lib', 'Twig', 'Autoloader.php');
-
-\Twig_Autoloader::register();
-
 class TwigView implements ICacheable, IView
 {
 	public $template_dir;

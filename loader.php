@@ -2,6 +2,9 @@
 # Set the namespace
 namespace AeFramework;
 
+# Load vendor dependencies
+require_once 'vendor/autoload.php';
+
 spl_autoload_register(function($name){
 	# If class ($name) is in the AeFramework namespace
 	if (substr($name, 0, strlen(__NAMESPACE__)) == __NAMESPACE__)
