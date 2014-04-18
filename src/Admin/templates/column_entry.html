@@ -1,0 +1,9 @@
+{% if column.type in ['text'] %}
+	<textarea name="{{ column.name }}" cols="100" rows="12">{{ row[column.name] }}</textarea>
+{% elseif column.type in ['boolean'] %}
+	<input type="checkbox" name="{{ column.name }}" {% if row[column.name] %}checked="checked"{% endif %}/>
+{% elseif column.type in ['date'] %}
+	<input type="date" name="{{ column.name }}" value="{{ row[column.name] }}" size="50"/>
+{% else %}
+	<input type="text" name="{{ column.name }}" value="{{ row[column.name] }}" size="50" maxlength="{{ column.length }}"/>
+{% endif %}

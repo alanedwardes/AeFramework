@@ -8,14 +8,6 @@ abstract class AdminView extends \AeFramework\TwigView
 	protected $table = null;
 	protected $tables = [];
 	
-	public function map($params = [])
-	{
-		if (isset($params['table']))
-			foreach ($this->tables as $table)
-				if ($table->getName() == $params['table'])
-					$this->table = $table;
-	}
-	
 	public function __construct($template)
 	{
 		$config = new \Doctrine\DBAL\Configuration();
@@ -29,11 +21,14 @@ abstract class AdminView extends \AeFramework\TwigView
 		$this->db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
 		$this->sm = $this->db->getSchemaManager();
 		
+		$platform = $this->db->getDatabasePlatform();
+		$platform->registerDoctrineTypeMapping('enum', 'string');
+		
 		foreach ($this->sm->listTables() as $table)
 		{
-			$primary_and_foreign_keys = count($table->getForeignKeys()) + count($table->getPrimaryKeyColumns());
-			if (count($table->getColumns()) != $primary_and_foreign_keys)
-				$this->tables[] = $table;
+			$table_info = new TableInformation($table);
+			if (!$table_info->isLink())
+				$this->tables[] = $table_info;
 		}
 		
 		//$this->db->getConfiguration()->setSQLLogger(new \Doctrine\DBAL\Logging\EchoSQLLogger());
@@ -45,6 +40,14 @@ abstract class AdminView extends \AeFramework\TwigView
 		});
 		
 		$this->twig->addFilter($filter);
+	}
+	
+	public function map($params = [])
+	{
+		if (isset($params['table']))
+			foreach ($this->tables as $table)
+				if ($table->name == $params['table'])
+					$this->table = $table;
 	}
 	
 	public function body($template_params = [])

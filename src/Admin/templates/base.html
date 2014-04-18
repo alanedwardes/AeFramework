@@ -2,6 +2,80 @@
 <html>
 	<head>
 		<title>{% block title %}{% endblock %}</title>
+		<style>
+			body 
+			{
+				background:#eee;
+				font-family:Tahoma;
+				color:#222;
+				font-size:0.75em;
+			}
+			h1, h2, h3, h4, h5
+			{
+				font-weight:normal;
+			}
+			th
+			{
+				background:LightSlateGray;
+				color:#fff;
+			}
+			table
+			{
+				border-collapse:collapse;
+			}
+			thead th
+			{
+				border:1px solid LightSlateGray;
+			}
+			th, td
+			{
+				padding:5px 10px;
+			}
+			tbody td
+			{
+				border:1px solid Silver;
+			}
+			tr:nth-child(even)
+			{
+				background:#f5f5f5;
+			}
+			a
+			{
+				text-decoration:none;
+				color:DodgerBlue;
+			}
+			a:hover
+			{
+				text-decoration:underline;
+			}
+			.boolean_false
+			{
+				color:Crimson;
+				font-weight:bold;
+			}
+			.boolean_true
+			{
+				color:green;
+				font-weight:bold;
+			}
+			label span
+			{
+				display:block;
+			}
+			input, textarea
+			{
+				border:1px solid silver;
+			}
+			input, textarea, button
+			{
+				padding:5px;
+			}
+			input, textarea, button
+			{
+				margin:5px 0px;
+
+			}
+		</style>
 	</head>
 	<body>
 		{% block body %}{% endblock %}

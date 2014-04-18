@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Models{% endblock %}
+
+{% block body %}
+	<h1>Models</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for table in tables %}
+				<tr>
+					<td><a href="{{ table.name }}/">{{ table.name|format_dbname }}</a></td>
+					<td><a href="{{ table.name }}/create/">+</a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

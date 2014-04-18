@@ -1,21 +1,18 @@
 <?php
 namespace AeFramework\Admin;
 
-class EditView extends SingleItemView
+class CreateView extends AdminView
 {
 	public function __construct()
 	{
-		parent::__construct(\AeFramework\Util::joinPath(__DIR__, 'templates/edit.html'));
+		parent::__construct(\AeFramework\Util::joinPath(__DIR__, 'templates/create.html'));
 	}
 	
-	public function update()
+	public function insert()
 	{
 		$data = [];
 		foreach ($this->table->columns as $column)
 		{
-			if ($column->isPrimary or $column->isAutoIncrement)
-				continue;
-			
 			$value = @$_POST[$column->name];
 			switch ($column->type)
 			{
@@ -30,13 +27,13 @@ class EditView extends SingleItemView
 			$data[$column->name] = $value;
 		}
 		
-		return $this->db->update($this->table->name, $data, [$this->key => $this->value]);
+		return $this->db->insert($this->table->name, $data);
 	}
 	
 	public function body()
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST')
-			if ($this->update())
+			if ($this->insert())
 				echo 'done';
 		
 		return parent::body();

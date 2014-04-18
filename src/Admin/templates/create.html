@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Edit {{ table.name|format_dbname }}{% endblock %}
+{% block title %}Create {{ table.name|format_dbname }}{% endblock %}
 
 {% block body %}
-	<h1>Edit {{ table.name|format_dbname }}</h1>
+	<h1>Create {{ table.name|format_dbname }}</h1>
 	<form action="" method="post">
-		<p><a href="./../../../">&laquo; Back to {{ table.name|format_dbname }} list</a></p>
+		<p><a href="..">&laquo; Back to {{ table.name|format_dbname }} list</a></p>
 		{% for column in table.columns if not column.isAutoIncrement %}
 			<div class="column_edit {{ column.type }}">
 				<label><span>{{ column.name|format_dbname }}:</span>
@@ -13,6 +13,6 @@
 				</label>
 			</div>
 		{% endfor %}
-		<button>Save {{ table.name|format_dbname }}</button>
+		<button>Create {{ table.name|format_dbname }}</button>
 	</form>
 {% endblock %}

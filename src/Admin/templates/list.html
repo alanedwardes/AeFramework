@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{{ table.name|format_dbname }} List{% endblock %}
+
+{% block body %}
+	<h1>{{ table.name|format_dbname }} List</h1>
+	<p><a href="../">&laquo; Back to Models</a> | <a href="./create/">New {{ table.name|format_dbname }}</a></p>
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+				{% for column in table.columns %}
+					<th>
+						{% if column.isPrimary %}
+							{{ table.name|format_dbname }}
+						{% else %}
+							{{ column.name|format_dbname }}
+						{% endif %}
+					</th>
+				{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+			{% for row in rows %}
+				<tr>
+					{% for column in table.columns %}
+						{% if column.isPrimary %}
+							<td><input type="checkbox" name="{{ column.name }}-{{ row[column.name] }}"/></td>
+							<td><a href="./edit/{{ column.name }}/{{ row[column.name] }}/">Edit</a> <a href="./delete/{{ column.name }}/{{ row[column.name] }}/">Delete</a></td>
+						{% else %}
+							<td>{% include "column_view.html" %}</td>
+						{% endif %}
+					{% endfor %}
+				</tr>
+			{% endfor %}
+		<tbody>
+	</table>
+{% endblock %}

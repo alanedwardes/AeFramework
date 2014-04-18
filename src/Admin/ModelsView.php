@@ -1,11 +1,11 @@
 <?php
 namespace AeFramework\Admin;
 
-class MainView extends AdminView
+class ModelsView extends AdminView
 {
 	public function __construct()
 	{
-		parent::__construct(\AeFramework\Util::joinPath(__DIR__, 'templates/main.html'));
+		parent::__construct(\AeFramework\Util::joinPath(__DIR__, 'templates/models.html'));
 	}
 	
 	public function body()

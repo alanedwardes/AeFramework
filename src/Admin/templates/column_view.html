@@ -1,0 +1,20 @@
+{% set value = row[column.name]|striptags %}
+{% if column.type in ['boolean'] %}
+	{% if value %}
+		<span class="boolean_true">&#x2713;</span>
+	{% else %}
+		<span class="boolean_false">&#x2717;</span>
+	{% endif %}
+{% elseif column.type in ['datetime'] %}
+	{{ value|date("M jS Y \\a\\t g:ia") }}
+{% elseif column.type in ['date'] %}
+	{{ value|date("M jS Y") }}
+{% elseif column.type in ['date'] %}
+	{{ value|date("g:ia") }}
+{% else %}
+	{% if value|length > 64 %}
+		{{ value[:64] }}...
+	{% else %}
+		{{ value }}
+	{% endif %}
+{% endif %}
