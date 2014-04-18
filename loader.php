@@ -12,6 +12,8 @@ spl_autoload_register(function($name){
 		# Truncate the namespace, including the directory separator
 		$name = substr($name, strlen(__NAMESPACE__) + 1);
 		
+		$name = str_replace('\\', DIRECTORY_SEPARATOR, $name);
+		
 		# Require the final file
 		require_once sprintf('src%s%s.php', DIRECTORY_SEPARATOR, $name);
 	}

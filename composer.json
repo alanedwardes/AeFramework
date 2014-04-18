@@ -1,6 +1,7 @@
 {
-    "require": {
-        "doctrine/orm": "*",
-	"twig/twig": "1.*"
-    }
+	"require": {
+		"twig/twig": "1.*",
+		"doctrine/common": "*",
+		"doctrine/dbal": "*"
+	}
 }
