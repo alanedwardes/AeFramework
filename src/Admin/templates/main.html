@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block body %}
+	<h1>List of Objects</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Object</th>
+				<th>Create</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for table in tables %}
+				<tr>
+					<td><a href="{{ table.getName }}/">{{ table.getName|format_dbname }}</a></td>
+					<td><a href="{{ table.getName }}/create/">+</a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

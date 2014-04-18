@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block body %}
+	<h1>Editing {{ table.getName|format_dbname }}</h1>
+	<form action="" method="post">
+		{% include "column_enumeration.html" %}
+		<button>Save {{ table.getName|format_dbname }}</button>
+	</form>
+{% endblock %}
