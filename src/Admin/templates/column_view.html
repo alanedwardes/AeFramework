@@ -1,10 +1,7 @@
+{% spaceless %}
 {% set value = row[column.name]|striptags %}
 {% if column.type in ['boolean'] %}
-	{% if value %}
-		<span class="boolean_true">&#x2713;</span>
-	{% else %}
-		<span class="boolean_false">&#x2717;</span>
-	{% endif %}
+	&#x{% if value %}2713{% else %}2717{% endif %};
 {% elseif column.type in ['datetime'] %}
 	{{ value|date("M jS Y \\a\\t g:ia") }}
 {% elseif column.type in ['date'] %}
@@ -18,3 +15,4 @@
 		{{ value }}
 	{% endif %}
 {% endif %}
+{% endspaceless %}

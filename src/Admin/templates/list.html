@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}{{ table.name|format_dbname }} List{% endblock %}
+{% block title %}{{ table }} List{% endblock %}
 
 {% block body %}
-	<h1>{{ table.name|format_dbname }} List</h1>
-	<p><a href="../">&laquo; Back to Models</a> | <a href="./create/">New {{ table.name|format_dbname }}</a></p>
+	<h1>{{ table }} List</h1>
+	<p><a href="../">&laquo; Back to Models</a> | <a href="./create/">Create {{ table }}</a></p>
 	<table>
 		<thead>
 			<tr>
@@ -12,9 +12,9 @@
 				{% for column in table.columns %}
 					<th>
 						{% if column.isPrimary %}
-							{{ table.name|format_dbname }}
+							{{ table }}
 						{% else %}
-							{{ column.name|format_dbname }}
+							{{ column }}
 						{% endif %}
 					</th>
 				{% endfor %}

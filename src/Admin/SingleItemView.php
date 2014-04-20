@@ -23,11 +23,18 @@ class SingleItemView extends AdminView
 	
 	public function body($template_params = [])
 	{
-		$stmt = $this->db->prepare("SELECT * FROM {$this->table->name} WHERE {$this->key} = ?");
-		$stmt->bindValue(1, $this->value);
-		$stmt->execute();
-		$template_params['row'] = $stmt->fetch();
-	
+		$template_params['row'] = $this->da->selectOne($this->table, "{$this->key} = ?", [$this->value]);
+		
+		$template_params['links'] = [];
+		foreach ($this->table->links as $link)
+		{
+			$template_params['links'][] = [
+				'all' => $this->da->select($link->remoteTable),
+				'selected' => $this->da->getLinks($link, $this->value),
+				'info' => $link
+			];
+		}
+		
 		return parent::body($template_params);
 	}
 }

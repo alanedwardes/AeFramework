@@ -17,9 +17,13 @@ class ColumnInformation
 	public $isAutoIncrement = false;
 	public $foreignTable = null;
 	public $foreignColumn = null;
+	public $table = null;
 
-	public function __construct(\Doctrine\DBAL\Schema\Table $table, \Doctrine\DBAL\Schema\Column $column)
+	public function __construct(TableInformation $parent, \Doctrine\DBAL\Schema\Table $table,
+			\Doctrine\DBAL\Schema\Column $column)
 	{
+		$this->table = $parent;
+		
 		foreach ($table->getForeignKeys() as $foreign)
 		{
 			if (in_array($column->getName(), $foreign->getColumns()))
@@ -45,5 +49,10 @@ class ColumnInformation
 		$this->isFixed = $column->getFixed();
 		$this->isAutoIncrement = $column->getAutoincrement();
 		$this->comment = $column->getComment();
+	}
+	
+	public function __toString()
+	{
+		return ucwords(str_replace('_', ' ', $this->name));
 	}
 }

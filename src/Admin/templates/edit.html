@@ -1,18 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Edit {{ table.name|format_dbname }}{% endblock %}
+{% block title %}Edit {{ table }}{% endblock %}
 
 {% block body %}
-	<h1>Edit {{ table.name|format_dbname }}</h1>
+	<h1>Edit {{ table }}</h1>
 	<form action="" method="post">
-		<p><a href="./../../../">&laquo; Back to {{ table.name|format_dbname }} list</a></p>
-		{% for column in table.columns if not column.isAutoIncrement %}
-			<div class="column_edit {{ column.type }}">
-				<label><span>{{ column.name|format_dbname }}:</span>
-					{% include "column_entry.html" %}
-				</label>
-			</div>
-		{% endfor %}
-		<button>Save {{ table.name|format_dbname }}</button>
+		<p><a href="./../../../">&laquo; Back to {{ table }} list</a></p>
+		{% include "model_entry.html" %}
+		<button>Save {{ table }}</button>
 	</form>
 {% endblock %}

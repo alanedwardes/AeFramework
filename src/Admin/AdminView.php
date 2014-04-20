@@ -7,46 +7,28 @@ abstract class AdminView extends \AeFramework\TwigView
 	protected $sm = null;
 	protected $table = null;
 	protected $tables = [];
+	protected $schema = null;
+	
+	protected $da = null;
 	
 	public function __construct($template)
 	{
-		$config = new \Doctrine\DBAL\Configuration();
-		$connectionParams = array(
-			'dbname' => DB_NAME,
-			'user' => DB_USER,
-			'password' => DB_PASS,
-			'host' => DB_HOST,
-			'driver' => 'pdo_mysql',
-		);
-		$this->db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
-		$this->sm = $this->db->getSchemaManager();
+		$this->da = new DatabaseAbstraction(DB_NAME, DB_USER, DB_PASS);
+		$this->schema = $this->da->schema;
 		
-		$platform = $this->db->getDatabasePlatform();
-		$platform->registerDoctrineTypeMapping('enum', 'string');
-		
-		foreach ($this->sm->listTables() as $table)
-		{
-			$table_info = new TableInformation($table);
-			if (!$table_info->isLink())
-				$this->tables[] = $table_info;
-		}
+		//$platform = $this->db->getDatabasePlatform();
+		//$platform->registerDoctrineTypeMapping('enum', 'string');
 		
 		//$this->db->getConfiguration()->setSQLLogger(new \Doctrine\DBAL\Logging\EchoSQLLogger());
 		
 		parent::__construct($template);
-		
-		$filter = new \Twig_SimpleFilter('format_dbname', function ($string) {
-			return ucwords(str_replace('_', ' ', $string));
-		});
-		
-		$this->twig->addFilter($filter);
 	}
 	
 	public function map($params = [])
 	{
 		if (isset($params['table']))
-			foreach ($this->tables as $table)
-				if ($table->name == $params['table'])
+			foreach ($this->schema->tables as $table)
+				if ($table->name == $params['table'] && !$table->isLink())
 					$this->table = $table;
 	}
 	

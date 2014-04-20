@@ -5,6 +5,7 @@ class TableInformation
 {
 	public $name = null;
 	public $columns = [];
+	public $links = [];
 	
 	private $table = null;
 	
@@ -14,7 +15,7 @@ class TableInformation
 		$this->name = $table->getName();
 		
 		foreach ($this->table->getColumns() as $column)
-			$this->columns[] = new ColumnInformation($table, $column);
+			$this->columns[$column->getName()] = new ColumnInformation($this, $table, $column);
 	}
 	
 	public function isLink()
@@ -25,5 +26,10 @@ class TableInformation
 		
 		return count($this->table->getColumns()) == 
 			count($this->table->getForeignKeys()) + $primary_key_count;
+	}
+	
+	public function __toString()
+	{
+		return ucwords(str_replace('_', ' ', $this->name));
 	}
 }

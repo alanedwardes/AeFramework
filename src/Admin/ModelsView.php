@@ -11,7 +11,7 @@ class ModelsView extends AdminView
 	public function body()
 	{
 		return parent::body([
-			'tables' => $this->tables
+			'tables' => $this->schema->tables
 		]);
 	}
 }

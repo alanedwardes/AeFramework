@@ -12,9 +12,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for table in tables %}
+			{% for table in tables if not table.isLink %}
 				<tr>
-					<td><a href="{{ table.name }}/">{{ table.name|format_dbname }}</a></td>
+					<td><a href="{{ table.name }}/">{{ table }}</a></td>
 					<td><a href="{{ table.name }}/create/">+</a></td>
 				</tr>
 			{% endfor %}

@@ -13,7 +13,7 @@ class CreateView extends AdminView
 		$data = [];
 		foreach ($this->table->columns as $column)
 		{
-			$value = @$_POST[$column->name];
+			$value = @$_POST['row'][$column->name];
 			switch ($column->type)
 			{
 				case \Doctrine\DBAL\Types\Type::BOOLEAN:
@@ -27,7 +27,12 @@ class CreateView extends AdminView
 			$data[$column->name] = $value;
 		}
 		
-		return $this->db->insert($this->table->name, $data);
+		$this->da->insert($this->table, $data);
+		
+		$insertId = $this->da->lastInsertId($this->table);
+		
+		foreach ($this->table->links as $link)
+			$this->da->addLinks($link, $insertId, @$_POST['link'][$link->table->name]);
 	}
 	
 	public function body()
@@ -35,7 +40,16 @@ class CreateView extends AdminView
 		if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			if ($this->insert())
 				echo 'done';
+				
+		$template_params['links'] = [];
+		foreach ($this->table->links as $link)
+		{
+			$template_params['links'][] = [
+				'all' => $this->da->select($link->remoteTable),
+				'info' => $link
+			];
+		}
 		
-		return parent::body();
+		return parent::body($template_params);
 	}
 }

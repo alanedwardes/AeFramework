@@ -16,7 +16,7 @@ class EditView extends SingleItemView
 			if ($column->isPrimary or $column->isAutoIncrement)
 				continue;
 			
-			$value = @$_POST[$column->name];
+			$value = @$_POST['row'][$column->name];
 			switch ($column->type)
 			{
 				case \Doctrine\DBAL\Types\Type::BOOLEAN:
@@ -30,7 +30,10 @@ class EditView extends SingleItemView
 			$data[$column->name] = $value;
 		}
 		
-		return $this->db->update($this->table->name, $data, [$this->key => $this->value]);
+		$this->da->update($this->table, $data, [$this->key => $this->value]);
+		
+		foreach ($this->table->links as $link)
+			$this->da->addLinks($link, $this->value, @$_POST['link'][$link->table->name]);
 	}
 	
 	public function body()

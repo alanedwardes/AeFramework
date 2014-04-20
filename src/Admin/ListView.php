@@ -10,8 +10,6 @@ class ListView extends AdminView
 	
 	public function body()
 	{
-		$rows = $this->db->query(sprintf('SELECT * FROM %s', $this->table->name))->fetchAll();
-	
-		return parent::body(['rows' => $rows]);
+		return parent::body(['rows' => $this->da->select($this->table)]);
 	}
 }

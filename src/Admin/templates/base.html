@@ -3,10 +3,13 @@
 	<head>
 		<title>{% block title %}{% endblock %}</title>
 		<style>
+			body, input, select, button
+			{
+				font-family:'Tahoma', sans-serif;
+			}
 			body 
 			{
 				background:#eee;
-				font-family:Tahoma;
 				color:#222;
 				font-size:0.75em;
 			}
@@ -66,14 +69,10 @@
 			{
 				border:1px solid silver;
 			}
-			input, textarea, button
+			input, textarea, button, select
 			{
 				padding:5px;
-			}
-			input, textarea, button
-			{
 				margin:5px 0px;
-
 			}
 		</style>
 	</head>

@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Delete {{ table.name|format_dbname }}{% endblock %}
+{% block title %}Delete {{ table }}{% endblock %}
 
 {% block body %}
-	<h1>Delete {{ table.name|format_dbname }}</h1>
+	<h1>Delete {{ table }}</h1>
 	{% for column in table.columns if not column.isAutoIncrement %}
 		<div class="column_view {{ column.type }}">
-			{{ column.name|format_dbname }}: {% include "column_view.html" %}
+			{{ column }}: {% include "column_view.html" %}
 		</div>
 	{% endfor %}
 	<form action="" method="post"><button>Delete</button></form>
