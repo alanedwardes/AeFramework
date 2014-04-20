@@ -1,3 +1,6 @@
+{% import _self as macros %}
+{% macro filtering(column, direction, limit, start) %}?order={{ column }}&direction={{ direction }}&limit={{ limit }}&start={{ start }}{% endmacro %}
+
 {% extends "base.html" %}
 
 {% block title %}{{ table }} List{% endblock %}
@@ -8,13 +11,24 @@
 	<table>
 		<thead>
 			<tr>
-				<th></th>
 				{% for column in table.columns %}
 					<th>
 						{% if column.isPrimary %}
-							{{ table }}
+							<a href=".">{{ table }}</a>
 						{% else %}
-							{{ column }}
+							{% if direction in 'desc' %}
+								{% set opposite_direction = 'asc' %}
+							{% else %}
+								{% set opposite_direction = 'desc' %}
+							{% endif %}
+							<a href="{{ macros.filtering(column.name, opposite_direction, limit, start) }}">
+								{{ column }} {% if order == column.name %}
+									{% if direction in 'desc' %}
+										&#x2193;
+									{% else %}
+										&#x2191;
+									{% endif %}
+								{% endif %}</a>
 						{% endif %}
 					</th>
 				{% endfor %}
@@ -25,14 +39,37 @@
 				<tr>
 					{% for column in table.columns %}
 						{% if column.isPrimary %}
-							<td><input type="checkbox" name="{{ column.name }}-{{ row[column.name] }}"/></td>
 							<td><a href="./edit/{{ column.name }}/{{ row[column.name] }}/">Edit</a> &bull; <a href="./delete/{{ column.name }}/{{ row[column.name] }}/">Delete</a></td>
 						{% else %}
 							<td>{% include "column_view.html" %}</td>
 						{% endif %}
 					{% endfor %}
 				</tr>
+			{% else %}
+				<tr><td colspan="{{ table.columns|length }}">No data found.</td></tr>
 			{% endfor %}
 		<tbody>
+		<thead>
+			<tr>
+				<th colspan="{{ table.columns|length }}">
+					{{ rows|length }} {{ table }} Items
+					|
+					Show: <a href="{{ macros.filtering(order, direction, 20, start) }}">20</a>
+					<a href="{{ macros.filtering(order, direction, 50, start) }}">50</a>
+					<a href="{{ macros.filtering(order, direction, 100, start) }}">100</a>
+					<a href="{{ macros.filtering(order, direction, 500, start) }}">500</a>
+					|
+					{% if start != 0 %}
+					<a href="{{ macros.filtering(order, direction, limit, (start - limit)) }}">&laquo; Page {{ ((start - limit) / limit) + 1 }}</a>
+					&bull;
+					{% endif %}
+					Page {{ (start / limit) + 1 }}
+					{% if rows|length >= limit %}
+					&bull;
+					<a href="{{ macros.filtering(order, direction, limit, (start + limit)) }}">Page {{ ((start + limit) / limit) + 1 }} &raquo;</a>
+					{% endif %}
+				</th>
+			</tr>
+		</thead>
 	</table>
 {% endblock %}

@@ -4,11 +4,15 @@
 
 {% block body %}
 	<h1>Delete {{ table }}</h1>
-	{% for column in table.columns if not column.isAutoIncrement %}
-		<div class="column_view {{ column.type }}">
-			{{ column }}: {% include "column_view.html" %}
-		</div>
-	{% endfor %}
-	<form action="" method="post"><button>Delete</button></form>
-	<form action="../../.." method="get"><button>Cancel</button></form>
+	<table>
+		<tbody>
+			{% for column in table.columns if not column.isAutoIncrement %}
+				<tr>
+					<th>{{ column }}</th>
+					<td>{% include "column_view.html" %}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<p><form action="" method="post"><button>Delete</button></form> <form action="../../.." method="get"><button>Cancel</button></form></p>
 {% endblock %}

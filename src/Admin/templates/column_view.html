@@ -13,8 +13,8 @@
 {% elseif column.type in ['time'] %}
 	{{ value|date("g:ia") }}
 {% else %}
-	{% if value|length > 64 %}
-		{{ value[:64] }}...
+	{% if value|length > 32 %}
+		{{ value[:32] }}...
 	{% else %}
 		{{ value }}
 	{% endif %}

@@ -10,7 +10,7 @@
 			}
 			body 
 			{
-				background:#eee;
+				background:#f5f5f5;
 				color:#222;
 				font-size:0.75em;
 			}
@@ -20,28 +20,37 @@
 			}
 			th
 			{
+				border:1px solid SlateGray;
 				background:LightSlateGray;
-				color:#fff;
+				color:white;
+			}
+			th a
+			{
+				color:white;
 			}
 			table
 			{
 				border-collapse:collapse;
 			}
-			thead th
-			{
-				border:1px solid LightSlateGray;
-			}
 			th, td
 			{
-				padding:5px 10px;
+				padding:5px 7.5px;
 			}
-			tbody td
+			tr:nth-child(odd) td
 			{
-				border:1px solid Silver;
+				border:1px solid Lavender;
+			}
+			tr:nth-child(even) td
+			{
+				border:1px solid GhostWhite;
+			}
+			tr:nth-child(odd)
+			{
+				background:white;
 			}
 			tr:nth-child(even)
 			{
-				background:#f5f5f5;
+				background:Lavender;
 			}
 			a
 			{
@@ -62,13 +71,21 @@
 				color:green;
 				font-weight:bold;
 			}
+			textarea, select
+			{
+				width:100%;
+			}
 			label span
 			{
 				display:block;
 			}
-			input, textarea
+			input, textarea, select
 			{
-				border:1px solid silver;
+				border:1px solid Lavender;
+			}
+			input:focus, textarea:focus, select:focus
+			{
+				border:1px solid DodgerBlue;
 			}
 			input, textarea, button, select
 			{
