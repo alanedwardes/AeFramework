@@ -8,10 +8,12 @@ class TableInformation
 	public $links = [];
 	
 	private $table = null;
+	private $schema = null;
 	
-	public function __construct(\Doctrine\DBAL\Schema\Table $table)
+	public function __construct(SchemaInformation $schema, \Doctrine\DBAL\Schema\Table $table)
 	{
 		$this->table = $table;
+		$this->schema = $schema;
 		$this->name = $table->getName();
 		
 		foreach ($this->table->getColumns() as $column)
@@ -28,8 +30,13 @@ class TableInformation
 			count($this->table->getForeignKeys()) + $primary_key_count;
 	}
 	
+	public function formatColumnName(ColumnInformation $column)
+	{
+		return $this->schema->formatColumnName($column);
+	}
+	
 	public function __toString()
 	{
-		return ucwords(str_replace('_', ' ', $this->name));
+		return $this->schema->formatTableName($this);
 	}
 }

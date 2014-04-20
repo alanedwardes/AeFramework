@@ -2,11 +2,15 @@
 {% set value = row[column.name]|striptags %}
 {% if column.type in ['boolean'] %}
 	&#x{% if value %}2713{% else %}2717{% endif %};
-{% elseif column.type in ['datetime'] %}
+{% elseif column.type in ['blob'] %}
+	Binary ({{ value|length|number_format }} bytes)
+{% elseif column.type in ['datetime', 'datetimez'] %}
 	{{ value|date("M jS Y \\a\\t g:ia") }}
 {% elseif column.type in ['date'] %}
 	{{ value|date("M jS Y") }}
-{% elseif column.type in ['date'] %}
+{% elseif column.type in ['decimal', 'float', 'integer', 'smallint', 'bigint'] %}
+	{{ value|number_format }}
+{% elseif column.type in ['time'] %}
 	{{ value|date("g:ia") }}
 {% else %}
 	{% if value|length > 64 %}

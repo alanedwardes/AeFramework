@@ -26,7 +26,7 @@
 					{% for column in table.columns %}
 						{% if column.isPrimary %}
 							<td><input type="checkbox" name="{{ column.name }}-{{ row[column.name] }}"/></td>
-							<td><a href="./edit/{{ column.name }}/{{ row[column.name] }}/">Edit</a> <a href="./delete/{{ column.name }}/{{ row[column.name] }}/">Delete</a></td>
+							<td><a href="./edit/{{ column.name }}/{{ row[column.name] }}/">Edit</a> &bull; <a href="./delete/{{ column.name }}/{{ row[column.name] }}/">Delete</a></td>
 						{% else %}
 							<td>{% include "column_view.html" %}</td>
 						{% endif %}

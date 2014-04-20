@@ -17,6 +17,8 @@ class DatabaseAbstraction
 			'host' => $host,
 			'driver' => $driver,
 		], $config);
+		$platform = $this->db->getDatabasePlatform();
+		$platform->registerDoctrineTypeMapping('enum', 'string');
 		
 		$this->schema = new SchemaInformation($this->db->getSchemaManager());
 	}
@@ -26,6 +28,11 @@ class DatabaseAbstraction
 		$statement = $this->db->prepare($query);
 		$statement->execute($values);
 		return $statement;
+	}
+	
+	public function count(TableInformation $table, $query = '1', $values = [])
+	{
+		return $this->internalStatement("SELECT COUNT(*) FROM {$table->name} WHERE {$query}", $values)->fetchColumn();
 	}
 	
 	public function select(TableInformation $table, $query = '1', $values = [])

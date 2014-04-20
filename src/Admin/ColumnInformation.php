@@ -53,6 +53,6 @@ class ColumnInformation
 	
 	public function __toString()
 	{
-		return ucwords(str_replace('_', ' ', $this->name));
+		return $this->table->formatColumnName($this);
 	}
 }

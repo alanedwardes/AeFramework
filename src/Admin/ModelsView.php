@@ -10,8 +10,14 @@ class ModelsView extends AdminView
 	
 	public function body()
 	{
-		return parent::body([
-			'tables' => $this->schema->tables
-		]);
+		$tables = [];
+		foreach ($this->da->schema->tables as $table)
+		{
+			$tables[] = [
+				'table' => $table,
+				'rows' => $this->da->count($table)
+			];
+		}
+		return parent::body([ 'tables' => $tables ]);
 	}
 }

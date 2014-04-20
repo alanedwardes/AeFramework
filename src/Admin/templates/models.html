@@ -12,10 +12,10 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for table in tables if not table.isLink %}
+			{% for table_info in tables if not table_info.table.isLink %}
 				<tr>
-					<td><a href="{{ table.name }}/">{{ table }}</a></td>
-					<td><a href="{{ table.name }}/create/">+</a></td>
+					<td><a href="{{ table_info.table.name }}/">{{ table_info.table }}</a> ({{ table_info.rows|number_format }})</td>
+					<td><a href="{{ table_info.table.name }}/create/">Create</a></td>
 				</tr>
 			{% endfor %}
 		</tbody>

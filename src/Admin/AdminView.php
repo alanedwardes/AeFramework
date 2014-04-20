@@ -3,18 +3,12 @@ namespace AeFramework\Admin;
 
 abstract class AdminView extends \AeFramework\TwigView
 {
-	protected $db = null;
-	protected $sm = null;
 	protected $table = null;
-	protected $tables = [];
-	protected $schema = null;
-	
 	protected $da = null;
 	
 	public function __construct($template)
 	{
 		$this->da = new DatabaseAbstraction(DB_NAME, DB_USER, DB_PASS);
-		$this->schema = $this->da->schema;
 		
 		//$platform = $this->db->getDatabasePlatform();
 		//$platform->registerDoctrineTypeMapping('enum', 'string');
@@ -27,7 +21,7 @@ abstract class AdminView extends \AeFramework\TwigView
 	public function map($params = [])
 	{
 		if (isset($params['table']))
-			foreach ($this->schema->tables as $table)
+			foreach ($this->da->schema->tables as $table)
 				if ($table->name == $params['table'] && !$table->isLink())
 					$this->table = $table;
 	}
