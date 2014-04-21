@@ -19,16 +19,28 @@ class Router
 		$this->mappers[] = $mapper;
 	}
 	
+	private function findViewFromMappers()
+	{
+		foreach ($this->mappers as $mapper)
+			if ($mapper->match($this->path))
+				return $this->serveView($this->getView($mapper->view, $mapper->params));
+		
+		throw new NotFoundException();
+	}
+	
 	public function despatch($path = null)
 	{
 		# If $path is null, use SERVER['REQUEST_URI']
 		$this->path = ($path != null ? $path : parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 		
-		foreach ($this->mappers as $mapper)
-			if ($mapper->match($this->path))
-				return $this->serveView($this->getView($mapper->view, $mapper->params));
-		
-		return $this->serveError(HttpCode::NotFound);
+		try
+		{
+			return $this->findViewFromMappers($path);
+		}
+		catch (ErrorCodeException $e)
+		{
+			return $this->serveError($e->httpCode);
+		}
 	}
 	
 	# Protected functions
@@ -40,7 +52,7 @@ class Router
 		}
 		else
 		{
-			throw new \Exception(sprintf("Error %s", $code));
+			throw new ErrorCodeException($code);
 		}
 	}
 	
