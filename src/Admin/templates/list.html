@@ -38,11 +38,17 @@
 			{% for row in rows %}
 				<tr>
 					{% for column in table.columns %}
-						{% if column.isPrimary %}
-							<td><a href="./edit/{{ column.name }}/{{ row[column.name] }}/">Edit</a> &bull; <a href="./delete/{{ column.name }}/{{ row[column.name] }}/">Delete</a></td>
-						{% else %}
-							<td>{% include "column_view.html" %}</td>
-						{% endif %}
+						<td>
+							{% if column.isPrimary %}
+								<a href="./edit/{{ column.name }}/{{ row[column.name] }}/">Edit</a> &bull; <a href="./delete/{{ column.name }}/{{ row[column.name] }}/">Delete</a>
+							{% elseif column.isForeign %}
+								{% if row[column.name] %}
+								<a href="../{{ column.foreignTable }}/edit/{{ column.foreignColumn }}/{{ row[column.name] }}/">{{ column.foreignTable }} #{{ row[column.name] }}</a>
+								{% endif %}
+							{% else %}
+								{% include "column_view.html" %}
+							{% endif %}
+						</td>
 					{% endfor %}
 				</tr>
 			{% else %}

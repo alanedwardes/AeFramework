@@ -1,4 +1,9 @@
-{% if column.type in ['text'] %}
+{% if column.isForeign %}
+	<select name="{{ column.name }}">
+		{% set link = row[column.name] %}
+		{% include "linked_options.html" %}
+	</select>
+{% elseif column.type in ['text'] %}
 	<textarea name="row[{{ column.name }}]" cols="100" rows="12">{{ row[column.name] }}</textarea>
 {% elseif column.type in ['boolean'] %}
 	<input type="checkbox" name="row[{{ column.name }}]" {% if row[column.name] %}checked="checked"{% endif %}/>

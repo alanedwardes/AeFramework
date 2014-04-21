@@ -64,9 +64,20 @@ class SchemaInformation
 	
 	private function findRelationships(TableInformation $table)
 	{
-		if ($table->isLink())
-			foreach ($table->columns as $column)
-				if ($column->isForeign)
-					$this->tables[$column->foreignTable]->links[] = new LinkInformation($this, $table, $this->tables[$column->foreignTable]);
+		foreach ($table->columns as $column)
+		{
+			if ($column->isForeign)
+			{
+				$foreign_table = $this->tables[$column->foreignTable];
+				if ($table->isLink())
+				{
+					$foreign_table->links[] = new LinkInformation($this, $table, $foreign_table);
+				}
+				else
+				{
+					$foreign_table->links[] = new OneToManyLinkInformation($foreign_table, $table, $column, $column->foreignColumn);
+				}
+			}
+		}
 	}
 }

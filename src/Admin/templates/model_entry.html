@@ -9,14 +9,7 @@
 	<div class="column_edit">
 		<label><span>Linked {{ link.info.remoteTable }} List: (<a href="../../../../{{ link.info.remoteTable.name }}/create/">Create {{ link.info.remoteTable }}</a>)</span>
 			<select style="height:150px" multiple="multiple" name="link[{{ link.info.table.name }}][]">
-				{% for row in link.all %}
-					<option value="{{ row.id }}" {% if row.id in link.selected %}selected="selected"{% endif %}>
-						{% for column in link.info.remoteTable.columns if not column.isAutoIncrement %}
-							{% if not loop.first %}&bull;{% endif %}
-							{{ column }}: {% include "column_view.html" %}
-						{% endfor %}
-					</option>
-				{% endfor %}
+				{% include "linked_options.html" %}
 			</select>
 		</label>
 	</div>

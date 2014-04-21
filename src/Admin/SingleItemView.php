@@ -28,11 +28,35 @@ class SingleItemView extends AdminView
 		$template_params['links'] = [];
 		foreach ($this->table->links as $link)
 		{
-			$template_params['links'][] = [
-				'all' => $this->da->select($link->remoteTable),
-				'selected' => $this->da->getLinks($link, $this->value),
-				'info' => $link
-			];
+			if ($link instanceof LinkInformation)
+			{
+				$template_params['links'][] = [
+					'all' => $this->da->select($link->remoteTable),
+					'selected' => $this->da->getLinks($link, $this->value),
+					'info' => $link
+				];
+			}
+			elseif ($link instanceof OneToManyLinkInformation)
+			{
+				$template_params['links'][] = [
+					'all' => $this->da->select($link->remoteTable),
+					'selected' => $this->da->select($link->remoteTable, "{$link->remoteColumn->name} = ?", [$this->value], true),
+					'info' => $link
+				];
+			}
+		}
+		
+		foreach ($this->table->columns as $column)
+		{
+			if ($column->isForeign)
+			{
+				$foreign_table = $this->da->schema->tables[$column->foreignTable];
+				$template_params['row'][$column->name] = [
+					'all' => $this->da->select($foreign_table),
+					'selected' => [$template_params['row'][$column->name]],
+					'info' => new OneToManyLinkInformation($this->table, $foreign_table, $column, $column->foreignColumn)
+				];
+			}
 		}
 		
 		return parent::body($template_params);

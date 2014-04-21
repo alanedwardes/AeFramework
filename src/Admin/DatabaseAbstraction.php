@@ -30,17 +30,22 @@ class DatabaseAbstraction
 		return $statement;
 	}
 	
+	private function fetchType($fetch_column)
+	{
+		return $fetch_column ? \PDO::FETCH_COLUMN : \PDO::FETCH_BOTH;
+	}
+	
 	public function count(TableInformation $table, $query = '1', $values = [])
 	{
 		return $this->internalStatement("SELECT COUNT(*) FROM {$table->name} WHERE {$query}", $values)->fetchColumn();
 	}
 	
-	public function select(TableInformation $table, $query = '1', $values = [])
+	public function select(TableInformation $table, $query = '1', $values = [], $fetch_column = false)
 	{
-		return $this->internalStatement("SELECT * FROM {$table->name} WHERE {$query}", $values)->fetchAll();
+		return $this->internalStatement("SELECT * FROM {$table->name} WHERE {$query}", $values)->fetchAll($this->fetchType($fetch_column));
 	}
 	
-	public function selectOne(TableInformation $table, $query = '1', $values = [])
+	public function selectOne(TableInformation $table, $query = '1', $values = [], $fetch_column = false)
 	{
 		return $this->internalStatement("SELECT * FROM {$table->name} WHERE {$query}", $values)->fetch();
 	}
