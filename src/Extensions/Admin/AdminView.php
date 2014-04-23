@@ -1,7 +1,7 @@
 <?php
 namespace AeFramework\Extensions\Admin;
 
-abstract class AdminView extends \AeFramework\TwigView implements \AeFramework\IAuthenticated
+abstract class AdminView extends \AeFramework\Views\TwigView implements \AeFramework\Views\IAuthenticated
 {
 	protected $table = null;
 	protected $da = null;

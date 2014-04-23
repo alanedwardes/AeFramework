@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework;
+namespace AeFramework\Routing;
 
 class Router
 {
@@ -14,7 +14,7 @@ class Router
 		$this->error_views[$code] = $view;
 	}
 	
-	public function route(Mapper $mapper)
+	public function route(\AeFramework\Mapping\Mapper $mapper)
 	{
 		$this->mappers[] = $mapper;
 	}
@@ -25,7 +25,7 @@ class Router
 			if ($mapper->match($this->path))
 				return $this->serveView($this->getView($mapper->view, $mapper->params));
 		
-		throw new NotFoundException();
+		throw new \AeFramework\NotFoundException();
 	}
 	
 	public function despatch($path = null)
@@ -37,7 +37,7 @@ class Router
 		{
 			return $this->findViewFromMappers($path);
 		}
-		catch (ErrorCodeException $e)
+		catch (\AeFramework\ErrorCodeException $e)
 		{
 			return $this->serveError($e->httpCode);
 		}
@@ -52,26 +52,26 @@ class Router
 		}
 		else
 		{
-			throw new ErrorCodeException($code);
+			throw new \AeFramework\ErrorCodeException($code);
 		}
 	}
 	
 	protected function getView($viewdata, array $mapper_params = [])
 	{
-		if ($viewdata instanceof IView)
+		if ($viewdata instanceof \AeFramework\Views\IView)
 			$instance = $viewdata;
 		elseif (isset($viewdata[1]))
 		{
-			$instance = ClassFactory::constructClassAndFillMembers($viewdata[0], [$viewdata[1]]);
+			$instance = \AeFramework\ClassFactory::constructClassAndFillMembers($viewdata[0], [$viewdata[1]]);
 		}
 		else
-			$instance = ClassFactory::constructClass($viewdata[0]);
+			$instance = \AeFramework\ClassFactory::constructClass($viewdata[0]);
 		
 		$instance->map($mapper_params);
 		return $instance;
 	}
 	
-	protected function serveView(IView $view)
+	protected function serveView(\AeFramework\Views\IView $view)
 	{
 		http_response_code($this->getCode($view));
 		
@@ -81,17 +81,17 @@ class Router
 		return $this->getBody($view);
 	}
 	
-	protected function getCode(IView $view)
+	protected function getCode(\AeFramework\Views\IView $view)
 	{
 		return $view->code();
 	}
 	
-	protected function getHeaders(IView $view)
+	protected function getHeaders(\AeFramework\Views\IView $view)
 	{
 		return $view->headers();
 	}
 	
-	protected function getBody(IView $view)
+	protected function getBody(\AeFramework\Views\IView $view)
 	{
 		return $view->body();
 	}

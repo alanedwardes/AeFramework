@@ -1,9 +1,11 @@
 <?php
+use AeFramework\Views as Views;
+
 class RedirectViewTestCase extends PHPUnit_Framework_TestCase
 {
 	public function testTemporaryRedirectViewRedirects()
 	{
-		$redirect = new AeFramework\TemporaryRedirectView('http://www.example.com/');
+		$redirect = new Views\TemporaryRedirectView('http://www.example.com/');
 		
 		$this->assertSame($redirect->headers(), ['Location' => 'http://www.example.com/']);
 		$this->assertSame($redirect->code(), AeFramework\HttpCode::Found);
@@ -11,7 +13,7 @@ class RedirectViewTestCase extends PHPUnit_Framework_TestCase
 	
 	public function testPermanentRedirectViewRedirects()
 	{
-		$redirect = new AeFramework\PermanentRedirectView('http://www.example.com/');
+		$redirect = new Views\PermanentRedirectView('http://www.example.com/');
 		
 		$this->assertSame($redirect->headers(), ['Location' => 'http://www.example.com/']);
 		$this->assertSame($redirect->code(), AeFramework\HttpCode::MovedPermanently);
@@ -19,7 +21,7 @@ class RedirectViewTestCase extends PHPUnit_Framework_TestCase
 	
 	public function testRedirectViewWithMapperParameters()
 	{
-		$redirect = new AeFramework\TemporaryRedirectView('http://www.example.com/posts/%s/');
+		$redirect = new Views\TemporaryRedirectView('http://www.example.com/posts/%s/');
 		
 		# Normally set by the mapper, but we are mocking here
 		$redirect->map(array('post_slug' => 'testing'));

@@ -1,12 +1,12 @@
 <?php
-namespace AeFramework;
+namespace AeFramework\Views;
 
 class TextView implements IView
 {
 	public $text;
 	public $code;
 	
-	public function __construct($text, $code = HttpCode::Ok)
+	public function __construct($text, $code = \AeFramework\HttpCode::Ok)
 	{
 		$this->text = $text;
 		$this->code = $code;

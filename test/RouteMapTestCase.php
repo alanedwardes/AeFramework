@@ -1,6 +1,10 @@
 <?php
 require_once 'Helpers/TestRouterServedView.php';
 
+use AeFramework\Routing as Routing;
+use AeFramework\Mapping as Mapping;
+use AeFramework\Views as Views;
+
 class RouteMapTestCase extends PHPUnit_Framework_TestCase
 {
 	private $router;
@@ -12,8 +16,8 @@ class RouteMapTestCase extends PHPUnit_Framework_TestCase
 
 	public function testMap()
 	{
-		AeFramework\RouteMap::map($this->router, [
-			[new AeFramework\StringMapper('/testing/', new AeFramework\TextView('test_view'))]
+		Routing\RouteMap::map($this->router, [
+			[new Mapping\StringMapper('/testing/', new Views\TextView('test_view'))]
 		]);
 		
 		$this->router->despatch('/testing/');
@@ -23,8 +27,8 @@ class RouteMapTestCase extends PHPUnit_Framework_TestCase
 	
 	public function testMapDeferredView()
 	{
-		AeFramework\RouteMap::map($this->router, [
-			[new AeFramework\StringMapper('/testing/', ['AeFramework\TextView', 'test_view'])]
+		Routing\RouteMap::map($this->router, [
+			[new Mapping\StringMapper('/testing/', ['AeFramework\Views\TextView', 'test_view'])]
 		]);
 		
 		$this->router->despatch('/testing/');
@@ -34,8 +38,8 @@ class RouteMapTestCase extends PHPUnit_Framework_TestCase
 	
 	public function testStringMapperFromString()
 	{
-		AeFramework\RouteMap::map($this->router, [
-			['/testing/', 'AeFramework\TextView', 'test_view']
+		Routing\RouteMap::map($this->router, [
+			['/testing/', 'AeFramework\Views\TextView', 'test_view']
 		]);
 		
 		$this->router->despatch('/testing/');
@@ -45,8 +49,8 @@ class RouteMapTestCase extends PHPUnit_Framework_TestCase
 	
 	public function testRegexMapperFromString()
 	{
-		AeFramework\RouteMap::map($this->router, [
-			['r^/testing/$', 'AeFramework\TextView', 'test_view']
+		Routing\RouteMap::map($this->router, [
+			['r^/testing/$', 'AeFramework\Views\TextView', 'test_view']
 		]);
 		
 		$this->router->despatch('/testing/');

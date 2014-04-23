@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework;
+namespace AeFramework\Views;
 
 abstract class RedirectView implements IView
 {

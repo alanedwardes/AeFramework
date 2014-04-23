@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework;
+namespace AeFramework\Views;
 
 class InlineFileView implements IView
 {
@@ -21,7 +21,7 @@ class InlineFileView implements IView
 	
 	public function code()
 	{
-		return HttpCode::Ok;
+		return \AeFramework\HttpCode::Ok;
 	}
 	
 	public function headers()

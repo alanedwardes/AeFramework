@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework;
+namespace AeFramework\Mapping;
 
 class StringMapper extends Mapper
 {

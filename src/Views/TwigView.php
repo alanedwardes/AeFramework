@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework;
+namespace AeFramework\Views;
 
 class TwigView implements ICacheable, IView
 {
@@ -23,7 +23,7 @@ class TwigView implements ICacheable, IView
 	
 	public function code()
 	{
-		return HttpCode::Ok;
+		return \AeFramework\HttpCode::Ok;
 	}
 	
 	public function expire()
@@ -43,6 +43,6 @@ class TwigView implements ICacheable, IView
 	
 	public function hash()
 	{
-		return Util::checksum($this->template, filemtime(Util::joinPath($this->template_dir, $this->template)));
+		return Util::checksum($this->template, filemtime(\AeFramework\Util::joinPath($this->template_dir, $this->template)));
 	}
 }

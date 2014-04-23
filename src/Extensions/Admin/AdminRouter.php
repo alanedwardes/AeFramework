@@ -1,11 +1,11 @@
 <?php
 namespace AeFramework\Extensions\Admin;
 
-class AdminRouter extends \AeFramework\AuthenticatedRouter
+class AdminRouter extends \AeFramework\Routing\AuthenticatedRouter
 {
-	public function __construct(\AeFramework\IAuthenticator $authenticator)
+	public function __construct(\AeFramework\Routing\IAuthenticator $authenticator)
 	{
-		\AeFramework\RouteMap::map($this, [
+		\AeFramework\Routing\RouteMap::map($this, [
 			['', '\AeFramework\Extensions\Admin\ModelsView'],
 			['r^(?P<table>.*)/delete/(?P<key>.*)/(?P<value>.*)/$', '\AeFramework\Extensions\Admin\DeleteView'],
 			['r^(?P<table>.*)/edit/(?P<key>.*)/(?P<value>.*)/$', '\AeFramework\Extensions\Admin\EditView'],

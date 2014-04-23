@@ -1,11 +1,11 @@
 <?php
-namespace AeFramework;
+namespace AeFramework\Mapping;
 
 class RegexMapper extends Mapper
 {
 	public function __construct($mapping, $view)
 	{
-		parent::__construct(Util::formatPathExpression($mapping), $view);
+		parent::__construct(\AeFramework\Util::formatPathExpression($mapping), $view);
 	}
 	
 	private function removeNumericGroups(&$groups)

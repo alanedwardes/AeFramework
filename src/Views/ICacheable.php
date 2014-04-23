@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework;
+namespace AeFramework\Views;
 
 interface ICacheable
 {

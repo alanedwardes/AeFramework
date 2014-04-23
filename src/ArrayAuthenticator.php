@@ -1,7 +1,7 @@
 <?php
 namespace AeFramework;
 
-class ArrayAuthenticator implements IAuthenticator
+class ArrayAuthenticator implements \AeFramework\Routing\IAuthenticator
 {
 	private $credentials = [];
 

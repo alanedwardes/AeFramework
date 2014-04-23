@@ -1,5 +1,7 @@
 <?php
-namespace AeFramework;
+namespace AeFramework\Routing;
+
+use AeFramework\Mapping as Mapping;
 
 class RouteMap
 {
@@ -11,7 +13,7 @@ class RouteMap
 		{
 			$route = $mapping[0];
 			
-			if ($route instanceof Mapper)
+			if ($route instanceof Mapping\Mapper)
 			{
 				$router->route($route);
 			}
@@ -36,10 +38,10 @@ class RouteMap
 		switch (substr($route, 0, 1))
 		{
 			case self::MAPPER_TYPE_REGEX:
-				return new RegexMapper(substr($route, 1), $view);
+				return new Mapping\RegexMapper(substr($route, 1), $view);
 				break;
 			default:
-				return new StringMapper($route, $view);
+				return new Mapping\StringMapper($route, $view);
 				break;
 		}
 	}

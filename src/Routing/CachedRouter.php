@@ -1,20 +1,20 @@
 <?php
-namespace AeFramework;
+namespace AeFramework\Routing;
 
 class CachedRouter extends Router
 {
 	private $cache_provider = null;
 	private $cache_key = '';
 	
-	public function __construct(Cache $cache_provider, $cache_key = '')
+	public function __construct(\AeFramework\Caching\Cache $cache_provider, $cache_key = '')
 	{
 		$this->cache_provider = $cache_provider;
 		$this->cache_key = $cache_key;
 	}
 	
-	protected function getBody(IView $view)
+	protected function getBody(\AeFramework\Views\IView $view)
 	{
-		if ($view instanceof ICacheable)
+		if ($view instanceof \AeFramework\Views\ICacheable)
 		{
 			if ($cached_body = $this->fromCache($view->hash()))
 			{
@@ -47,7 +47,7 @@ class CachedRouter extends Router
 	
 	protected function cacheKey($hash)
 	{
-		return Util::checksum($this->path, $this->cache_key, $hash);
+		return \AeFramework\Util::checksum($this->path, $this->cache_key, $hash);
 	}
 	
 	protected function fromCache($hash)

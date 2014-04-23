@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework;
+namespace AeFramework\Routing;
 
 class Despatcher
 {
@@ -8,7 +8,7 @@ class Despatcher
 
 	public function addRouter($expression, Router $router)
 	{
-		$this->routers[] = [Util::formatPathExpression($expression), $router];
+		$this->routers[] = [\AeFramework\Util::formatPathExpression($expression), $router];
 	}
 
 	public function despatch($path = null)

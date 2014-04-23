@@ -1,7 +1,7 @@
 <?php
 namespace AeFramework\Extensions\Admin;
 
-class LoginView extends \AeFramework\TwigView
+class LoginView extends \AeFramework\Views\TwigView
 {
 	public function __construct()
 	{

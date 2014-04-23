@@ -1,10 +1,10 @@
 <?php
-namespace AeFramework;
+namespace AeFramework\Views;
 
 class PermanentRedirectView extends RedirectView
 {
 	public function code()
 	{
-		return HttpCode::MovedPermanently;
+		return \AeFramework\HttpCode::MovedPermanently;
 	}
 }

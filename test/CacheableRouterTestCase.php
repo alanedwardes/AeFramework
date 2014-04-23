@@ -1,5 +1,5 @@
 <?php
-class CacheableView implements AeFramework\IView, AeFramework\ICacheable
+class CacheableView implements \AeFramework\Views\IView, \AeFramework\Views\ICacheable
 {
 	public $hash = null;
 	public $body_generated;
@@ -35,7 +35,7 @@ class CacheableView implements AeFramework\IView, AeFramework\ICacheable
 	}
 }
 
-class TemporaryMemoryCache extends AeFramework\Cache
+class TemporaryMemoryCache extends \AeFramework\Caching\Cache
 {
 	private $cache = [];
 	
@@ -64,9 +64,9 @@ class CacheableRouterTestCase extends PHPUnit_Framework_TestCase
 	
 	public function testCacheableRouterCaches()
 	{
-		$this->router = new AeFramework\CachedRouter($this->cache);
+		$this->router = new AeFramework\Routing\CachedRouter($this->cache);
 	
-		$this->router->route(new AeFramework\StringMapper('/testing', $this->cacheable_view));
+		$this->router->route(new AeFramework\Mapping\StringMapper('/testing', $this->cacheable_view));
 		
 		$this->cacheable_view->body_generated = false;
 		$this->router->despatch('/testing');
@@ -79,9 +79,9 @@ class CacheableRouterTestCase extends PHPUnit_Framework_TestCase
 	
 	public function testCacheableRouterViewHashInvalidatesCache()
 	{
-		$this->router = new AeFramework\CachedRouter($this->cache);
+		$this->router = new AeFramework\Routing\CachedRouter($this->cache);
 	
-		$this->router->route(new AeFramework\StringMapper('/testing', $this->cacheable_view));
+		$this->router->route(new \AeFramework\Mapping\StringMapper('/testing', $this->cacheable_view));
 		
 		$this->cacheable_view->body_generated = false;
 		$this->cacheable_view->hash = 'hash';
@@ -97,16 +97,16 @@ class CacheableRouterTestCase extends PHPUnit_Framework_TestCase
 	public function testCacheableRouterSameCacheKeyWithTwoInstances()
 	{
 		# Router 1
-		$this->router = new AeFramework\CachedRouter($this->cache, 'cachekey');
-		$this->router->route(new AeFramework\StringMapper('/testing', $this->cacheable_view));
+		$this->router = new AeFramework\Routing\CachedRouter($this->cache, 'cachekey');
+		$this->router->route(new \AeFramework\Mapping\StringMapper('/testing', $this->cacheable_view));
 		
 		$this->cacheable_view->body_generated = false;
 		$this->router->despatch('/testing');
 		$this->assertTrue($this->cacheable_view->body_generated);
 		
 		# Router 2
-		$this->router = new AeFramework\CachedRouter($this->cache, 'cachekey');
-		$this->router->route(new AeFramework\StringMapper('/testing', $this->cacheable_view));
+		$this->router = new AeFramework\Routing\CachedRouter($this->cache, 'cachekey');
+		$this->router->route(new \AeFramework\Mapping\StringMapper('/testing', $this->cacheable_view));
 		
 		$this->cacheable_view->body_generated = false;
 		$this->router->despatch('/testing');
@@ -116,16 +116,16 @@ class CacheableRouterTestCase extends PHPUnit_Framework_TestCase
 	public function testCacheableRouterDifferentCacheKeyWithTwoInstances()
 	{
 		# Router 1
-		$this->router = new AeFramework\CachedRouter($this->cache, 'cachekey');
-		$this->router->route(new AeFramework\StringMapper('/testing', $this->cacheable_view));
+		$this->router = new \AeFramework\Routing\CachedRouter($this->cache, 'cachekey');
+		$this->router->route(new \AeFramework\Mapping\StringMapper('/testing', $this->cacheable_view));
 		
 		$this->cacheable_view->body_generated = false;
 		$this->router->despatch('/testing');
 		$this->assertTrue($this->cacheable_view->body_generated);
 		
 		# Router 2
-		$this->router = new AeFramework\CachedRouter($this->cache, 'anothercachekey');
-		$this->router->route(new AeFramework\StringMapper('/testing', $this->cacheable_view));
+		$this->router = new \AeFramework\Routing\CachedRouter($this->cache, 'anothercachekey');
+		$this->router->route(new \AeFramework\Mapping\StringMapper('/testing', $this->cacheable_view));
 		
 		$this->cacheable_view->body_generated = false;
 		$this->router->despatch('/testing');

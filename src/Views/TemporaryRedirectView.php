@@ -1,10 +1,10 @@
 <?php
-namespace AeFramework;
+namespace AeFramework\Views;
 
 class TemporaryRedirectView extends RedirectView
 {
 	public function code()
 	{
-		return HttpCode::Found;
+		return \AeFramework\HttpCode::Found;
 	}
 }
