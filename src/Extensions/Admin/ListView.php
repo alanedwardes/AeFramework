@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework\Admin;
+namespace AeFramework\Extensions\Admin;
 
 class ListView extends AdminView
 {

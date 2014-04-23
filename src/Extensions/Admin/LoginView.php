@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework\Admin;
+namespace AeFramework\Extensions\Admin;
 
 class LoginView extends \AeFramework\TwigView
 {
@@ -8,13 +8,21 @@ class LoginView extends \AeFramework\TwigView
 		parent::__construct(\AeFramework\Util::joinPath(__DIR__, 'templates/login.html'));
 	}
 	
-	public function body()
+	public function headers()
 	{
 		if (isset($_POST['username']) and isset($_POST['password']))
 		{
-			$this->authenticator->authenticate($_POST['username'], $_POST['password']);
+			if ($this->authenticator->authenticate($_POST['username'], $_POST['password']))
+			{
+				return ['Location' => '.'];
+			}
 		}
 		
+		return [];
+	}
+	
+	public function body()
+	{
 		return parent::body();
 	}
 }

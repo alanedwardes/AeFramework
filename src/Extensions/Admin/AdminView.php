@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework\Admin;
+namespace AeFramework\Extensions\Admin;
 
 abstract class AdminView extends \AeFramework\TwigView implements \AeFramework\IAuthenticated
 {
