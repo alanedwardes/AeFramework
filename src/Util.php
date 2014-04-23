@@ -15,12 +15,16 @@ class Util
 	
 	public static function random()
 	{
-		$items = func_get_args();
-		return $items[array_rand($items)];
+		return func_get_args()[array_rand(func_get_args())];
 	}
 	
 	public static function camelCaseToSpaces($string)
 	{
 		return trim(preg_replace('/(?<=\\w)(?=[A-Z])/',' $1', $string));
+	}
+	
+	public static function formatPathExpression($expression)
+	{
+		return sprintf('/%s/', str_replace('/', '\/', $expression));
 	}
 }

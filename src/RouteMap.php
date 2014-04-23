@@ -17,7 +17,7 @@ class RouteMap
 			}
 			else
 			{
-				$view = $mapping[1];
+				$view = array_slice($mapping, 1);
 				
 				if (is_numeric($route))
 				{

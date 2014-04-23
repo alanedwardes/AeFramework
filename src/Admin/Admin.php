@@ -3,15 +3,15 @@ namespace AeFramework\Admin;
 
 class Admin
 {
-	public static function map()
+	public static function map($authenticator)
 	{
 		return [
-			['/admin/', ['AeFramework\Admin\ModelsView']],
-			['r^/admin/(?P<table>.*)/delete/(?P<key>.*)/(?P<value>.*)/$', ['AeFramework\Admin\DeleteView']],
-			['r^/admin/(?P<table>.*)/edit/(?P<key>.*)/(?P<value>.*)/$', ['AeFramework\Admin\EditView']],
-			['r^/admin/(?P<table>.*)/create/$', ['AeFramework\Admin\CreateView']],
-			['r^/admin/(?P<table>.*)/$', ['AeFramework\Admin\ListView']],
-			['/admin/login/', ['AeFramework\Admin\LoginView']]
+			['', 'AeFramework\Admin\ModelsView'],
+			['r^(?P<table>.*)/delete/(?P<key>.*)/(?P<value>.*)/$', 'AeFramework\Admin\DeleteView'],
+			['r^(?P<table>.*)/edit/(?P<key>.*)/(?P<value>.*)/$', 'AeFramework\Admin\EditView'],
+			['r^(?P<table>.*)/create/$', 'AeFramework\Admin\CreateView'],
+			['r^(?P<table>.*)/$', 'AeFramework\Admin\ListView'],
+			[\AeFramework\HttpCode::Forbidden, 'AeFramework\Admin\LoginView']
 		];
 	}
 }

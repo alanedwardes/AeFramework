@@ -31,7 +31,7 @@ class Router
 	public function despatch($path = null)
 	{
 		# If $path is null, use SERVER['REQUEST_URI']
-		$this->path = ($path != null ? $path : parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+		$this->path = ($path !== null ? $path : parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 		
 		try
 		{
@@ -61,7 +61,9 @@ class Router
 		if ($viewdata instanceof IView)
 			$instance = $viewdata;
 		elseif (isset($viewdata[1]))
-			$instance = ClassFactory::constructClassAndFillMembers($viewdata[0], $viewdata[1]);
+		{
+			$instance = ClassFactory::constructClassAndFillMembers($viewdata[0], [$viewdata[1]]);
+		}
 		else
 			$instance = ClassFactory::constructClass($viewdata[0]);
 		

@@ -5,14 +5,7 @@ class RegexMapper extends Mapper
 {
 	public function __construct($mapping, $view)
 	{
-		# First, escape /
-		$mapping = str_replace('/', '\/', $mapping);
-		
-		# Next, encapsulate with slashes
-		$mapping = sprintf('/%s/', $mapping);
-		
-		# Finally, pass it back
-		parent::__construct($mapping, $view);
+		parent::__construct(Util::formatPathExpression($mapping), $view);
 	}
 	
 	private function removeNumericGroups(&$groups)

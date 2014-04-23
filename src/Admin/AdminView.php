@@ -10,11 +10,6 @@ abstract class AdminView extends \AeFramework\TwigView
 	{
 		$this->da = new DatabaseAbstraction(DB_NAME, DB_USER, DB_PASS);
 		
-		//$platform = $this->db->getDatabasePlatform();
-		//$platform->registerDoctrineTypeMapping('enum', 'string');
-		
-		//$this->db->getConfiguration()->setSQLLogger(new \Doctrine\DBAL\Logging\EchoSQLLogger());
-		
 		parent::__construct($template);
 	}
 	
@@ -30,10 +25,7 @@ abstract class AdminView extends \AeFramework\TwigView
 	{
 		$template_params['table'] = $this->table;
 		return parent::body($template_params);
-	}
-
-	public function Authenticate()
-	{
-		$cookie = $_COOKIE['AeFrameworkAdminSession'];
+		
+		return parent::body($template_params);
 	}
 }

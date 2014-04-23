@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+	<h1>Login</h1>
+	<p>Enter a username and password to continue.</p>
+	<form action="" method="post">
+		<div class="column_edit">
+			<input type="text" id="username" name="username" size="35"/>
+		</div>
+		<div class="column_edit">
+			<input type="password" id="password" name="password" size="35"/>
+		</div>
+		<button>Login</button>
+	</form>
+	<script>
+		document.getElementById('username').focus();
+	</script>
+{% endblock %}

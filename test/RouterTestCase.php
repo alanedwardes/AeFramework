@@ -35,7 +35,7 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 	
 	public function testRouterDeferredViewContruction()
 	{
-		$this->router->route(new AeFramework\StringMapper('/testing/', ['AeFramework\TextView', ['test_deferred']]));
+		$this->router->route(new AeFramework\StringMapper('/testing/', ['AeFramework\TextView', 'test_deferred']));
 		
 		$this->router->despatch('/testing/');
 		
