@@ -29,7 +29,7 @@ class Router
 			}
 		}
 		
-		throw new \AeFramework\NotFoundException();
+		throw new \AeFramework\ErrorCodeException(\AeFramework\HttpCode::NotFound);
 	}
 	
 	protected function serveFromMapper($mapper)

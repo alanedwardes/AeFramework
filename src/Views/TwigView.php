@@ -43,6 +43,6 @@ class TwigView implements ICacheable, IView
 	
 	public function hash()
 	{
-		return Util::checksum($this->template, filemtime(\AeFramework\Util::joinPath($this->template_dir, $this->template)));
+		return \AeFramework\Util::checksum($this->template, filemtime(\AeFramework\Util::joinPath($this->template_dir, $this->template)));
 	}
 }
