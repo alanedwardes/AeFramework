@@ -35,6 +35,8 @@ class RegexMapper extends Mapper
 		
 		$this->params = $groups;
 		
+		$this->remaining = preg_replace($this->mapping, '', $path);
+		
 		return true;
 	}
 }

@@ -22,10 +22,29 @@ class Router
 	private function findViewFromMappers()
 	{
 		foreach ($this->mappers as $mapper)
+		{
 			if ($mapper->match($this->path))
-				return $this->serveView($this->getView($mapper->view, $mapper->params));
+			{
+				return $this->serveFromMapper($mapper);
+			}
+		}
 		
 		throw new \AeFramework\NotFoundException();
+	}
+	
+	protected function serveFromMapper($mapper)
+	{
+		$target = $this->constructMapperTarget($mapper->target);
+	
+		if ($target instanceof Router)
+		{
+			return $target->despatch($mapper->remaining);
+		}
+		elseif ($target instanceof \AeFramework\Views\IView)
+		{
+			$target->map($mapper->params);
+			return $this->serveView($target);
+		}
 	}
 	
 	public function despatch($path = null)
@@ -48,7 +67,7 @@ class Router
 	{
 		if (isset($this->error_views[$code]))
 		{
-			return $this->serveView($this->getView($this->error_views[$code]), $code);
+			return $this->serveView($this->constructMapperTarget($this->error_views[$code]), $code);
 		}
 		else
 		{
@@ -56,19 +75,21 @@ class Router
 		}
 	}
 	
-	protected function getView($viewdata, array $mapper_params = [])
+	protected function constructMapperTarget($target)
 	{
-		if ($viewdata instanceof \AeFramework\Views\IView)
-			$instance = $viewdata;
-		elseif (isset($viewdata[1]))
+		# This could be an already constructed IView or Router
+		if (!is_array($target))
 		{
-			$instance = \AeFramework\ClassFactory::constructClassAndFillMembers($viewdata[0], [$viewdata[1]]);
+			return $target;
+		}
+		elseif (isset($target[1]))
+		{
+			return \AeFramework\ClassFactory::constructClassAndFillMembers($target[0], [$target[1]]);
 		}
 		else
-			$instance = \AeFramework\ClassFactory::constructClass($viewdata[0]);
-		
-		$instance->map($mapper_params);
-		return $instance;
+		{
+			return \AeFramework\ClassFactory::constructClass($target[0]);
+		}
 	}
 	
 	protected function serveView(\AeFramework\Views\IView $view)

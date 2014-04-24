@@ -4,13 +4,14 @@ namespace AeFramework\Mapping;
 abstract class Mapper
 {
 	public $mapping = '';
-	public $view = null;
+	public $target = null;
 	public $params = [];
+	public $remaining = '';
 	
-	public function __construct($mapping, $view)
+	public function __construct($mapping, $target)
 	{
 		$this->mapping = $mapping;
-		$this->view = $view;
+		$this->target = $target;
 	}
 	
 	protected abstract function match($path);
