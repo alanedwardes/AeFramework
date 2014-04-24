@@ -22,7 +22,7 @@ class RouteMapTestCase extends PHPUnit_Framework_TestCase
 		
 		$this->router->despatch('/testing/');
 		
-		$this->assertSame('test_view', $this->router->served_view->body());
+		$this->assertSame('test_view', $this->router->served_view->response());
 	}
 	
 	public function testMapDeferredView()
@@ -33,7 +33,7 @@ class RouteMapTestCase extends PHPUnit_Framework_TestCase
 		
 		$this->router->despatch('/testing/');
 		
-		$this->assertSame('test_view', $this->router->served_view->body());
+		$this->assertSame('test_view', $this->router->served_view->response());
 	}
 	
 	public function testStringMapperFromString()
@@ -44,7 +44,7 @@ class RouteMapTestCase extends PHPUnit_Framework_TestCase
 		
 		$this->router->despatch('/testing/');
 		
-		$this->assertSame('test_view', $this->router->served_view->body());
+		$this->assertSame('test_view', $this->router->served_view->response());
 	}
 	
 	public function testRegexMapperFromString()
@@ -55,6 +55,6 @@ class RouteMapTestCase extends PHPUnit_Framework_TestCase
 		
 		$this->router->despatch('/testing/');
 		
-		$this->assertSame('test_view', $this->router->served_view->body());
+		$this->assertSame('test_view', $this->router->served_view->response());
 	}
 }

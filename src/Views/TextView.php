@@ -1,7 +1,7 @@
 <?php
 namespace AeFramework\Views;
 
-class TextView implements IView
+class TextView extends View
 {
 	public $text;
 	public $code;
@@ -12,22 +12,12 @@ class TextView implements IView
 		$this->code = $code;
 	}
 	
-	public function map($params = [])
+	public function request($verb, array $params)
 	{
-	
+		$this->headers['Content-Type'] = 'text/plain';
 	}
 	
-	public function code()
-	{
-		return $this->code;
-	}
-	
-	public function headers()
-	{
-		return ['Content-Type' => 'text/plain'];
-	}
-	
-	public function body()
+	public function response()
 	{
 		return $this->text;
 	}

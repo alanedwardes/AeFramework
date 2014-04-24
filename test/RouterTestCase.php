@@ -65,7 +65,7 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 		
 		$this->router->despatch('/testing/');
 		
-		$this->assertSame($this->router->served_view->body(), 'test_deferred');
+		$this->assertSame($this->router->served_view->response(), 'test_deferred');
 	}
 	
 	public function testRouterDelegateRouting()

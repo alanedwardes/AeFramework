@@ -10,7 +10,7 @@ class AuthenticatedRouter extends Router
 		$this->authenticator = $authenticator;
 	}
 	
-	public function serveView(\AeFramework\Views\IView $view)
+	public function serveView(\AeFramework\Views\View $view)
 	{
 		$view->authenticator = $this->authenticator;
 		

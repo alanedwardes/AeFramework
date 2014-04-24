@@ -1,7 +1,7 @@
 <?php
 namespace AeFramework\Views;
 
-class InlineFileView implements IView
+class FileView extends View
 {
 	public $file;
 	public $content_type;
@@ -15,21 +15,12 @@ class InlineFileView implements IView
 		$this->content_type = $content_type;
 	}
 	
-	public function map($params = [])
+	public function request($verb, array $params = [])
 	{
+		$this->headers['Content-Type'] = $this->content_type;
 	}
 	
-	public function code()
-	{
-		return \AeFramework\HttpCode::Ok;
-	}
-	
-	public function headers()
-	{
-		return ['Content-Type' => $this->content_type];
-	}
-	
-	public function body()
+	public function response()
 	{
 		return readfile($this->file);
 	}

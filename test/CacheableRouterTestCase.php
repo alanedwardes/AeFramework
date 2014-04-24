@@ -1,24 +1,15 @@
 <?php
-class CacheableView implements \AeFramework\Views\IView, \AeFramework\Views\ICacheable
+class CacheableView extends \AeFramework\Views\View implements \AeFramework\Views\ICacheable
 {
 	public $hash = null;
 	public $body_generated;
 	
-	public function map($params = [])
+	public function request($verb, array $params = [])
 	{
+		$this->code = AeFramework\HttpCode::NotImplemented;
 	}
 	
-	public function code()
-	{
-		return AeFramework\HttpCode::NotImplemented;
-	}
-	
-	public function headers()
-	{
-		return array();
-	}
-	
-	public function body()
+	public function response()
 	{
 		$this->body_generated = true;
 		return 'Hello World!';

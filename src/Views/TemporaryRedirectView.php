@@ -3,8 +3,10 @@ namespace AeFramework\Views;
 
 class TemporaryRedirectView extends RedirectView
 {
-	public function code()
+	function request($verb, array $params = [])
 	{
-		return \AeFramework\HttpCode::Found;
+		$this->code = \AeFramework\HttpCode::Found;
+		
+		parent::request($verb, $params);
 	}
 }

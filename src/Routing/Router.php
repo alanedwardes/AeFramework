@@ -40,10 +40,9 @@ class Router
 		{
 			return $target->despatch($mapper->remaining);
 		}
-		elseif ($target instanceof \AeFramework\Views\IView)
+		elseif ($target instanceof \AeFramework\Views\View)
 		{
-			$target->map($mapper->params);
-			return $this->serveView($target);
+			return $this->serveView($target, $mapper->params);
 		}
 	}
 	
@@ -67,7 +66,9 @@ class Router
 	{
 		if (isset($this->error_views[$code]))
 		{
-			return $this->serveView($this->constructMapperTarget($this->error_views[$code]), $code);
+			$view = $this->constructMapperTarget($this->error_views[$code]);
+			$view->code = $code;
+			return $this->serveView($view);
 		}
 		else
 		{
@@ -77,7 +78,7 @@ class Router
 	
 	protected function constructMapperTarget($target)
 	{
-		# This could be an already constructed IView or Router
+		# This could be an already constructed View or Router
 		if (!is_array($target))
 		{
 			return $target;
@@ -92,28 +93,31 @@ class Router
 		}
 	}
 	
-	protected function serveView(\AeFramework\Views\IView $view)
+	protected function serveView(\AeFramework\Views\View $view, array $mapper_params = [])
 	{
+		$view->request(isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : null, $mapper_params);
+	
 		http_response_code($this->getCode($view));
 		
-		foreach ($this->getHeaders($view) as $name => $value)
-			header(sprintf('%s: %s', $name, $value));
+		if (!headers_sent())
+			foreach ($this->getHeaders($view) as $name => $value)
+				header(sprintf('%s: %s', $name, $value));
 		
-		return $this->getBody($view);
+		return $this->getResponse($view);
 	}
 	
-	protected function getCode(\AeFramework\Views\IView $view)
+	protected function getCode(\AeFramework\Views\View $view)
 	{
-		return $view->code();
+		return $view->code;
 	}
 	
-	protected function getHeaders(\AeFramework\Views\IView $view)
+	protected function getHeaders(\AeFramework\Views\View $view)
 	{
-		return $view->headers();
+		return $view->headers;
 	}
 	
-	protected function getBody(\AeFramework\Views\IView $view)
+	protected function getResponse(\AeFramework\Views\View $view)
 	{
-		return $view->body();
+		return $view->response();
 	}
 }

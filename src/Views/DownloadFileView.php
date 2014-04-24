@@ -1,7 +1,7 @@
 <?php
 namespace AeFramework\Views;
 
-class DownloadFileView extends InlineFileView
+class DownloadFileView extends FileView
 {
 	public $download_name;
 	
@@ -14,10 +14,10 @@ class DownloadFileView extends InlineFileView
 		parent::__construct($file, $content_type);
 	}
 	
-	public function headers()
+	public function request($verb, array $params = [])
 	{
-		return array_merge([
-			'Content-Disposition' => sprintf('attachment; filename="%s"', $this->download_name)
-		], parent::headers());
+		parent::request($verb, $params);
+		
+		$this->headers['Content-Disposition'] = sprintf('attachment; filename="%s"', $this->download_name);
 	}
 }

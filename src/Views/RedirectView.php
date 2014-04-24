@@ -1,29 +1,21 @@
 <?php
 namespace AeFramework\Views;
 
-abstract class RedirectView implements IView
+abstract class RedirectView extends View
 {
 	public $location;
-	private $mapper_params;
 	
 	function __construct($location)
 	{
 		$this->location = $location;
 	}
 	
-	function map($params = [])
+	function request($verb, array $params = [])
 	{
-		$this->mapper_params = $params;
+		$this->headers['Location'] = vsprintf($this->location, $params);
 	}
 	
-	abstract public function code();
-	
-	public function headers()
-	{
-		return ['Location' => vsprintf($this->location, $this->mapper_params)];
-	}
-	
-	function body()
+	function response()
 	{
 		return null;
 	}

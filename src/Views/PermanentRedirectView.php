@@ -3,8 +3,10 @@ namespace AeFramework\Views;
 
 class PermanentRedirectView extends RedirectView
 {
-	public function code()
+	function request($verb, array $params = [])
 	{
-		return \AeFramework\HttpCode::MovedPermanently;
+		$this->code = \AeFramework\HttpCode::MovedPermanently;
+		
+		parent::request($verb, $params);
 	}
 }

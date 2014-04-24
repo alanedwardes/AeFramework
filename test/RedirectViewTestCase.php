@@ -7,16 +7,20 @@ class RedirectViewTestCase extends PHPUnit_Framework_TestCase
 	{
 		$redirect = new Views\TemporaryRedirectView('http://www.example.com/');
 		
-		$this->assertSame($redirect->headers(), ['Location' => 'http://www.example.com/']);
-		$this->assertSame($redirect->code(), AeFramework\HttpCode::Found);
+		$redirect->request('GET');
+		
+		$this->assertSame($redirect->headers, ['Location' => 'http://www.example.com/']);
+		$this->assertSame($redirect->code, AeFramework\HttpCode::Found);
 	}
 	
 	public function testPermanentRedirectViewRedirects()
 	{
 		$redirect = new Views\PermanentRedirectView('http://www.example.com/');
 		
-		$this->assertSame($redirect->headers(), ['Location' => 'http://www.example.com/']);
-		$this->assertSame($redirect->code(), AeFramework\HttpCode::MovedPermanently);
+		$redirect->request('GET');
+		
+		$this->assertSame($redirect->headers, ['Location' => 'http://www.example.com/']);
+		$this->assertSame($redirect->code, AeFramework\HttpCode::MovedPermanently);
 	}
 	
 	public function testRedirectViewWithMapperParameters()
@@ -24,8 +28,8 @@ class RedirectViewTestCase extends PHPUnit_Framework_TestCase
 		$redirect = new Views\TemporaryRedirectView('http://www.example.com/posts/%s/');
 		
 		# Normally set by the mapper, but we are mocking here
-		$redirect->map(array('post_slug' => 'testing'));
+		$redirect->request('GET', ['post_slug' => 'testing']);
 		
-		$this->assertSame($redirect->headers(), ['Location' => 'http://www.example.com/posts/testing/']);
+		$this->assertSame($redirect->headers, ['Location' => 'http://www.example.com/posts/testing/']);
 	}
 }

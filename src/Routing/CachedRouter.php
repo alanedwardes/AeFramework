@@ -12,29 +12,27 @@ class CachedRouter extends Router
 		$this->cache_key = $cache_key;
 	}
 	
-	protected function getBody(\AeFramework\Views\IView $view)
+	protected function getResponse(\AeFramework\Views\View $view)
 	{
 		if ($view instanceof \AeFramework\Views\ICacheable)
 		{
-			if ($cached_body = $this->fromCache($view->hash()))
+			if ($cached_response = $this->fromCache($view->hash()))
 			{
-				if (!headers_sent())
-					header('X-Cache: hit');
+				$view->headers['X-Cache'] = 'hit';
 				
-				return $cached_body;
+				return $cached_response;
 			}
 			else
 			{
-				if (!headers_sent())
-					header('X-Cache: miss');
+				$view->headers['X-Cache'] = 'miss';
 				
-				$fresh_body = parent::getBody($view);
-				$this->toCache($fresh_body, $view->hash(), $view->expire());
-				return $fresh_body;
+				$fresh_response = parent::getResponse($view);
+				$this->toCache($fresh_response, $view->hash(), $view->expire());
+				return $fresh_response;
 			}
 		}
 		
-		return parent::getBody($view);
+		return parent::getresponse($view);
 	}
 	
 	protected function toCache($data, $hash, $expire)
