@@ -10,7 +10,7 @@ class AuthenticatedRouter extends Router
 		$this->authenticator = $authenticator;
 	}
 	
-	public function serveView(\AeFramework\Views\View $view)
+	public function serveView(\AeFramework\Views\View $view, array $mapper_params = [])
 	{
 		$view->authenticator = $this->authenticator;
 		
@@ -18,7 +18,7 @@ class AuthenticatedRouter extends Router
 		{
 			if ($this->authenticator->isAuthenticated())
 			{
-				return parent::serveView($view);
+				return parent::serveView($view, $mapper_params);
 			}
 			else
 			{
@@ -27,7 +27,7 @@ class AuthenticatedRouter extends Router
 		}
 		else
 		{
-			return parent::serveView($view);
+			return parent::serveView($view, $mapper_params);
 		}
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 namespace AeFramework\Extensions\Admin;
 
-abstract class AdminView extends \AeFramework\Views\TwigView implements \AeFramework\Views\IAuthenticated
+abstract class AdminView extends \AeFramework\Views\TemplateView implements \AeFramework\Views\IAuthenticated
 {
 	protected $table = null;
 	protected $da = null;
@@ -13,7 +13,7 @@ abstract class AdminView extends \AeFramework\Views\TwigView implements \AeFrame
 		parent::__construct($template);
 	}
 	
-	public function map($params = [])
+	public function request($verb, array $params = [])
 	{
 		if (isset($params['table']))
 			foreach ($this->da->schema->tables as $table)
@@ -21,11 +21,9 @@ abstract class AdminView extends \AeFramework\Views\TwigView implements \AeFrame
 					$this->table = $table;
 	}
 	
-	public function body($template_params = [])
+	public function response($template_params = [])
 	{
 		$template_params['table'] = $this->table;
-		return parent::body($template_params);
-		
-		return parent::body($template_params);
+		return parent::response($template_params);
 	}
 }

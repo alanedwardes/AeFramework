@@ -8,7 +8,7 @@ class ModelsView extends AdminView
 		parent::__construct(\AeFramework\Util::joinPath(__DIR__, 'templates/models.html'));
 	}
 	
-	public function body()
+	public function response()
 	{
 		$tables = [];
 		foreach ($this->da->schema->tables as $table)
@@ -18,6 +18,8 @@ class ModelsView extends AdminView
 				'rows' => $this->da->count($table)
 			];
 		}
-		return parent::body([ 'tables' => $tables ]);
+		return parent::response([
+			'tables' => $tables
+		]);
 	}
 }

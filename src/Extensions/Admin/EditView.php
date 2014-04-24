@@ -36,12 +36,12 @@ class EditView extends SingleItemView
 			$this->da->addLinks($link, $this->value, @$_POST['link'][$link->table->name]);
 	}
 	
-	public function body()
+	public function response()
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			if ($this->update())
 				echo 'done';
 		
-		return parent::body();
+		return parent::response();
 	}
 }

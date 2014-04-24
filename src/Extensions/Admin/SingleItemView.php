@@ -8,9 +8,9 @@ class SingleItemView extends AdminView
 	protected $row;
 	protected $columns;
 	
-	public function map($params = [])
+	public function request($verb, array $params = [])
 	{
-		parent::map($params);
+		parent::request($verb, $params);
 		
 		if (isset($params['key']))
 			foreach ($this->table->columns as $column)
@@ -21,7 +21,7 @@ class SingleItemView extends AdminView
 			$this->value = $params['value'];
 	}
 	
-	public function body($template_params = [])
+	public function response($template_params = [])
 	{
 		$template_params['row'] = $this->da->selectOne($this->table, "{$this->key} = ?", [$this->value]);
 		
@@ -59,6 +59,6 @@ class SingleItemView extends AdminView
 			}
 		}
 		
-		return parent::body($template_params);
+		return parent::response($template_params);
 	}
 }

@@ -8,7 +8,7 @@ class ListView extends AdminView
 		parent::__construct(\AeFramework\Util::joinPath(__DIR__, 'templates/list.html'));
 	}
 	
-	public function body()
+	public function response()
 	{
 		$user_order = @$_GET['order'];
 		$user_direction = @$_GET['direction'];
@@ -29,7 +29,7 @@ class ListView extends AdminView
 		$limit = min(max(intval($user_limit), 20), 500);
 		$start = max(intval($user_start), 0);
 		
-		return parent::body([
+		return parent::response([
 			'rows' => $this->da->select($this->table, "1 ORDER BY {$order} {$direction} LIMIT {$start}, {$limit}"),
 			'order' => $order,
 			'direction' => $direction,

@@ -35,7 +35,7 @@ class CreateView extends AdminView
 			$this->da->addLinks($link, $insertId, @$_POST['link'][$link->table->name]);
 	}
 	
-	public function body()
+	public function response()
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			if ($this->insert())
@@ -50,6 +50,6 @@ class CreateView extends AdminView
 			];
 		}
 		
-		return parent::body($template_params);
+		return parent::response($template_params);
 	}
 }
