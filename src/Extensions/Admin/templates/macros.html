@@ -1,9 +1,6 @@
 {% macro column_input(column, value) %}
 	{% if column.isForeign %}
-		<select name="{{ column.name }}">
-			{% set link = row[column.name] %}
-			{% include "linked_options.html" %}
-		</select>
+		<select name="{{ column.name }}">{{ _self.linked_options(value) }}</select>
 	{% elseif column.type in ['text'] %}
 		<textarea name="row[{{ column.name }}]" cols="100" rows="12">{{ value }}</textarea>
 	{% elseif column.type in ['boolean'] %}
@@ -13,6 +10,17 @@
 	{% else %}
 		<input type="text" name="row[{{ column.name }}]" value="{{ value }}" size="50" maxlength="{{ column.length }}"/>
 	{% endif %}
+{% endmacro %}
+
+{% macro linked_options(link) %}
+	{% for row in link.all %}
+		<option value="{{ row[link.info.localColumn] }}" {% if row[link.info.localColumn] in link.selected %}selected="selected"{% endif %}>
+			{% for column in link.info.remoteTable.columns if not column.isAutoIncrement and not column.isForeign %}
+				{% if not loop.first %}&bull;{% endif %}
+				{{ column }}: {{ _self.column_show(column, row[column.name]) }}
+			{% endfor %}
+		</option>
+	{% endfor %}
 {% endmacro %}
 
 {% macro column_show(column, value, html) %}

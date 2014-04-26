@@ -5,11 +5,12 @@
 		</label>
 	</div>
 {% endfor %}
+
 {% for link in links %}
 	<div class="column_edit">
 		<label><span>Linked {{ link.info.remoteTable }} List: (<a href="../../../../{{ link.info.remoteTable.name }}/create/">Create {{ link.info.remoteTable }}</a>)</span>
 			<select style="height:150px" multiple="multiple" name="link[{{ link.info.table.name }}][]">
-				{% include "linked_options.html" %}
+				{{ model.linked_options(link) }}
 			</select>
 		</label>
 	</div>

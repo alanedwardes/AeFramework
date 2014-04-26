@@ -1,8 +1,0 @@
-{% for row in link.all %}
-	<option value="{{ row[link.info.localColumn] }}" {% if row[link.info.localColumn] in link.selected %}selected="selected"{% endif %}>
-		{% for column in link.info.remoteTable.columns if not column.isAutoIncrement and not column.isForeign %}
-			{% if not loop.first %}&bull;{% endif %}
-			{{ column }}: {{ model.column_show(column, row[column.name]) }}
-		{% endfor %}
-	</option>
-{% endfor %}
