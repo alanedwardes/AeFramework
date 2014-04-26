@@ -7,7 +7,6 @@ class SingleItemView extends AdminView
 {
 	protected $key = null;
 	protected $value;
-	protected $row;
 	protected $columns;
 	
 	public function request($verb, array $params = [])

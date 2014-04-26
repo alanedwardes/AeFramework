@@ -1,6 +1,8 @@
 <?php
 namespace AeFramework\Extensions\Admin;
 
+use AeFramework as ae;
+
 class CreateView extends AdminView
 {
 	public function __construct()
@@ -8,39 +10,20 @@ class CreateView extends AdminView
 		parent::__construct(\AeFramework\Util::joinPath(__DIR__, 'templates/create.html'));
 	}
 	
-	public function insert()
+	public function request($verb, array $params = [])
 	{
-		$data = [];
-		foreach ($this->table->columns as $column)
+		parent::request($verb, $params);
+		
+		if ($verb == ae\HttpVerb::Post)
 		{
-			$value = @$_POST['row'][$column->name];
-			switch ($column->type)
-			{
-				case \Doctrine\DBAL\Types\Type::BOOLEAN:
-					$value = (int)($value == 'on');
-					break;
-				default:
-					$value = html_entity_decode($value);
-					break;
-			}
-			
-			$data[$column->name] = $value;
+			$this->form_data->insert($this->table, @$_POST['row'], @$_POST['link']);
+			$this->headers['Location'] = '..';
+			$this->code = ae\HttpCode::Found;
 		}
-		
-		$this->da->insert($this->table, $data);
-		
-		$insertId = $this->da->lastInsertId($this->table);
-		
-		foreach ($this->table->links as $link)
-			$this->da->addLinks($link, $insertId, @$_POST['link'][$link->table->name]);
 	}
 	
 	public function response()
 	{
-		if ($_SERVER['REQUEST_METHOD'] == 'POST')
-			if ($this->insert())
-				echo 'done';
-				
 		$template_params['links'] = [];
 		foreach ($this->table->links as $link)
 		{

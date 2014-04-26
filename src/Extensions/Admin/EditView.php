@@ -1,6 +1,8 @@
 <?php
 namespace AeFramework\Extensions\Admin;
 
+use AeFramework as ae;
+
 class EditView extends SingleItemView
 {
 	public function __construct()
@@ -8,40 +10,15 @@ class EditView extends SingleItemView
 		parent::__construct(\AeFramework\Util::joinPath(__DIR__, 'templates/edit.html'));
 	}
 	
-	public function update()
+	public function request($verb, array $params = [])
 	{
-		$data = [];
-		foreach ($this->table->columns as $column)
+		parent::request($verb, $params);
+		
+		if ($verb == ae\HttpVerb::Post)
 		{
-			if ($column->isPrimary or $column->isAutoIncrement)
-				continue;
-			
-			$value = @$_POST['row'][$column->name];
-			switch ($column->type)
-			{
-				case \Doctrine\DBAL\Types\Type::BOOLEAN:
-					$value = (int)($value == 'on');
-					break;
-				default:
-					$value = html_entity_decode($value);
-					break;
-			}
-			
-			$data[$column->name] = $value;
+			$this->form_data->update($this->table, @$_POST['row'], $this->key, $this->value, @$_POST['link']);
+			$this->headers['Location'] = '../../..';
+			$this->code = ae\HttpCode::Found;
 		}
-		
-		$this->da->update($this->table, $data, [$this->key => $this->value]);
-		
-		foreach ($this->table->links as $link)
-			$this->da->addLinks($link, $this->value, @$_POST['link'][$link->table->name]);
-	}
-	
-	public function response()
-	{
-		if ($_SERVER['REQUEST_METHOD'] == 'POST')
-			if ($this->update())
-				echo 'done';
-		
-		return parent::response();
 	}
 }
