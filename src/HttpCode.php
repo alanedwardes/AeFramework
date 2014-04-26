@@ -9,16 +9,21 @@ class HttpCode
 		$this->code = $code;
 	}
 	
-	public function __toString()
+	public static function codeToString($code)
 	{
-		$reflection = new \ReflectionClass($this);
+		$reflection = new \ReflectionClass(__CLASS__);
 		$constants = $reflection->getConstants();
 		$names = array_flip($constants);
 		
-		if (isset($names[$this->code]))
-			return sprintf('%s %s', $this->code, Util::camelCaseToSpaces($names[$this->code]));
+		if (isset($names[$code]))
+			return sprintf('%s %s', $code, Util::camelCaseToSpaces($names[$code]));
 		
-		return sprintf('%s', $this->code);
+		return sprintf('%s', $code);
+	}
+	
+	public function __toString()
+	{
+		return self::codeToString($this->code);
 	}
 
 	# 2xx Success

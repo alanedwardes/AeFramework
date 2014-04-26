@@ -29,7 +29,7 @@ class Router
 			}
 		}
 		
-		throw new \AeFramework\ErrorCodeException(\AeFramework\HttpCode::NotFound);
+		throw new \AeFramework\HttpCodeException(\AeFramework\HttpCode::NotFound);
 	}
 	
 	protected function serveFromMapper($mapper)
@@ -55,9 +55,9 @@ class Router
 		{
 			return $this->findViewFromMappers($path);
 		}
-		catch (\AeFramework\ErrorCodeException $e)
+		catch (\AeFramework\HttpCodeException $e)
 		{
-			return $this->serveError($e->httpCode);
+			return $this->serveError($e->getCode());
 		}
 	}
 	
@@ -72,7 +72,7 @@ class Router
 		}
 		else
 		{
-			throw new \AeFramework\ErrorCodeException($code);
+			throw new \AeFramework\HttpCodeException($code);
 		}
 	}
 	

@@ -39,7 +39,8 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
-	 * @expectedException \AeFramework\ErrorCodeException
+	 * @expectedException     \AeFramework\HttpCodeException
+	 * @expectedExceptionCode 404
 	 */
 	public function testRouterNotFoundException()
 	{

@@ -22,7 +22,7 @@ class AuthenticatedRouter extends Router
 			}
 			else
 			{
-				throw new \AeFramework\ErrorCodeException(\AeFramework\HttpCode::Forbidden);
+				throw new \AeFramework\HttpCodeException(\AeFramework\HttpCode::Forbidden);
 			}
 		}
 		else
