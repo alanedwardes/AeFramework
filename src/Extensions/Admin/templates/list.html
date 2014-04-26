@@ -1,5 +1,5 @@
 {% import _self as macros %}
-{% macro filtering(column, direction, limit, start) %}?order={{ column }}&direction={{ direction }}&limit={{ limit }}&start={{ start }}{% endmacro %}
+{% macro filtering(column, direction, limit, start) %}?order={{ column }}&amp;direction={{ direction }}&amp;limit={{ limit }}&amp;start={{ start }}{% endmacro %}
 
 {% extends "base.html" %}
 
@@ -46,7 +46,7 @@
 								<a href="../{{ column.foreignTable }}/edit/{{ column.foreignColumn }}/{{ row[column.name] }}/">{{ column.foreignTable }} #{{ row[column.name] }}</a>
 								{% endif %}
 							{% else %}
-								{% include "column_view.html" %}
+								{{ model.column_show(column, row[column.name], true) }}
 							{% endif %}
 						</td>
 					{% endfor %}

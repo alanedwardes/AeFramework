@@ -1,7 +1,7 @@
 {% for column in table.columns if not column.isAutoIncrement %}
-	<div class="column_edit {{ column.type }}">
+	<div>
 		<label><span>{{ column }}:</span>
-			{% include "column_entry.html" %}
+			{{ model.column_input(column, row[column.name]) }}
 		</label>
 	</div>
 {% endfor %}

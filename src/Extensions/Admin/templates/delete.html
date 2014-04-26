@@ -9,7 +9,7 @@
 			{% for column in table.columns if not column.isAutoIncrement %}
 				<tr>
 					<th>{{ column }}</th>
-					<td>{% include "column_view.html" %}</td>
+					<td>{{ model.column_show(column, row[column.name]) }}</td>
 				</tr>
 			{% endfor %}
 		</tbody>

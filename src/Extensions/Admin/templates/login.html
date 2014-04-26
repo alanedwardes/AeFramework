@@ -3,17 +3,23 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
-	<h1>Login</h1>
-	<p>Enter a username and password to continue.</p>
-	<form action="" method="post">
-		<div class="column_edit">
-			<input type="text" id="username" name="username" size="35"/>
-		</div>
-		<div class="column_edit">
-			<input type="password" id="password" name="password" size="35"/>
-		</div>
-		<button>Login</button>
-	</form>
+	<div class="slim center wrap">
+		<h1>Login</h1>
+		<p>Enter a username and password to continue.</p>
+		<form action="" method="post">
+			<label>
+				<span>Username</span>
+				<input type="text" id="username" name="username" size="35"/>
+			</label>
+			<label>
+				<span>Password</span>
+				<input type="password" id="password" name="password" size="35"/>
+			</label>
+			<div>
+				<button>Login</button>
+			</div>
+		</form>
+	</div>
 	<script>
 		document.getElementById('username').focus();
 	</script>

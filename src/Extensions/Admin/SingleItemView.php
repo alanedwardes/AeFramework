@@ -1,9 +1,11 @@
 <?php
 namespace AeFramework\Extensions\Admin;
 
+use AeFramework as ae;
+
 class SingleItemView extends AdminView
 {
-	protected $key;
+	protected $key = null;
 	protected $value;
 	protected $row;
 	protected $columns;
@@ -17,6 +19,9 @@ class SingleItemView extends AdminView
 				if ($column->name == $params['key'])
 					$this->key = $column->name;
 		
+		if ($this->key == null)
+			throw new ae\HttpCodeException(ae\HttpCode::NotFound);
+		
 		if (isset($params['value']))
 			$this->value = $params['value'];
 	}
@@ -24,6 +29,9 @@ class SingleItemView extends AdminView
 	public function response($template_params = [])
 	{
 		$template_params['row'] = $this->da->selectOne($this->table, "{$this->key} = ?", [$this->value]);
+		
+		if (!$template_params['row'])
+			throw new ae\HttpCodeException(ae\HttpCode::NotFound);
 		
 		$template_params['links'] = [];
 		foreach ($this->table->links as $link)

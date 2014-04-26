@@ -1,7 +1,9 @@
 <?php
 namespace AeFramework\Extensions\Admin;
 
-abstract class AdminView extends \AeFramework\Views\TemplateView implements \AeFramework\Views\IAuthenticated
+use AeFramework as ae;
+
+abstract class AdminView extends ae\Views\TemplateView implements ae\Views\IAuthenticated
 {
 	protected $table = null;
 	protected $da = null;
@@ -16,9 +18,14 @@ abstract class AdminView extends \AeFramework\Views\TemplateView implements \AeF
 	public function request($verb, array $params = [])
 	{
 		if (isset($params['table']))
+		{
 			foreach ($this->da->schema->tables as $table)
 				if ($table->name == $params['table'] && !$table->isLink())
 					$this->table = $table;
+		
+			if ($this->table == null)
+				throw new ae\HttpCodeException(ae\HttpCode::NotFound);
+		}
 	}
 	
 	public function response($template_params = [])
