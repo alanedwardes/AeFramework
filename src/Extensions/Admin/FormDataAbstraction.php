@@ -35,10 +35,10 @@ class FormDataAbstraction
 		
 		foreach ($table->links as $link)
 		{
-			if (isset($link_data[$link->table->name]))
-			{
-				$this->database->addLinks($link, $primary_value, $link_data[$link->table->name]);
-			}
+			# If there's data set, use it, otherwise use an empty array
+			$link_table_data = isset($link_data[$link->table->name]) ? $link_data[$link->table->name] : [];
+			
+			$this->database->addLinks($link, $primary_value, $link_table_data);
 		}
 	}
 	
