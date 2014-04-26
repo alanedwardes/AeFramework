@@ -17,8 +17,8 @@ class EditView extends SingleItemView
 		if ($verb == ae\HttpVerb::Post)
 		{
 			$this->form_data->update($this->table, @$_POST['row'], $this->key, $this->value, @$_POST['link']);
-			//$this->headers['Location'] = '../../..';
-			//$this->code = ae\HttpCode::Found;
+			$this->headers['Location'] = '../../..';
+			$this->code = ae\HttpCode::Found;
 		}
 	}
 }
