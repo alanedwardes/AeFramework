@@ -12,7 +12,7 @@ class FileCache extends Cache
 	
 	private function cacheFile($key)
 	{
-		return \AeFramework\Util::joinPath($this->cache_folder, Util::checksum($key));
+		return sprintf('%s%s%u', $this->cache_folder, DIRECTORY_SEPARATOR, crc32($key));
 	}
 	
 	public function get($key)

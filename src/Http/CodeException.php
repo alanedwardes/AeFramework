@@ -1,11 +1,11 @@
 <?php
-namespace AeFramework;
+namespace AeFramework\Http;
 
-class HttpCodeException extends \Exception
+class CodeException extends \Exception
 {
 	public function __construct($code)
 	{
-		$this->message = HttpCode::codeToString($code);
+		$this->message = Code::codeToString($code);
 		$this->code = $code;
 	}
 	

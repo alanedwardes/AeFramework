@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework\Routing;
+namespace AeFramework\Auth;
 
 interface IAuthenticator
 {

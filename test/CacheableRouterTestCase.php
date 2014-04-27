@@ -6,7 +6,7 @@ class CacheableView extends \AeFramework\Views\View implements \AeFramework\View
 	
 	public function request($verb, array $params = [])
 	{
-		$this->code = AeFramework\HttpCode::NotImplemented;
+		$this->code = \AeFramework\Http\Code::NotImplemented;
 	}
 	
 	public function response()

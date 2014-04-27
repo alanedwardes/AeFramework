@@ -9,19 +9,19 @@ class DeleteView extends SingleItemView
 	
 	public function __construct()
 	{
-		parent::__construct(\AeFramework\Util::joinPath(__DIR__, 'templates/delete.html'));
+		parent::__construct('templates/delete.html');
 	}
 	
 	public function request($verb, array $params = [])
 	{
 		parent::request($verb, $params);
 	
-		if ($verb == ae\HttpVerb::Post)
+		if ($verb == ae\Http\Verb::Post)
 		{
 			if ($this->da->delete($this->table, [$this->key => $this->value]))
 			{
 				$this->headers['Location'] = '../../..';
-				$this->code = ae\HttpCode::Found;
+				$this->code = ae\Http\Code::Found;
 				$this->deleted = true;
 			}
 		}

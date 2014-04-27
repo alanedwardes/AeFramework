@@ -22,7 +22,7 @@ class BasicAuthView extends View
 			}
 		}
 		
-		$this->code = ae\HttpCode::Unauthorized;
+		$this->code = ae\Http\Code::Unauthorized;
 		$this->headers['WWW-Authenticate'] = vsprintf('Basic realm="%s"', $this->realm);
 	}
 	

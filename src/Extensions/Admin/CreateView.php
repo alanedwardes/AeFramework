@@ -7,18 +7,18 @@ class CreateView extends AdminView
 {
 	public function __construct()
 	{
-		parent::__construct(\AeFramework\Util::joinPath(__DIR__, 'templates/create.html'));
+		parent::__construct('templates/create.html');
 	}
 	
 	public function request($verb, array $params = [])
 	{
 		parent::request($verb, $params);
 		
-		if ($verb == ae\HttpVerb::Post)
+		if ($verb == ae\Http\Verb::Post)
 		{
 			$this->form_data->insert($this->table, @$_POST['row'], @$_POST['link']);
 			$this->headers['Location'] = '..';
-			$this->code = ae\HttpCode::Found;
+			$this->code = ae\Http\Code::Found;
 		}
 	}
 	

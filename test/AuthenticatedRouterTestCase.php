@@ -25,7 +25,7 @@ class TestViewThatAuthenticates extends Views\View
 	public function response(){}
 }
 
-class TestAuthenticator implements \AeFramework\Routing\IAuthenticator
+class TestAuthenticator implements \AeFramework\Auth\IAuthenticator
 {
 	private $authenticated = false;
 	
@@ -49,7 +49,7 @@ class AuthenticatedRouterTestCase extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
-	 * @expectedException     \AeFramework\HttpCodeException
+	 * @expectedException     \AeFramework\Http\CodeException
 	 * @expectedExceptionCode 403
 	 */
 	public function testAuthenticatedRouterAuthenticates()
@@ -68,7 +68,7 @@ class AuthenticatedRouterTestCase extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
-	 * @expectedException     \AeFramework\HttpCodeException
+	 * @expectedException     \AeFramework\Http\CodeException
 	 * @expectedExceptionCode 404
 	 */
 	public function testAuthenticatedRouterServesNotFoundViews()

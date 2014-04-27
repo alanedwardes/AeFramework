@@ -77,19 +77,34 @@ class DatabaseAbstraction
 			FROM {$link->remoteTable->name} a
 			INNER JOIN {$link->table->name} b
 			ON a.{$link->remoteColumn} = b.{$link->remoteLinkColumn}
-			WHERE b.{$link->localLinkColumn} = ?", [$local_link_value])->fetchAll(\PDO::FETCH_COLUMN);
+			WHERE b.{$link->localLinkColumn} = ?", [$local_link_value])->fetchAll($this->fetchType(true));
 	}
 	
-	public function addLinks(LinkInformation $link, $local_link_value, array $remote_link_values)
+	public function addLinks($link, $local_link_value, array $remote_link_values)
 	{
-		$this->delete($link->table, [$link->localLinkColumn => $local_link_value]);
-		
-		foreach ($remote_link_values as $remote_value)
+		if ($link instanceof LinkInformation)
 		{
-			$this->insert($link->table, [
-				$link->remoteLinkColumn => $remote_value,
-				$link->localLinkColumn => $local_link_value
-			]);
+			$this->delete($link->table, [$link->localLinkColumn => $local_link_value]);
+			
+			foreach ($remote_link_values as $remote_value)
+			{
+				$this->insert($link->table, [
+					$link->remoteLinkColumn => $remote_value,
+					$link->localLinkColumn => $local_link_value
+				]);
+			}
+		}
+		elseif ($link instanceof OneToManyLinkInformation)
+		{
+			foreach ($remote_link_values as $remote_link_value)
+			{
+				$this->update($link->remoteTable, [$link->remoteColumn->name => $remote_link_value],
+					[$link->localColumn => $local_link_value]);
+			}
+		}
+		else
+		{
+			throw new Exception('Unhandled link information type.');
 		}
 	}
 }

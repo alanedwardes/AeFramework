@@ -5,7 +5,7 @@ class LoginView extends \AeFramework\Views\TemplateView
 {
 	public function __construct()
 	{
-		parent::__construct(\AeFramework\Util::joinPath(__DIR__, 'templates/login.html'));
+		parent::__construct(__DIR__ . DIRECTORY_SEPARATOR . 'templates/login.html');
 	}
 	
 	public function request($verb, array $params = [])

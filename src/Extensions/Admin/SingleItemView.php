@@ -19,7 +19,7 @@ class SingleItemView extends AdminView
 					$this->key = $column->name;
 		
 		if ($this->key == null)
-			throw new ae\HttpCodeException(ae\HttpCode::NotFound);
+			throw new ae\Http\CodeException(ae\Http\Code::NotFound);
 		
 		if (isset($params['value']))
 			$this->value = $params['value'];
@@ -30,7 +30,7 @@ class SingleItemView extends AdminView
 		$template_params['row'] = $this->da->selectOne($this->table, "{$this->key} = ?", [$this->value]);
 		
 		if (!$template_params['row'])
-			throw new ae\HttpCodeException(ae\HttpCode::NotFound);
+			throw new ae\Http\CodeException(ae\Http\Code::NotFound);
 		
 		$template_params['links'] = [];
 		foreach ($this->table->links as $link)
@@ -61,7 +61,7 @@ class SingleItemView extends AdminView
 				$template_params['row'][$column->name] = [
 					'all' => $this->da->select($foreign_table),
 					'selected' => [$template_params['row'][$column->name]],
-					'info' => new OneToManyLinkInformation($this->table, $foreign_table, $column, $column->foreignColumn)
+					'info' => new OneToManyLinkInformation($foreign_table, $this->table, $column)
 				];
 			}
 		}

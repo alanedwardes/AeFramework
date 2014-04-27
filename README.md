@@ -31,10 +31,10 @@ $mapper = new ae\Mapping\StringMapper('/', $hello_view);
 $router->route($mapper);
 
 # Create a simple not found view
-$notfound_view = new ae\Views\TextView('File not found', ae\HttpCode::NotFound);
+$notfound_view = new ae\Views\TextView('File not found');
 
 # Set the not found view
-$router->error(ae\HttpCode::NotFound, $notfound_view);
+$router->error(ae\Http\Code::NotFound, $notfound_view);
 
 # Despatch
 echo $router->despatch();

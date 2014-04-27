@@ -10,7 +10,7 @@ class RedirectViewTestCase extends PHPUnit_Framework_TestCase
 		$redirect->request('GET');
 		
 		$this->assertSame($redirect->headers, ['Location' => 'http://www.example.com/']);
-		$this->assertSame($redirect->code, AeFramework\HttpCode::Found);
+		$this->assertSame($redirect->code, AeFramework\Http\Code::Found);
 	}
 	
 	public function testPermanentRedirectViewRedirects()
@@ -20,7 +20,7 @@ class RedirectViewTestCase extends PHPUnit_Framework_TestCase
 		$redirect->request('GET');
 		
 		$this->assertSame($redirect->headers, ['Location' => 'http://www.example.com/']);
-		$this->assertSame($redirect->code, AeFramework\HttpCode::MovedPermanently);
+		$this->assertSame($redirect->code, AeFramework\Http\Code::MovedPermanently);
 	}
 	
 	public function testRedirectViewWithMapperParameters()

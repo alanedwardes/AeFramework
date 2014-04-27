@@ -31,7 +31,7 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 	public function testRouterNotFoundRoute()
 	{
 		$this->router->route(new Mapping\StringMapper('/testing/', $this->test_view1));
-		$this->router->error(\AeFramework\HttpCode::NotFound, $this->test_view2);
+		$this->router->error(\AeFramework\Http\Code::NotFound, $this->test_view2);
 		
 		$this->router->despatch('/not-found/');
 		
@@ -39,7 +39,7 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
-	 * @expectedException     \AeFramework\HttpCodeException
+	 * @expectedException     \AeFramework\Http\CodeException
 	 * @expectedExceptionCode 404
 	 */
 	public function testRouterNotFoundException()
@@ -53,7 +53,7 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 	{
 		$this->router->route(new Mapping\RegexMapper('^/testing', $this->delegate_router));
 		
-		$this->delegate_router->error(\AeFramework\HttpCode::NotFound, $this->test_view2);
+		$this->delegate_router->error(\AeFramework\Http\Code::NotFound, $this->test_view2);
 		
 		$this->router->despatch('/testing/test');
 		

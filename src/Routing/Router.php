@@ -1,6 +1,11 @@
 <?php
 namespace AeFramework\Routing;
 
+use AeFramework\ClassFactory;
+use AeFramework\Views\View;
+use AeFramework\Mapping\Mapper;
+use AeFramework\Http as Http;
+
 class Router
 {
 	# Properties
@@ -14,7 +19,7 @@ class Router
 		$this->error_views[$code] = $view;
 	}
 	
-	public function route(\AeFramework\Mapping\Mapper $mapper)
+	public function route(Mapper $mapper)
 	{
 		$this->mappers[] = $mapper;
 	}
@@ -29,7 +34,7 @@ class Router
 			}
 		}
 		
-		throw new \AeFramework\HttpCodeException(\AeFramework\HttpCode::NotFound);
+		throw new Http\CodeException(Http\Code::NotFound);
 	}
 	
 	protected function serveFromMapper($mapper)
@@ -40,7 +45,7 @@ class Router
 		{
 			return $target->despatch($mapper->remaining);
 		}
-		elseif ($target instanceof \AeFramework\Views\View)
+		elseif ($target instanceof View)
 		{
 			return $this->serveView($target, $mapper->params);
 		}
@@ -55,7 +60,7 @@ class Router
 		{
 			return $this->findViewFromMappers($path);
 		}
-		catch (\AeFramework\HttpCodeException $e)
+		catch (Http\CodeException $e)
 		{
 			return $this->serveError($e->getCode());
 		}
@@ -72,7 +77,7 @@ class Router
 		}
 		else
 		{
-			throw new \AeFramework\HttpCodeException($code);
+			throw new Http\CodeException($code);
 		}
 	}
 	
@@ -85,15 +90,15 @@ class Router
 		}
 		elseif (isset($target[1]))
 		{
-			return \AeFramework\ClassFactory::constructClassAndFillMembers($target[0], [$target[1]]);
+			return ClassFactory::constructClassAndFillMembers($target[0], [$target[1]]);
 		}
 		else
 		{
-			return \AeFramework\ClassFactory::constructClass($target[0]);
+			return ClassFactory::constructClass($target[0]);
 		}
 	}
 	
-	protected function serveView(\AeFramework\Views\View $view, array $mapper_params = [])
+	protected function serveView(View $view, array $mapper_params = [])
 	{
 		$view->request(isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : null, $mapper_params);
 	
@@ -106,17 +111,17 @@ class Router
 		return $this->getResponse($view);
 	}
 	
-	protected function getCode(\AeFramework\Views\View $view)
+	protected function getCode(View $view)
 	{
 		return $view->code;
 	}
 	
-	protected function getHeaders(\AeFramework\Views\View $view)
+	protected function getHeaders(View $view)
 	{
 		return $view->headers;
 	}
 	
-	protected function getResponse(\AeFramework\Views\View $view)
+	protected function getResponse(View $view)
 	{
 		return $view->response();
 	}

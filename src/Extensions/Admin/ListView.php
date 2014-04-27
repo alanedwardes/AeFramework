@@ -5,7 +5,7 @@ class ListView extends AdminView
 {
 	public function __construct()
 	{
-		parent::__construct(\AeFramework\Util::joinPath(__DIR__, 'templates/list.html'));
+		parent::__construct('templates/list.html');
 	}
 	
 	public function response()

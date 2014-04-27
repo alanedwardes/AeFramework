@@ -15,7 +15,7 @@ abstract class AdminView extends ae\Views\TemplateView implements ae\Views\IAuth
 		
 		$this->form_data = new FormDataAbstraction($this->da);
 		
-		parent::__construct($template);
+		parent::__construct(__DIR__ . DIRECTORY_SEPARATOR . $template);
 	}
 	
 	public function request($verb, array $params = [])
@@ -27,7 +27,7 @@ abstract class AdminView extends ae\Views\TemplateView implements ae\Views\IAuth
 					$this->table = $table;
 		
 			if ($this->table == null)
-				throw new ae\HttpCodeException(ae\HttpCode::NotFound);
+				throw new ae\Http\CodeException(ae\Http\Code::NotFound);
 		}
 	}
 	

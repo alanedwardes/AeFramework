@@ -1,7 +1,7 @@
 <?php
-namespace AeFramework;
+namespace AeFramework\Http;
 
-class HttpCode
+class Code
 {
 	public $code;
 	public function __construct($code)
@@ -16,7 +16,10 @@ class HttpCode
 		$names = array_flip($constants);
 		
 		if (isset($names[$code]))
-			return sprintf('%s %s', $code, Util::camelCaseToSpaces($names[$code]));
+		{
+			# Switch the camel case to spaces
+			return sprintf('%s %s', $code, trim(preg_replace('/(?<=\\w)(?=[A-Z])/',' $1', $names[$code])));
+		}
 		
 		return sprintf('%s', $code);
 	}

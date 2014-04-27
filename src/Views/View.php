@@ -5,7 +5,7 @@ use AeFramework as ae;
 
 abstract class View
 {
-	public $code = ae\HttpCode::Ok;
+	public $code = ae\Http\Code::Ok;
 	public $headers = [];
 	
 	abstract public function request($verb, array $params);

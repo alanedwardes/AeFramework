@@ -1,6 +1,6 @@
 {% macro column_input(column, value) %}
 	{% if column.isForeign %}
-		<select name="{{ column.name }}">{{ _self.linked_options(value) }}</select>
+		<select name="row[{{ column.name }}]">{{ _self.linked_options(value) }}</select>
 	{% elseif column.type in ['text'] %}
 		<textarea name="row[{{ column.name }}]" cols="100" rows="12">{{ value }}</textarea>
 	{% elseif column.type in ['boolean'] %}

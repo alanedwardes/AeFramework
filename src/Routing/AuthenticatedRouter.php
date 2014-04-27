@@ -1,6 +1,11 @@
 <?php
 namespace AeFramework\Routing;
 
+use AeFramework\Views\View;
+use AeFramework\Views\IAuthenticated;
+use AeFramework\Auth\IAuthenticator;
+use AeFramework\Http as Http;
+
 class AuthenticatedRouter extends Router
 {
 	protected $authenticator;
@@ -10,11 +15,11 @@ class AuthenticatedRouter extends Router
 		$this->authenticator = $authenticator;
 	}
 	
-	public function serveView(\AeFramework\Views\View $view, array $mapper_params = [])
+	public function serveView(View $view, array $mapper_params = [])
 	{
 		$view->authenticator = $this->authenticator;
 		
-		if ($view instanceof \AeFramework\Views\IAuthenticated)
+		if ($view instanceof IAuthenticated)
 		{
 			if ($this->authenticator->isAuthenticated())
 			{
@@ -22,7 +27,7 @@ class AuthenticatedRouter extends Router
 			}
 			else
 			{
-				throw new \AeFramework\HttpCodeException(\AeFramework\HttpCode::Forbidden);
+				throw new Http\CodeException(Http\Code::Forbidden);
 			}
 		}
 		else

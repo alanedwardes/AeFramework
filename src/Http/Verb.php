@@ -1,7 +1,7 @@
 <?php
-namespace AeFramework;
+namespace AeFramework\Http;
 
-class HttpVerb
+class Verb
 {
 	const Options = 'OPTIONS';
 	const Get = 'GET';

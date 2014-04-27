@@ -5,7 +5,7 @@ class ModelsView extends AdminView
 {
 	public function __construct()
 	{
-		parent::__construct(\AeFramework\Util::joinPath(__DIR__, 'templates/models.html'));
+		parent::__construct('templates/models.html');
 	}
 	
 	public function response()

@@ -38,17 +38,6 @@ class LinkInformation
 		]);*/
 	}
 	
-	public function create(\Doctrine\DBAL\Connection $db, $linkLocalColumnItem, array $linkRemoteColumnItems)
-	{
-		$db->delete($this->table->name, [$this->localLinkColumn => $linkLocalColumnItem]);
-		
-		foreach ($linkRemoteColumnItems as $remoteItem)
-			$db->insert($this->table->name, [
-				$this->remoteLinkColumn => $remoteItem,
-				$this->localLinkColumn => $linkLocalColumnItem
-			]);
-	}
-	
 	private function discover($perspective_table)
 	{
 		foreach ($this->table->columns as $column)
