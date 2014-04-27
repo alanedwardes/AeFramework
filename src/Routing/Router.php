@@ -101,6 +101,7 @@ class Router
 	protected function serveView(View $view, array $mapper_params = [])
 	{
 		$view->request(isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : null, $mapper_params);
+		$response = $this->getResponse($view);
 	
 		http_response_code($this->getCode($view));
 		
@@ -108,7 +109,7 @@ class Router
 			foreach ($this->getHeaders($view) as $name => $value)
 				header(sprintf('%s: %s', $name, $value));
 		
-		return $this->getResponse($view);
+		return $response;
 	}
 	
 	protected function getCode(View $view)
