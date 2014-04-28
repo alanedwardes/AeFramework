@@ -1,14 +1,17 @@
 <?php
 namespace AeFramework\Auth;
 
+use AeFramework\Sessions\SessionHandler;
+
 class ArrayAuthenticator implements IAuthenticator
 {
 	private $credentials = [];
-
-	public function __construct(array $credentials)
+	private $session = null;
+	
+	public function __construct(array $credentials, SessionHandler $session)
 	{
-		session_start();
 		$this->credentials = $credentials;
+		$this->session = $session;
 	}
 	
 	public function authenticate($username, $password)
@@ -17,22 +20,17 @@ class ArrayAuthenticator implements IAuthenticator
 		{
 			if ($this->credentials[$username] === $password)
 			{
-				$_SESSION['AeFramework_username'] = $username;
-				$_SESSION['AeFramework_password'] = $password;
-				$_SESSION['AeFramework_logintime'] = time();
+				$this->session->username = $username;
+				$this->session->authenticated = true;
 				return true;
 			}
 		}
-		else
-		{
-			return false;
-		}
+		
+		return false;
 	}
 	
 	public function isAuthenticated()
 	{
-		$username = @$_SESSION['AeFramework_username'];
-		$password = @$_SESSION['AeFramework_password'];
-		return $this->authenticate($username, $password);
+		return ($this->session->authenticated === true);
 	}
 }
