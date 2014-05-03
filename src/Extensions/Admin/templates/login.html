@@ -6,15 +6,23 @@
 	<div class="slim center wrap">
 		<h1>Login</h1>
 		<p>Enter a username and password to continue.</p>
+		{% if login_attempted %}<p class="error">You entered invalid credentials.</p>{% endif %}
 		<form action="" method="post">
 			<label>
 				<span>Username</span>
-				<input type="text" id="username" name="username" size="35"/>
+				<input type="text" id="username" name="username" size="35" value="{{ username }}" required/>
 			</label>
 			<label>
 				<span>Password</span>
-				<input type="password" id="password" name="password" size="35"/>
+				<input type="password" id="password" name="password" size="35" value="{{ password }}" required/>
 			</label>
+			{% if needs_token %}
+				<p>Enter your multi-factor token.</p>
+				<label>
+					<span>Token</span>
+					<input type="text" id="token" name="token" size="6" maxlength="6" required autocomplete="off" pattern="[0-9]{6}" placeholder="000000"/>
+				</label>
+			{% endif %}
 			<div>
 				<button>Login</button>
 			</div>

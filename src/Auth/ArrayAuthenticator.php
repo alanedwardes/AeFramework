@@ -3,7 +3,7 @@ namespace AeFramework\Auth;
 
 use AeFramework\Sessions\SessionHandler;
 
-class ArrayAuthenticator implements IAuthenticator
+class ArrayAuthenticator implements IAuthenticator, IPasswordAuthenticator
 {
 	private $credentials = [];
 	private $session = null;

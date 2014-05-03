@@ -1,7 +1,8 @@
 {
 	"require": {
-		"twig/twig": "1.*",
+		"christian-riesen/otp": "1.*",
 		"doctrine/common": "*",
-		"doctrine/dbal": "*"
+		"doctrine/dbal": "*",
+		"twig/twig": "1.*"
 	}
 }

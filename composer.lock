@@ -3,8 +3,101 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "c044e01c91ec7ac1c4cdcc072adac02c",
+    "hash": "3df4394b47d02e47f417222be3e01a61",
     "packages": [
+        {
+            "name": "christian-riesen/base32",
+            "version": "1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ChristianRiesen/base32.git",
+                "reference": "1d5a90243be4daafd4b50e03b4978f1477e8dd20"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ChristianRiesen/base32/zipball/1d5a90243be4daafd4b50e03b4978f1477e8dd20",
+                "reference": "1d5a90243be4daafd4b50e03b4978f1477e8dd20",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Base32": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Riesen",
+                    "email": "chris.riesen@gmail.com",
+                    "homepage": "http://christianriesen.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Base32 encoder/decoder, unit tested, according to RFC 4648",
+            "homepage": "https://github.com/ChristianRiesen/base32",
+            "keywords": [
+                "base32",
+                "decode",
+                "encode",
+                "rfc4648"
+            ],
+            "time": "2013-01-29 09:48:22"
+        },
+        {
+            "name": "christian-riesen/otp",
+            "version": "1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ChristianRiesen/otp.git",
+                "reference": "4bfaf4fa4a2f1069bf5b6606be93ea1de1f20a1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ChristianRiesen/otp/zipball/4bfaf4fa4a2f1069bf5b6606be93ea1de1f20a1c",
+                "reference": "4bfaf4fa4a2f1069bf5b6606be93ea1de1f20a1c",
+                "shasum": ""
+            },
+            "require": {
+                "christian-riesen/base32": ">=1.0",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Otp": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Riesen",
+                    "email": "chris.riesen@gmail.com",
+                    "homepage": "http://christianriesen.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "One Time Passwords, hotp and totp according to RFC4226 and RFC6238",
+            "homepage": "https://github.com/ChristianRiesen/otp",
+            "keywords": [
+                "googleauthenticator",
+                "hotp",
+                "otp",
+                "rfc4226",
+                "rfc6238",
+                "totp"
+            ],
+            "time": "2013-07-03 14:01:54"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.1.2",
