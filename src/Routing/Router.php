@@ -3,17 +3,16 @@ namespace AeFramework\Routing;
 
 use AeFramework\ClassFactory;
 use AeFramework\Views\View;
+use AeFramework\Views\IRunner;
 use AeFramework\Mapping\Mapper;
 use AeFramework\Http as Http;
 
 class Router
 {
-	# Properties
 	public $mappers = [];
 	public $error_views = [];
 	public $path = '';
 	
-	# Member Functions
 	public function error($code, $view)
 	{
 		$this->error_views[$code] = $view;
@@ -30,7 +29,8 @@ class Router
 		{
 			if ($mapper->match($this->path))
 			{
-				return $this->serveFromMapper($mapper);
+				$this->serveFromMapper($mapper);
+				return;
 			}
 		}
 		
@@ -43,11 +43,11 @@ class Router
 	
 		if ($target instanceof Router)
 		{
-			return $target->despatch($mapper->remaining);
+			$target->despatch($mapper->remaining);
 		}
 		elseif ($target instanceof View)
 		{
-			return $this->serveView($target, $mapper->params);
+			$this->serveView($target, $mapper->params);
 		}
 	}
 	
@@ -58,11 +58,11 @@ class Router
 		
 		try
 		{
-			return $this->findViewFromMappers($path);
+			$this->findViewFromMappers($path);
 		}
 		catch (Http\CodeException $e)
 		{
-			return $this->serveError($e->getCode());
+			$this->serveError($e->getCode());
 		}
 	}
 	
@@ -73,7 +73,7 @@ class Router
 		{
 			$view = $this->constructMapperTarget($this->error_views[$code]);
 			$view->code = $code;
-			return $this->serveView($view);
+			$this->serveView($view);
 		}
 		else
 		{
@@ -100,26 +100,30 @@ class Router
 	
 	protected function serveView(View $view, array $mapper_params = [])
 	{
-		$view->request(isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : null, $mapper_params);
-		$response = $this->getResponse($view);
-	
-		http_response_code($this->getCode($view));
+		# Call the request
+		$view->request(@$_SERVER['REQUEST_METHOD'], $mapper_params);
 		
+		# Get the response and save it
+		$response = $this->getResponse($view);
+		
+		# Set response status code
+		http_response_code($view->code);
+		
+		# Set response headers
 		if (!headers_sent())
-			foreach ($this->getHeaders($view) as $name => $value)
+			foreach ($view->headers as $name => $value)
 				header(sprintf('%s: %s', $name, $value));
 		
-		return $response;
-	}
-	
-	protected function getCode(View $view)
-	{
-		return $view->code;
-	}
-	
-	protected function getHeaders(View $view)
-	{
-		return $view->headers;
+		# Set response body
+		echo $response;
+		
+		# If the view is a task runner,
+		# disconnect and run the task
+		if ($view instanceof IRunner)
+		{
+			fastcgi_finish_request();
+			$view->task();
+		}
 	}
 	
 	protected function getResponse(View $view)
