@@ -90,7 +90,7 @@ class Router
 		}
 		elseif (isset($target[1]))
 		{
-			return ClassFactory::constructClassAndFillMembers($target[0], [$target[1]]);
+			return ClassFactory::constructClassAndFillMembers($target[0], array_slice($target, 1));
 		}
 		else
 		{
