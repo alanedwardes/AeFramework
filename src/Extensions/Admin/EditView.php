@@ -11,7 +11,7 @@ class EditView extends SingleItemView
 	}
 	
 	public function request($verb, array $params = [])
-	{
+	{	
 		parent::request($verb, $params);
 		
 		if ($verb == ae\Http\Verb::Post)

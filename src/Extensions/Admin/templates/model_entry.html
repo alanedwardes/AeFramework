@@ -1,6 +1,12 @@
-{% for column in table.columns if not column.isAutoIncrement %}
+<div class="checkboxes">
+	{% for column in table.columns if column.type in ['boolean'] %}
+		<label {% if column.comment %}title="{{ column.comment }}"{% endif %}>{{ model.column_input(column, row[column.name]) }} <b>{{ column }}</b></label>
+	{% endfor %}
+</div>
+
+{% for column in table.columns if not column.isAutoIncrement and column.type not in ['boolean'] %}
 	<div>
-		<label class="column_{{ column.type }}">
+		<label>
 			<span><b>{{ column }}</b>{% if column.length %} <small>max. {{ model.bytes_to_string(column.length) }}</small>{% endif %}</span>
 			{% if column.comment %}<span class="info">{{ column.comment }}</span>{% endif %}
 			{{ model.column_input(column, row[column.name]) }}
@@ -10,7 +16,7 @@
 
 {% for link in links %}
 	<div class="column_edit">
-		<label><span>Linked {{ link.info.remoteTable }} List: (<a href="../../../../{{ link.info.remoteTable.name }}/create/">Create {{ link.info.remoteTable }}</a>)</span>
+		<label><span><b>Linked {{ link.info.remoteTable }} List</b> (<a href="../../../../{{ link.info.remoteTable.name }}/create/">Create {{ link.info.remoteTable }}</a>)</span>
 			<select style="height:150px" multiple="multiple" name="link[{{ link.info.table.name }}][]">
 				{{ model.linked_options(link) }}
 			</select>
