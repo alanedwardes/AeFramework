@@ -23,7 +23,8 @@ class FormDataAbstraction
 			if ($column->isAutoIncrement)
 				continue;
 			
-			$data[$column->name] = $this->getColumnInputData($column->type, @$input[$column->name]);
+			if ($column->type !== Type::BLOB)
+				$data[$column->name] = $this->getColumnInputData($column->type, @$input[$column->name]);
 			
 			if (isset($files['tmp_name'][$column->name]) and $files['error'][$column->name] === UPLOAD_ERR_OK)
 				$data[$column->name] = $this->getColumnFileData($column->type, $files['tmp_name'][$column->name]);
@@ -45,7 +46,8 @@ class FormDataAbstraction
 		$data = [];
 		foreach ($table->columns as $column)
 		{
-			$data[$column->name] = $this->getColumnInputData($column->type, @$input[$column->name]);
+			if ($column->type !== Type::BLOB)
+				$data[$column->name] = $this->getColumnInputData($column->type, @$input[$column->name]);
 			
 			if (isset($files['tmp_name'][$column->name]) and $files['error'][$column->name] === UPLOAD_ERR_OK)
 				$data[$column->name] = $this->getColumnFileData($column->type, $files['tmp_name'][$column->name]);
