@@ -40,8 +40,25 @@ class SchemaInformation
 	
 	private function formatObjectName($name, $similar_names)
 	{
+		// Slam to lower
+		$name = strtolower($name);
+		
+		// Change "object_id" columns to just "object"
+		if (substr($name, -3) === '_id')
+			$name = substr($name, 0, -3);
+		
+		// Change "is_live" columns to just "live"
+		if (substr($name, 0, 3) === 'is_')
+			$name = substr($name, 3);
+		
+		// Find common prefixes to table names
 		$common = $this->findCommonStrings($similar_names);
-		return ucwords(str_replace(['id', $common, '_'], ['ID', '', ' '], $name));
+		
+		// Remove the common prefixes, replace underscore with a space
+		$name = str_replace([$common, '_'], ['', ' '], $name);
+		
+		// Return title case
+		return ucwords($name);
 	}
 	
 	public function formatColumnName(ColumnInformation $column)
