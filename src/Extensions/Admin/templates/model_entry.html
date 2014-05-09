@@ -1,9 +1,8 @@
 {% for column in table.columns if not column.isAutoIncrement %}
 	<div>
-		<label>
-			<span>{{ column }}: {% if column.length %}
-				<small>{{ model.bytes_to_string(column.length) }}</small>
-			{% endif %}</span>
+		<label class="column_{{ column.type }}">
+			<span><b>{{ column }}</b>{% if column.length %} <small>max. {{ model.bytes_to_string(column.length) }}</small>{% endif %}</span>
+			{% if column.comment %}<span class="info">{{ column.comment }}</span>{% endif %}
 			{{ model.column_input(column, row[column.name]) }}
 		</label>
 	</div>

@@ -12,7 +12,7 @@
 		<input type="hidden" name="max_file_size" value="{{ column.length }}" />
 		<input {{ req }} type="file" name="row[{{ column.name }}]"/>
 	{% else %}
-		<input {{ req }} type="text" name="row[{{ column.name }}]" value="{{ value }}" size="50" maxlength="{{ column.length }}"/>
+		<input {{ req }} type="text" name="row[{{ column.name }}]" value="{{ value }}" size="50" {% if column.length %}maxlength="{{ column.length }}"{% endif %}/>
 	{% endif %}
 {% endmacro %}
 
