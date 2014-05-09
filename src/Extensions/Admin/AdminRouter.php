@@ -8,6 +8,7 @@ class AdminRouter extends \AeFramework\Routing\AuthenticatedRouter
 		\AeFramework\Routing\RouteMap::map($this, [
 			['', '\AeFramework\Extensions\Admin\ModelsView'],
 			['r^(?P<table>.*)/delete/(?P<key>.*)/(?P<value>.*)/$', '\AeFramework\Extensions\Admin\DeleteView'],
+			['r^(?P<table>.*)/blob/(?P<key>.*)/(?P<value>.*)/(?P<field>.*)/$', '\AeFramework\Extensions\Admin\BlobView'],
 			['r^(?P<table>.*)/edit/(?P<key>.*)/(?P<value>.*)/$', '\AeFramework\Extensions\Admin\EditView'],
 			['r^(?P<table>.*)/create/$', '\AeFramework\Extensions\Admin\CreateView'],
 			['r^(?P<table>.*)/$', '\AeFramework\Extensions\Admin\ListView'],

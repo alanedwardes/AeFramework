@@ -1,6 +1,9 @@
 {% for column in table.columns if not column.isAutoIncrement %}
 	<div>
-		<label><span>{{ column }}:</span>
+		<label>
+			<span>{{ column }}: {% if column.length %}
+				<small>{{ model.bytes_to_string(column.length) }}</small>
+			{% endif %}</span>
 			{{ model.column_input(column, row[column.name]) }}
 		</label>
 	</div>

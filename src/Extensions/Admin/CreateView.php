@@ -16,7 +16,7 @@ class CreateView extends AdminView
 		
 		if ($verb == ae\Http\Verb::Post)
 		{
-			$this->form_data->insert($this->table, @$_POST['row'], @$_POST['link']);
+			$this->form_data->insert($this->table, @$_POST['row'], @$_FILES['row'], @$_POST['link']);
 			$this->headers['Location'] = '..';
 			$this->code = ae\Http\Code::Found;
 		}

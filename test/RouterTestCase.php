@@ -4,6 +4,14 @@ require_once 'Helpers/TestRouterServedView.php';
 use AeFramework\Views as Views;
 use AeFramework\Mapping as Mapping;
 
+class TestViewWithTwoConstructorParameters extends AeFramework\Views\TextView
+{
+	public function __construct($one, $two)
+	{
+		parent::__construct($one . '_' . $two);
+	}
+}
+
 class RouterTestCase extends PHPUnit_Framework_TestCase
 {
 	private $router;
@@ -63,6 +71,32 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 	public function testRouterDeferredViewConstruction()
 	{
 		$this->router->route(new Mapping\StringMapper('/testing/', ['AeFramework\Views\TextView', 'test_deferred']));
+		
+		$this->router->despatch('/testing/');
+		
+		$this->assertSame($this->router->served_view->response(), 'test_deferred');
+	}
+	
+	public function testRouterDeferredViewConstructionWithMultipleConstructorParameters()
+	{
+		$this->router->route(new Mapping\StringMapper('/testing/', [
+			'TestViewWithTwoConstructorParameters',
+			'test',
+			'deferred'
+		]));
+		
+		$this->router->despatch('/testing/');
+		
+		$this->assertSame($this->router->served_view->response(), 'test_deferred');
+	}
+	
+	public function testRouterDeferredViewConstructionWithConstructorParametersAndClassMembers()
+	{
+		$this->router->route(new Mapping\StringMapper('/testing/', [
+			'AeFramework\Views\TextView',
+			'testing',
+			'text' => 'test_deferred'
+		]));
 		
 		$this->router->despatch('/testing/');
 		

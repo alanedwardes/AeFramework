@@ -10,6 +10,7 @@ class DatabaseAbstraction
 	public function __construct($db_name, $user, $password, $host = 'localhost', $driver = 'pdo_mysql')
 	{
 		$config = new \Doctrine\DBAL\Configuration;
+		//$config->setSQLLogger(new \Doctrine\DBAL\Logging\EchoSQLLogger());
 		$this->db = \Doctrine\DBAL\DriverManager::getConnection([
 			'dbname' => $db_name,
 			'user' => $user,

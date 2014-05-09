@@ -39,6 +39,7 @@ class ColumnInformation
 		{
 			$this->isPrimary = in_array($column->getName(), $primary_key->getColumns());
 		}
+		
 		$this->name = $column->getName();
 		$this->type = $column->getType()->getName();
 		$this->length = $column->getLength();
@@ -49,6 +50,25 @@ class ColumnInformation
 		$this->isFixed = $column->getFixed();
 		$this->isAutoIncrement = $column->getAutoincrement();
 		$this->comment = $column->getComment();
+		
+		if ($this->type === \Doctrine\DBAL\Types\Type::BLOB)
+		{
+			$this->length = min($this->bytesFromIni('post_max_size'), $this->bytesFromIni('upload_max_filesize'));
+		}
+	}
+	
+	private function bytesFromIni($setting)
+	{
+		$value = trim(ini_get($setting));
+		
+		switch(strtolower($value[strlen($value) - 1]))
+		{
+			case 'g': $value *= 1024;
+			case 'm': $value *= 1024;
+			case 'k': $value *= 1024;
+		}
+
+		return $value;
 	}
 	
 	public function __toString()

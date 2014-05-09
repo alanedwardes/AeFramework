@@ -1,6 +1,8 @@
 <?php
 namespace AeFramework\Extensions\Admin;
 
+use \Doctrine\DBAL\Types\Type;
+
 class FormDataAbstraction
 {
 	private $database;
@@ -10,25 +12,22 @@ class FormDataAbstraction
 		$this->database = $database;
 	}
 	
-	public function update(TableInformation $table, $input, $primary_key, $primary_value, $link_data = [])
+	public function update(TableInformation $table, $input, $files, $primary_key, $primary_value, $link_data = [])
 	{
 		$data = [];
 		foreach ($table->columns as $column)
 		{
 			if ($column->isPrimary)
 				continue;
-				
+			
 			if ($column->isAutoIncrement)
 				continue;
-				
-			if (!isset($input[$column->name]))
-				continue;
 			
-			$value = html_entity_decode($input[$column->name]);
-			if ($column->type == \Doctrine\DBAL\Types\Type::BOOLEAN)
-				$value = (int)($value === 'on');
+			if (isset($input[$column->name]))
+				$data[$column->name] = $this->getColumnInputData($column->type, $input[$column->name]);
 			
-			$data[$column->name] = $value;
+			if (isset($files['tmp_name'][$column->name]) and $files['error'][$column->name] === UPLOAD_ERR_OK)
+				$data[$column->name] = $this->getColumnFileData($column->type, $files['tmp_name'][$column->name]);
 		}
 		
 		$this->database->update($table, $data, [$primary_key => $primary_value]);
@@ -42,19 +41,16 @@ class FormDataAbstraction
 		}
 	}
 	
-	public function insert(TableInformation $table, $input, $link_data = [])
+	public function insert(TableInformation $table, $input, $files, $link_data = [])
 	{
 		$data = [];
 		foreach ($table->columns as $column)
 		{
-			if (!isset($input[$column->name]))
-				continue;
-		
-			$value = html_entity_decode($input[$column->name]);
-			if ($column->type == \Doctrine\DBAL\Types\Type::BOOLEAN)
-				$value = (int)($value === 'on');
+			if (isset($input[$column->name]))
+				$data[$column->name] = $this->getColumnInputData($column->type, $input[$column->name]);
 			
-			$data[$column->name] = $value;
+			if (isset($files['tmp_name'][$column->name]))
+				$data[$column->name] = $this->getColumnFileData($column->type, $files['tmp_name'][$column->name]);
 		}
 		
 		$this->database->insert($table, $data);
@@ -67,6 +63,26 @@ class FormDataAbstraction
 			{
 				$this->database->addLinks($link, $insertId, $link_data[$link->table->name]);
 			}
+		}
+	}
+	
+	private function getColumnInputData($type, $input)
+	{
+		switch ($type)
+		{
+			case Type::BOOLEAN:
+				return ($input === 'on');
+			default:
+				return html_entity_decode($input);
+		}
+	}
+	
+	private function getColumnFileData($type, $file)
+	{
+		switch ($type)
+		{
+			case Type::BLOB:
+				return file_get_contents($file);
 		}
 	}
 }

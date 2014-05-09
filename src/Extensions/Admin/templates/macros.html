@@ -1,14 +1,18 @@
 {% macro column_input(column, value) %}
+	{% if column.isNotNull %}{% set req = 'required' %}{% endif %} 
 	{% if column.isForeign %}
 		<select name="row[{{ column.name }}]">{{ _self.linked_options(value) }}</select>
 	{% elseif column.type in ['text'] %}
-		<textarea name="row[{{ column.name }}]" cols="100" rows="12">{{ value }}</textarea>
+		<textarea {{ req }} name="row[{{ column.name }}]" cols="100" rows="12">{{ value }}</textarea>
 	{% elseif column.type in ['boolean'] %}
 		<input type="checkbox" name="row[{{ column.name }}]" {% if value %}checked="checked"{% endif %}/>
 	{% elseif column.type in ['date'] %}
-		<input type="date" name="row[{{ column.name }}]" value="{% if value %}{{ value }}{% else %}{{ now|date("Y-m-d") }}{% endif %}"/>
+		<input {{ req }} type="date" name="row[{{ column.name }}]" value="{% if value %}{{ value }}{% else %}{{ now|date("Y-m-d") }}{% endif %}"/>
+	{% elseif column.type in ['blob'] %}
+		<input type="hidden" name="max_file_size" value="{{ column.length }}" />
+		<input {{ req }} type="file" name="row[{{ column.name }}]"/>
 	{% else %}
-		<input type="text" name="row[{{ column.name }}]" value="{{ value }}" size="50" maxlength="{{ column.length }}"/>
+		<input {{ req }} type="text" name="row[{{ column.name }}]" value="{{ value }}" size="50" maxlength="{{ column.length }}"/>
 	{% endif %}
 {% endmacro %}
 
@@ -30,7 +34,7 @@
 			&#x{% if value %}2713{% else %}2717{% endif %};
 		{% if html %}</b>{% endif %}
 	{% elseif column.type in ['blob'] %}
-		Binary ({{ value|length|number_format }} bytes)
+		Binary ({{ value|length }} bytes)
 	{% elseif column.type in ['datetime', 'datetimez'] %}
 		{{ value|date("M jS Y \\a\\t g:ia") }}
 	{% elseif column.type in ['date'] %}
@@ -46,4 +50,10 @@
 			{{ value }}
 		{% endif %}
 	{% endif %}
+{% endmacro %}
+
+{% macro bytes_to_string(bytes) %}
+	{% set sizes = ['bytes', 'kilobytes', 'megabytes', 'gigabytes', 'terrabytes', 'petabytes'] %}
+	{% set factor = ((bytes|length - 1) / 3)|round(0, 'floor') %}
+	{{ (bytes / (1024 ** factor))|round }} {{ sizes[factor] }}
 {% endmacro %}

@@ -4,7 +4,7 @@
 
 {% block body %}
 	<h1>Edit {{ table }}</h1>
-	<form action="" method="post">
+	<form action="" method="post" enctype="multipart/form-data">
 		<p><a href="./../../../">&laquo; Back to {{ table }} list</a></p>
 		{% include "model_entry.html" %}
 		<button>Save {{ table }}</button>
