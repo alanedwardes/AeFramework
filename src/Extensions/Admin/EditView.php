@@ -5,9 +5,9 @@ use AeFramework as ae;
 
 class EditView extends SingleItemView
 {
-	public function __construct()
+	public function __construct($connection)
 	{
-		parent::__construct('templates/edit.html');
+		parent::__construct('templates/edit.html', $connection);
 	}
 	
 	public function request($verb, array $params = [])

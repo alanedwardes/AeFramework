@@ -3,9 +3,9 @@ namespace AeFramework\Extensions\Admin;
 
 class ModelsView extends AdminView
 {
-	public function __construct()
+	public function __construct($connection)
 	{
-		parent::__construct('templates/models.html');
+		parent::__construct('templates/models.html', $connection);
 	}
 	
 	public function response()

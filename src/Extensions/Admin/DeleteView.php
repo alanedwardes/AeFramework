@@ -7,9 +7,9 @@ class DeleteView extends SingleItemView
 {
 	private $deleted = false;
 	
-	public function __construct()
+	public function __construct($connection)
 	{
-		parent::__construct('templates/delete.html');
+		parent::__construct('templates/delete.html', $connection);
 	}
 	
 	public function request($verb, array $params = [])

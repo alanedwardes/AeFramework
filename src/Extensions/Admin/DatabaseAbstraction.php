@@ -7,17 +7,11 @@ class DatabaseAbstraction
 
 	private $db = null;
 	
-	public function __construct($db_name, $user, $password, $host = 'localhost', $driver = 'pdo_mysql')
+	public function __construct($connection)
 	{
 		$config = new \Doctrine\DBAL\Configuration;
 		//$config->setSQLLogger(new \Doctrine\DBAL\Logging\EchoSQLLogger());
-		$this->db = \Doctrine\DBAL\DriverManager::getConnection([
-			'dbname' => $db_name,
-			'user' => $user,
-			'password' => $password,
-			'host' => $host,
-			'driver' => $driver,
-		], $config);
+		$this->db = \Doctrine\DBAL\DriverManager::getConnection($connection, $config);
 		$platform = $this->db->getDatabasePlatform();
 		$platform->registerDoctrineTypeMapping('enum', 'string');
 		

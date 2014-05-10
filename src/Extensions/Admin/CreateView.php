@@ -5,9 +5,9 @@ use AeFramework as ae;
 
 class CreateView extends AdminView
 {
-	public function __construct()
+	public function __construct($connection)
 	{
-		parent::__construct('templates/create.html');
+		parent::__construct('templates/create.html', $connection);
 	}
 	
 	public function request($verb, array $params = [])

@@ -3,9 +3,9 @@ namespace AeFramework\Extensions\Admin;
 
 class ListView extends AdminView
 {
-	public function __construct()
+	public function __construct($connection)
 	{
-		parent::__construct('templates/list.html');
+		parent::__construct('templates/list.html', $connection);
 	}
 	
 	public function response()

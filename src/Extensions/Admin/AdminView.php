@@ -9,9 +9,9 @@ abstract class AdminView extends ae\Views\TemplateView implements ae\Views\IAuth
 	protected $da = null;
 	protected $form_data = null;
 	
-	public function __construct($template)
+	public function __construct($template, $connection)
 	{
-		$this->da = new DatabaseAbstraction(DB_NAME, DB_USER, DB_PASS);
+		$this->da = new DatabaseAbstraction($connection);
 		
 		$this->form_data = new FormDataAbstraction($this->da);
 		

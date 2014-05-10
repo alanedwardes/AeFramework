@@ -7,9 +7,9 @@ class BlobView extends SingleItemView
 {
 	private $field;
 	
-	public function __construct()
+	public function __construct($connection)
 	{
-		parent::__construct('templates/blob.html');
+		parent::__construct('templates/blob.html', $connection);
 	}
 	
 	public function request($verb, array $params = [])
