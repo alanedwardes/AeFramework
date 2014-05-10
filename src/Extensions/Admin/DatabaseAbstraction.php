@@ -15,10 +15,21 @@ class DatabaseAbstraction
 		$platform = $this->db->getDatabasePlatform();
 		$platform->registerDoctrineTypeMapping('enum', 'string');
 		
+		$this->refreshSchema();
+	}
+	
+	public function refreshSchema()
+	{
 		$this->schema = new SchemaInformation($this->db->getSchemaManager());
 	}
 	
-	private function internalStatement($query, $values = [])
+	public function internalStatement($statement)
+	{
+		return $this->db->exec($statement);
+	}
+	
+	// Public for unit test setup
+	public function internalBindStatement($query, $values = [])
 	{
 		$statement = $this->db->prepare($query);
 		$statement->execute($values);
@@ -32,17 +43,17 @@ class DatabaseAbstraction
 	
 	public function count(TableInformation $table, $query = '1', $values = [])
 	{
-		return $this->internalStatement("SELECT COUNT(*) FROM {$table->name} WHERE {$query}", $values)->fetchColumn();
+		return $this->internalBindStatement("SELECT COUNT(*) FROM {$table->name} WHERE {$query}", $values)->fetchColumn();
 	}
 	
 	public function select(TableInformation $table, $query = '1', $values = [], $fetch_column = false)
 	{
-		return $this->internalStatement("SELECT * FROM {$table->name} WHERE {$query}", $values)->fetchAll($this->fetchType($fetch_column));
+		return $this->internalBindStatement("SELECT * FROM {$table->name} WHERE {$query}", $values)->fetchAll($this->fetchType($fetch_column));
 	}
 	
 	public function selectOne(TableInformation $table, $query = '1', $values = [], $fetch_column = false)
 	{
-		return $this->internalStatement("SELECT * FROM {$table->name} WHERE {$query}", $values)->fetch();
+		return $this->internalBindStatement("SELECT * FROM {$table->name} WHERE {$query}", $values)->fetch();
 	}
 	
 	public function update(TableInformation $table, array $values, array $condition)
@@ -67,7 +78,7 @@ class DatabaseAbstraction
 	
 	public function getLinks(LinkInformation $link, $local_link_value)
 	{
-		return $this->internalStatement("
+		return $this->internalBindStatement("
 			SELECT a.{$link->remoteColumn}
 			FROM {$link->remoteTable->name} a
 			INNER JOIN {$link->table->name} b
