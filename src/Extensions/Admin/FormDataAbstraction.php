@@ -46,6 +46,12 @@ class FormDataAbstraction
 		$data = [];
 		foreach ($table->columns as $column)
 		{
+			if ($column->isPrimary)
+				continue;
+			
+			if ($column->isAutoIncrement)
+				continue;
+		
 			if ($column->type !== Type::BLOB)
 				$data[$column->name] = $this->getColumnInputData($column->type, @$input[$column->name]);
 			
