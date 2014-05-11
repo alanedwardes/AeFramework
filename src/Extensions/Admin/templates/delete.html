@@ -6,7 +6,7 @@
 	<h1>Delete {{ table }}</h1>
 	<table>
 		<tbody>
-			{% for column in table.columns if not column.isAutoIncrement %}
+			{% for column in table.columns if not column.isAutoIncrement and not column.isForeign %}
 				<tr>
 					<th>{{ column }}</th>
 					<td>{{ model.column_show(column, row[column.name], true) }}</td>

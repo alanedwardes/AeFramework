@@ -23,12 +23,35 @@ class CreateView extends AdminView
 	public function response()
 	{
 		$template_params['links'] = [];
+		
 		foreach ($this->table->links as $link)
 		{
-			$template_params['links'][] = [
-				'all' => $this->da->select($link->remoteTable),
-				'info' => $link
-			];
+			if ($link instanceof LinkInformation)
+			{
+				$template_params['links'][] = [
+					'all' => $this->da->select($link->remoteTable),
+					'info' => $link
+				];
+			}
+			elseif ($link instanceof OneToManyLinkInformation)
+			{
+				$template_params['links'][] = [
+					'all' => $this->da->select($link->remoteTable),
+					'info' => $link
+				];
+			}
+		}
+		
+		foreach ($this->table->columns as $column)
+		{
+			if ($column->isForeign)
+			{
+				$foreign_table = $this->da->schema->tables[$column->foreignTable];
+				$template_params['row'][$column->name] = [
+					'all' => $this->da->select($foreign_table),
+					'info' => new OneToManyLinkInformation($foreign_table, $this->table, $column)
+				];
+			}
 		}
 		
 		return parent::response($template_params);
