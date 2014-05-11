@@ -4,7 +4,7 @@ A fast, light and succinct PHP web framework.
 
 Features:
 * Routing, caching, authentication and session management capabilities
-* Zero-configuration admin panel, that traverses schemas and automatically discovers relationships
+* Zero-configuration admin panel that traverses schemas and automatically discovers relationships
 * Built-in templating using the [Twig](https://github.com/fabpot/Twig) library
 
 ### Basic Usage
