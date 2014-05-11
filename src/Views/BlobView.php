@@ -57,5 +57,5 @@ class BlobView extends View
 		return false;
 	}
 	
-	public function response() { return $data; }
+	public function response() { return $this->data; }
 }
