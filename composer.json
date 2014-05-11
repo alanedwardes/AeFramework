@@ -1,8 +1,26 @@
 {
+	"name": "alanedwardes/carbo",
+	"type": "library",
+	"description": "A fast, light and succinct PHP web framework. I use this for my own projects.",
+	"homepage": "https://github.com/alanedwardes/carbo",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Alan Edwardes",
+			"email": "alan@alanedwardes.com",
+			"homepage": "http://alanedwardes.com/",
+			"role": "Developer"
+		}
+	],
 	"require": {
+		"php": ">=5.4.0",
 		"christian-riesen/otp": "1.*",
-		"doctrine/common": "*",
-		"doctrine/dbal": "*",
+		"doctrine/dbal": "2.4.*",
 		"twig/twig": "1.*"
+	},
+	"autoload": {
+		"psr-4": {
+			"Carbo\\": "src/"
+		}
 	}
 }
