@@ -6,7 +6,7 @@
 	stopOnFailure="true"
 	bootstrap="loader.php">
 	<testsuites>
-		<testsuite name="AeFramework Test Suite">
+		<testsuite name="Carbo Test Suite">
 			<directory suffix=".php">./test</directory>
 		</testsuite>
 	</testsuites>

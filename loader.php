@@ -6,7 +6,7 @@ namespace Carbo;
 require_once 'vendor/autoload.php';
 
 spl_autoload_register(function($name){
-	# If class ($name) is in the AeFramework namespace
+	# If class ($name) is in the Carbo namespace
 	if (substr($name, 0, strlen(__NAMESPACE__)) == __NAMESPACE__)
 	{
 		# Truncate the namespace, including the directory separator
