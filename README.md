@@ -1,12 +1,16 @@
-Carbo
-=====
+## Carbo
 
-A fast, light and succinct PHP web framework. *By no means stable or secure yet - use at your own risk.*
+A fast, light and succinct PHP web framework.
 
-Basic Usage
------------
+Features:
+* Routing, caching, authentication and session management capabilities
+* Zero-configuration admin panel, that traverses schemas and automatically discovers relationships
+* Built-in templating using the [Twig](https://github.com/fabpot/Twig) library
+
+### Basic Usage
 
 ```php
+# For composer: require_once 'vendor/autoload.php';
 require_once 'carbo/loader.php';
 
 # Create a cache
@@ -37,3 +41,6 @@ $router->error(Carbo\Http\Code::NotFound, $notfound_view);
 # Despatch
 echo $router->despatch();
 ```
+
+### Composer
+Package [`alanedwardes/carbo`](https://packagist.org/packages/alanedwardes/carbo)
