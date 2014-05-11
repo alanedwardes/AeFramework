@@ -4,23 +4,25 @@
 
 {% block body %}
 	<div class="slim center wrap">
-		<h1>Login</h1>
-		<p>Enter a username and password to continue.</p>
+		<h1>Login</h1>		
 		{% if login_attempted %}<p class="error">You entered invalid credentials.</p>{% endif %}
+		{% if login_attempted_token %}<p class="error">You entered an invalid multi-factor authentication token.</p>{% endif %}
 		<form action="" method="post">
 			<label>
-				<span>Username</span>
-				<input type="text" id="username" name="username" size="35" value="{{ username }}" required/>
+				<span><b>Username</b></span>
+				<input type="text" name="username" size="35" value="{{ username }}" autofocus required {% if needs_token %}disabled{% endif %}/>
+				{% if needs_token %}<input type="hidden" name="username" value="{{ username }}"/>{% endif %}
 			</label>
 			<label>
-				<span>Password</span>
-				<input type="password" id="password" name="password" size="35" value="{{ password }}" required/>
+				<span><b>Password</b></span>
+				<input type="password" name="password" size="35" value="{{ password }}" required {% if needs_token %}disabled{% endif %}/>
+				{% if needs_token %}<input type="hidden" name="password" value="{{ password }}"/>{% endif %}
 			</label>
 			{% if needs_token %}
-				<p>Enter your multi-factor token.</p>
 				<label>
-					<span>Token</span>
-					<input type="text" id="token" name="token" size="6" maxlength="6" required autocomplete="off" pattern="[0-9]{6}" placeholder="000000"/>
+					<span><b>Token</b></span>
+					<span class="info">Enter your multi-factor authentication token.</span>
+					<input type="text" name="token" required autofocus autocomplete="off"/>
 				</label>
 			{% endif %}
 			<div>

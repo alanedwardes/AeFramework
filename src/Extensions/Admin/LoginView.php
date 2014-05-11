@@ -11,6 +11,7 @@ class LoginView extends \Carbo\Views\TemplateView
 	private $password = '';
 	private $needs_token = false;
 	private $login_attempted = false;
+	private $login_attempted_token = false;
 
 	public function __construct()
 	{
@@ -62,7 +63,7 @@ class LoginView extends \Carbo\Views\TemplateView
 			}
 			else
 			{
-				$this->login_attempted = true;
+				$this->login_attempted_token = true;
 			}
 		}
 		
@@ -73,6 +74,7 @@ class LoginView extends \Carbo\Views\TemplateView
 	{
 		return parent::response([
 			'login_attempted' => $this->login_attempted,
+			'login_attempted_token' => $this->login_attempted_token,
 			'needs_token' => $this->needs_token,
 			'username' => $this->username,
 			'password' => $this->password
