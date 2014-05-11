@@ -1,7 +1,5 @@
 <?php
-namespace AeFramework\Extensions\Admin;
-
-use AeFramework as ae;
+namespace Carbo\Extensions\Admin;
 
 class DeleteView extends SingleItemView
 {
@@ -16,12 +14,12 @@ class DeleteView extends SingleItemView
 	{
 		parent::request($verb, $params);
 	
-		if ($verb == ae\Http\Verb::Post)
+		if ($verb == \Carbo\Http\Verb::Post)
 		{
 			if ($this->da->delete($this->table, [$this->key => $this->value]))
 			{
 				$this->headers['Location'] = '../../..';
-				$this->code = ae\Http\Code::Found;
+				$this->code = \Carbo\Http\Code::Found;
 				$this->deleted = true;
 			}
 		}

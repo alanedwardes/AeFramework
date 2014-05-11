@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework\Views;
+namespace Carbo\Views;
 
 interface ICacheable
 {

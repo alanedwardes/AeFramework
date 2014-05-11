@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework\Auth;
+namespace Carbo\Auth;
 
 interface IPasswordTokenAuthenticator
 {

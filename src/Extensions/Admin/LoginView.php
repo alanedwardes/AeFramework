@@ -1,11 +1,11 @@
 <?php
-namespace AeFramework\Extensions\Admin;
+namespace Carbo\Extensions\Admin;
 
-use AeFramework\Auth\IAuthenticator;
-use AeFramework\Auth\IPasswordAuthenticator;
-use AeFramework\Auth\IPasswordTokenAuthenticator;
+use Carbo\Auth\IAuthenticator;
+use Carbo\Auth\IPasswordAuthenticator;
+use Carbo\Auth\IPasswordTokenAuthenticator;
 
-class LoginView extends \AeFramework\Views\TemplateView
+class LoginView extends \Carbo\Views\TemplateView
 {
 	private $username = '';
 	private $password = '';

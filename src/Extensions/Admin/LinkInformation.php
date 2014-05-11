@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework\Extensions\Admin;
+namespace Carbo\Extensions\Admin;
 
 class LinkInformation
 {

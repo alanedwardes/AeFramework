@@ -27,23 +27,23 @@ class ClassFactoryTestCase extends PHPUnit_Framework_TestCase
 {
 	public function testConstructClass()
 	{
-		$instance = AeFramework\ClassFactory::constructClass('TestClassWithoutConstructor');
+		$instance = Carbo\ClassFactory::constructClass('TestClassWithoutConstructor');
 		
 		$this->assertInstanceOf('TestClassWithoutConstructor', $instance);
 	}
 	
 	public function testConstructClassWithConstructorParameters()
 	{
-		$instance = AeFramework\ClassFactory::constructClass('TestClassWithConstructor', ['one', 'two', 'three']);
+		$instance = Carbo\ClassFactory::constructClass('TestClassWithConstructor', ['one', 'two', 'three']);
 		
 		$this->assertInstanceOf('TestClassWithConstructor', $instance);
 	}
 	
 	public function testFillPublicMembers()
 	{
-		$instance = AeFramework\ClassFactory::constructClass('TestClassWithPublicMembersAndWithoutConstructor');
+		$instance = Carbo\ClassFactory::constructClass('TestClassWithPublicMembersAndWithoutConstructor');
 		
-		AeFramework\ClassFactory::fillClassMembers($instance, [
+		Carbo\ClassFactory::fillClassMembers($instance, [
 			'one' => 'one',
 			'two' => 'two',
 			'three' => 'three'
@@ -54,7 +54,7 @@ class ClassFactoryTestCase extends PHPUnit_Framework_TestCase
 	
 	public function testConstructClassAndFillMembers()
 	{
-		$instance = AeFramework\ClassFactory::constructClassAndFillMembers('TestClassWithPublicMembersAndConstructor', [
+		$instance = Carbo\ClassFactory::constructClassAndFillMembers('TestClassWithPublicMembersAndConstructor', [
 			'one',
 			'two',
 			'three',

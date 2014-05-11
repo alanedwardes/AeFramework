@@ -1,7 +1,7 @@
 <?php
-namespace AeFramework\Routing;
+namespace Carbo\Routing;
 
-use AeFramework\Mapping as Mapping;
+use Carbo\Mapping as Mapping;
 
 class RouteMap
 {

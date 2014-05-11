@@ -1,12 +1,12 @@
 <?php
-class CacheableView extends \AeFramework\Views\View implements \AeFramework\Views\ICacheable
+class CacheableView extends \Carbo\Views\View implements \Carbo\Views\ICacheable
 {
 	public $hash = null;
 	public $body_generated;
 	
 	public function request($verb, array $params = [])
 	{
-		$this->code = \AeFramework\Http\Code::NotImplemented;
+		$this->code = \Carbo\Http\Code::NotImplemented;
 	}
 	
 	public function response()
@@ -26,7 +26,7 @@ class CacheableView extends \AeFramework\Views\View implements \AeFramework\View
 	}
 }
 
-class TemporaryMemoryCache extends \AeFramework\Caching\Cache
+class TemporaryMemoryCache extends \Carbo\Caching\Cache
 {
 	private $cache = [];
 	
@@ -55,9 +55,9 @@ class CacheableRouterTestCase extends PHPUnit_Framework_TestCase
 	
 	public function testCacheableRouterCaches()
 	{
-		$this->router = new AeFramework\Routing\CachedRouter($this->cache);
+		$this->router = new Carbo\Routing\CachedRouter($this->cache);
 	
-		$this->router->route(new AeFramework\Mapping\StringMapper('/testing', $this->cacheable_view));
+		$this->router->route(new Carbo\Mapping\StringMapper('/testing', $this->cacheable_view));
 		
 		$this->cacheable_view->body_generated = false;
 		$this->router->despatch('/testing');
@@ -70,9 +70,9 @@ class CacheableRouterTestCase extends PHPUnit_Framework_TestCase
 	
 	public function testCacheableRouterViewHashInvalidatesCache()
 	{
-		$this->router = new AeFramework\Routing\CachedRouter($this->cache);
+		$this->router = new Carbo\Routing\CachedRouter($this->cache);
 	
-		$this->router->route(new \AeFramework\Mapping\StringMapper('/testing', $this->cacheable_view));
+		$this->router->route(new \Carbo\Mapping\StringMapper('/testing', $this->cacheable_view));
 		
 		$this->cacheable_view->body_generated = false;
 		$this->cacheable_view->hash = 'hash';
@@ -88,16 +88,16 @@ class CacheableRouterTestCase extends PHPUnit_Framework_TestCase
 	public function testCacheableRouterSameCacheKeyWithTwoInstances()
 	{
 		# Router 1
-		$this->router = new AeFramework\Routing\CachedRouter($this->cache, 'cachekey');
-		$this->router->route(new \AeFramework\Mapping\StringMapper('/testing', $this->cacheable_view));
+		$this->router = new Carbo\Routing\CachedRouter($this->cache, 'cachekey');
+		$this->router->route(new \Carbo\Mapping\StringMapper('/testing', $this->cacheable_view));
 		
 		$this->cacheable_view->body_generated = false;
 		$this->router->despatch('/testing');
 		$this->assertTrue($this->cacheable_view->body_generated);
 		
 		# Router 2
-		$this->router = new AeFramework\Routing\CachedRouter($this->cache, 'cachekey');
-		$this->router->route(new \AeFramework\Mapping\StringMapper('/testing', $this->cacheable_view));
+		$this->router = new Carbo\Routing\CachedRouter($this->cache, 'cachekey');
+		$this->router->route(new \Carbo\Mapping\StringMapper('/testing', $this->cacheable_view));
 		
 		$this->cacheable_view->body_generated = false;
 		$this->router->despatch('/testing');
@@ -107,16 +107,16 @@ class CacheableRouterTestCase extends PHPUnit_Framework_TestCase
 	public function testCacheableRouterDifferentCacheKeyWithTwoInstances()
 	{
 		# Router 1
-		$this->router = new \AeFramework\Routing\CachedRouter($this->cache, 'cachekey');
-		$this->router->route(new \AeFramework\Mapping\StringMapper('/testing', $this->cacheable_view));
+		$this->router = new \Carbo\Routing\CachedRouter($this->cache, 'cachekey');
+		$this->router->route(new \Carbo\Mapping\StringMapper('/testing', $this->cacheable_view));
 		
 		$this->cacheable_view->body_generated = false;
 		$this->router->despatch('/testing');
 		$this->assertTrue($this->cacheable_view->body_generated);
 		
 		# Router 2
-		$this->router = new \AeFramework\Routing\CachedRouter($this->cache, 'anothercachekey');
-		$this->router->route(new \AeFramework\Mapping\StringMapper('/testing', $this->cacheable_view));
+		$this->router = new \Carbo\Routing\CachedRouter($this->cache, 'anothercachekey');
+		$this->router->route(new \Carbo\Mapping\StringMapper('/testing', $this->cacheable_view));
 		
 		$this->cacheable_view->body_generated = false;
 		$this->router->despatch('/testing');

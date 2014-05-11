@@ -1,7 +1,7 @@
 <?php
-use AeFramework\Views as Views;
-use AeFramework\Routing as Routing;
-use AeFramework\Mapping as Mapping;
+use Carbo\Views as Views;
+use Carbo\Routing as Routing;
+use Carbo\Mapping as Mapping;
 
 class TestNonAuthenticatedView extends Views\View
 {
@@ -25,7 +25,7 @@ class TestViewThatAuthenticates extends Views\View
 	public function response(){}
 }
 
-class TestAuthenticator implements \AeFramework\Auth\IAuthenticator
+class TestAuthenticator implements \Carbo\Auth\IAuthenticator
 {
 	private $authenticated = false;
 	
@@ -49,7 +49,7 @@ class AuthenticatedRouterTestCase extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
-	 * @expectedException     \AeFramework\Http\CodeException
+	 * @expectedException     \Carbo\Http\CodeException
 	 * @expectedExceptionCode 403
 	 */
 	public function testAuthenticatedRouterAuthenticates()
@@ -68,7 +68,7 @@ class AuthenticatedRouterTestCase extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
-	 * @expectedException     \AeFramework\Http\CodeException
+	 * @expectedException     \Carbo\Http\CodeException
 	 * @expectedExceptionCode 404
 	 */
 	public function testAuthenticatedRouterServesNotFoundViews()

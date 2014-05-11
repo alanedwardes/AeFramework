@@ -1,5 +1,5 @@
 <?php
-use AeFramework\Views as Views;
+use Carbo\Views as Views;
 
 class RedirectViewTestCase extends PHPUnit_Framework_TestCase
 {
@@ -10,7 +10,7 @@ class RedirectViewTestCase extends PHPUnit_Framework_TestCase
 		$redirect->request('GET');
 		
 		$this->assertSame($redirect->headers, ['Location' => 'http://www.example.com/']);
-		$this->assertSame($redirect->code, AeFramework\Http\Code::Found);
+		$this->assertSame($redirect->code, Carbo\Http\Code::Found);
 	}
 	
 	public function testPermanentRedirectViewRedirects()
@@ -20,7 +20,7 @@ class RedirectViewTestCase extends PHPUnit_Framework_TestCase
 		$redirect->request('GET');
 		
 		$this->assertSame($redirect->headers, ['Location' => 'http://www.example.com/']);
-		$this->assertSame($redirect->code, AeFramework\Http\Code::MovedPermanently);
+		$this->assertSame($redirect->code, Carbo\Http\Code::MovedPermanently);
 	}
 	
 	public function testRedirectViewWithMapperParameters()

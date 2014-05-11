@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework\Http;
+namespace Carbo\Http;
 
 class Verb
 {

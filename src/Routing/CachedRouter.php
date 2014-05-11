@@ -1,10 +1,10 @@
 <?php
-namespace AeFramework\Routing;
+namespace Carbo\Routing;
 
-use AeFramework\Caching\Cache;
-use AeFramework\Views\View;
-use AeFramework\Views\ICacheable;
-use AeFramework\Http as Http;
+use Carbo\Caching\Cache;
+use Carbo\Views\View;
+use Carbo\Views\ICacheable;
+use Carbo\Http as Http;
 
 class CachedRouter extends Router
 {

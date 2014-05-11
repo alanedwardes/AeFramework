@@ -1,6 +1,6 @@
 <?php
 # Set the namespace
-namespace AeFramework;
+namespace Carbo;
 
 # Load vendor dependencies
 require_once 'vendor/autoload.php';

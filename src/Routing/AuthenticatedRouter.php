@@ -1,10 +1,10 @@
 <?php
-namespace AeFramework\Routing;
+namespace Carbo\Routing;
 
-use AeFramework\Views\View;
-use AeFramework\Views\IAuthenticated;
-use AeFramework\Auth\IAuthenticator;
-use AeFramework\Http as Http;
+use Carbo\Views\View;
+use Carbo\Views\IAuthenticated;
+use Carbo\Auth\IAuthenticator;
+use Carbo\Http as Http;
 
 class AuthenticatedRouter extends Router
 {

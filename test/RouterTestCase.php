@@ -1,10 +1,10 @@
 <?php
 require_once 'Helpers/TestRouterServedView.php';
 
-use AeFramework\Views as Views;
-use AeFramework\Mapping as Mapping;
+use Carbo\Views as Views;
+use Carbo\Mapping as Mapping;
 
-class TestViewWithTwoConstructorParameters extends AeFramework\Views\TextView
+class TestViewWithTwoConstructorParameters extends Carbo\Views\TextView
 {
 	public function __construct($one, $two)
 	{
@@ -39,7 +39,7 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 	public function testRouterNotFoundRoute()
 	{
 		$this->router->route(new Mapping\StringMapper('/testing/', $this->test_view1));
-		$this->router->error(\AeFramework\Http\Code::NotFound, $this->test_view2);
+		$this->router->error(\Carbo\Http\Code::NotFound, $this->test_view2);
 		
 		$this->router->despatch('/not-found/');
 		
@@ -47,7 +47,7 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
-	 * @expectedException     \AeFramework\Http\CodeException
+	 * @expectedException     \Carbo\Http\CodeException
 	 * @expectedExceptionCode 404
 	 */
 	public function testRouterNotFoundException()
@@ -61,7 +61,7 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 	{
 		$this->router->route(new Mapping\RegexMapper('^/testing', $this->delegate_router));
 		
-		$this->delegate_router->error(\AeFramework\Http\Code::NotFound, $this->test_view2);
+		$this->delegate_router->error(\Carbo\Http\Code::NotFound, $this->test_view2);
 		
 		$this->router->despatch('/testing/test');
 		
@@ -70,7 +70,7 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 	
 	public function testRouterDeferredViewConstruction()
 	{
-		$this->router->route(new Mapping\StringMapper('/testing/', ['AeFramework\Views\TextView', 'test_deferred']));
+		$this->router->route(new Mapping\StringMapper('/testing/', ['Carbo\Views\TextView', 'test_deferred']));
 		
 		$this->router->despatch('/testing/');
 		
@@ -93,7 +93,7 @@ class RouterTestCase extends PHPUnit_Framework_TestCase
 	public function testRouterDeferredViewConstructionWithConstructorParametersAndClassMembers()
 	{
 		$this->router->route(new Mapping\StringMapper('/testing/', [
-			'AeFramework\Views\TextView',
+			'Carbo\Views\TextView',
 			'testing',
 			'text' => 'test_deferred'
 		]));

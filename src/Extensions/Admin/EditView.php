@@ -1,7 +1,5 @@
 <?php
-namespace AeFramework\Extensions\Admin;
-
-use AeFramework as ae;
+namespace Carbo\Extensions\Admin;
 
 class EditView extends SingleItemView
 {
@@ -14,11 +12,11 @@ class EditView extends SingleItemView
 	{	
 		parent::request($verb, $params);
 		
-		if ($verb == ae\Http\Verb::Post)
+		if ($verb == \Carbo\Http\Verb::Post)
 		{
 			$this->form_data->update($this->table, @$_POST['row'], @$_FILES['row'], $this->key, $this->value, @$_POST['link']);
 			$this->headers['Location'] = '../../..';
-			$this->code = ae\Http\Code::Found;
+			$this->code = \Carbo\Http\Code::Found;
 		}
 	}
 }

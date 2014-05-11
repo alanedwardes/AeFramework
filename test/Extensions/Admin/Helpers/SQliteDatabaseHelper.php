@@ -1,5 +1,5 @@
 <?php
-use AeFramework\Extensions\Admin\DatabaseAbstraction;
+use Carbo\Extensions\Admin\DatabaseAbstraction;
 
 class SQliteDatabaseHelper
 {

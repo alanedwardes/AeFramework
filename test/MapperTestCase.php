@@ -1,6 +1,6 @@
 <?php
-use AeFramework\Mapping as Mapping;
-use AeFramework\Views as Views;
+use Carbo\Mapping as Mapping;
+use Carbo\Views as Views;
 
 class MapperTestCase extends PHPUnit_Framework_TestCase
 {

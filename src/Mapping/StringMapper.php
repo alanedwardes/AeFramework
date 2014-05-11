@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework\Mapping;
+namespace Carbo\Mapping;
 
 class StringMapper extends Mapper
 {

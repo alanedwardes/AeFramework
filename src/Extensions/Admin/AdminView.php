@@ -1,9 +1,7 @@
 <?php
-namespace AeFramework\Extensions\Admin;
+namespace Carbo\Extensions\Admin;
 
-use AeFramework as ae;
-
-abstract class AdminView extends ae\Views\TemplateView implements ae\Views\IAuthenticated
+abstract class AdminView extends \Carbo\Views\TemplateView implements \Carbo\Views\IAuthenticated
 {
 	protected $table = null;
 	protected $da = null;
@@ -27,7 +25,7 @@ abstract class AdminView extends ae\Views\TemplateView implements ae\Views\IAuth
 					$this->table = $table;
 		
 			if ($this->table == null)
-				throw new ae\Http\CodeException(ae\Http\Code::NotFound);
+				throw new Carbo\Http\CodeException(Carbo\Http\Code::NotFound);
 		}
 	}
 	

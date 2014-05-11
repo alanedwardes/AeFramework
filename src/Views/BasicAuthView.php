@@ -1,6 +1,5 @@
 <?php
-namespace AeFramework\Views;
-use AeFramework as ae;
+namespace Carbo\Views;
 
 class BasicAuthView extends View
 {
@@ -22,7 +21,7 @@ class BasicAuthView extends View
 			}
 		}
 		
-		$this->code = ae\Http\Code::Unauthorized;
+		$this->code = \Carbo\Http\Code::Unauthorized;
 		$this->headers['WWW-Authenticate'] = sprintf('Basic realm="%s"', $this->realm);
 	}
 	

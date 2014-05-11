@@ -1,11 +1,9 @@
 <?php
-namespace AeFramework\Views;
-
-use AeFramework as ae;
+namespace Carbo\Views;
 
 abstract class View
 {
-	public $code = ae\Http\Code::Ok;
+	public $code = \Carbo\Http\Code::Ok;
 	public $headers = [];
 	
 	abstract public function request($verb, array $params);

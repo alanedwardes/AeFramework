@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework\Mapping;
+namespace Carbo\Mapping;
 
 abstract class Mapper
 {

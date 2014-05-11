@@ -1,7 +1,5 @@
 <?php
-namespace AeFramework\Extensions\Admin;
-
-use AeFramework as ae;
+namespace Carbo\Extensions\Admin;
 
 class CreateView extends AdminView
 {
@@ -14,11 +12,11 @@ class CreateView extends AdminView
 	{
 		parent::request($verb, $params);
 		
-		if ($verb == ae\Http\Verb::Post)
+		if ($verb == \Carbo\Http\Verb::Post)
 		{
 			$this->form_data->insert($this->table, @$_POST['row'], @$_FILES['row'], @$_POST['link']);
 			$this->headers['Location'] = '..';
-			$this->code = ae\Http\Code::Found;
+			$this->code = \Carbo\Http\Code::Found;
 		}
 	}
 	

@@ -1,7 +1,5 @@
 <?php
-namespace AeFramework\Extensions\Admin;
-
-use AeFramework as ae;
+namespace Carbo\Extensions\Admin;
 
 class BlobView extends SingleItemView
 {

@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework\Caching;
+namespace Carbo\Caching;
 
 class ApcCache extends Cache
 {

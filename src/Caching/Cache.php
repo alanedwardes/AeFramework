@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework\Caching;
+namespace Carbo\Caching;
 
 abstract class Cache
 {

@@ -1,10 +1,10 @@
 <?php
-namespace AeFramework\Auth;
+namespace Carbo\Auth;
 
 use \Otp\Otp;
 use \Base32\Base32;
 use \Otp\GoogleAuthenticator;
-use AeFramework\Sessions\SessionHandler;
+use Carbo\Sessions\SessionHandler;
 
 class MutliFactorArrayAuthenticator implements IAuthenticator, IPasswordTokenAuthenticator
 {

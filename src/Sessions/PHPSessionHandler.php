@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework\Sessions;
+namespace Carbo\Sessions;
 
 class PHPSessionHandler extends SessionHandler
 {

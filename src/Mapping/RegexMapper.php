@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework\Mapping;
+namespace Carbo\Mapping;
 
 class RegexMapper extends Mapper
 {

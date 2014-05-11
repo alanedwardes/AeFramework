@@ -1,11 +1,11 @@
 <?php
-namespace AeFramework\Views;
+namespace Carbo\Views;
 
 class PermanentRedirectView extends RedirectView
 {
 	function request($verb, array $params = [])
 	{
-		$this->code = \AeFramework\Http\Code::MovedPermanently;
+		$this->code = \Carbo\Http\Code::MovedPermanently;
 		
 		parent::request($verb, $params);
 	}

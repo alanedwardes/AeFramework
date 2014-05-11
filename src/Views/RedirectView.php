@@ -1,5 +1,5 @@
 <?php
-namespace AeFramework\Views;
+namespace Carbo\Views;
 
 abstract class RedirectView extends View
 {

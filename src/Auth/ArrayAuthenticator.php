@@ -1,7 +1,7 @@
 <?php
-namespace AeFramework\Auth;
+namespace Carbo\Auth;
 
-use AeFramework\Sessions\SessionHandler;
+use Carbo\Sessions\SessionHandler;
 
 class ArrayAuthenticator implements IAuthenticator, IPasswordAuthenticator
 {

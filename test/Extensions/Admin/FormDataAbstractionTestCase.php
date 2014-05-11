@@ -1,7 +1,7 @@
 <?php
 require_once 'Helpers/SQliteDatabaseHelper.php';
 
-use AeFramework\Extensions\Admin\FormDataAbstraction;
+use Carbo\Extensions\Admin\FormDataAbstraction;
 
 class FormDataAbstractionTestCase extends PHPUnit_Framework_TestCase
 {
