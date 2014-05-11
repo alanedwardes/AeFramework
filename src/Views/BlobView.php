@@ -3,8 +3,9 @@ namespace Carbo\Views;
 
 class BlobView extends View
 {
-	private $data = null;
-	private $name = null;
+	public $data = null;
+	public $name = null;
+	
 	private $markers = [ // https://en.wikipedia.org/wiki/List_of_file_signatures
 		'424d'             => ['image/bmp',       'bmp'], // bitmap
 		'fffb'             => ['audio/mpeg',      'mp3'], // mp3
@@ -17,7 +18,7 @@ class BlobView extends View
 		'89504e470d0a1a0a' => ['image/png',       'png'], // png
 	];
 	
-	public function __construct($data, $name = 'download')
+	public function __construct($data = null, $name = 'download')
 	{
 		$this->data = $data;
 		$this->name = $name;
