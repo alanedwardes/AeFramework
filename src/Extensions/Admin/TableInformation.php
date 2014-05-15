@@ -6,6 +6,7 @@ class TableInformation
 	public $name = null;
 	public $columns = [];
 	public $links = [];
+	public $comment = null;
 	public $oneToManyLinks = [];
 	
 	private $table = null;

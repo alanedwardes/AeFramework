@@ -1,9 +1,14 @@
 {% macro column_input(column, value) %}
 	{% if column.isNotNull %}{% set req = 'required' %}{% endif %} 
 	{% if column.isForeign %}
-		<select name="row[{{ column.name }}]">{{ _self.linked_options(value) }}</select>
+		<select {{ req }} name="row[{{ column.name }}]">
+			{% if not column.isNotNull %}
+				<option value="">None</option>
+			{% endif %}
+			{{ _self.linked_options(value) }}
+		</select>
 	{% elseif column.type in ['text'] %}
-		<textarea {{ req }} name="row[{{ column.name }}]" cols="100" rows="12">{{ value }}</textarea>
+		<textarea {{ req }} name="row[{{ column.name }}]" cols="100" rows="30">{{ value }}</textarea>
 	{% elseif column.type in ['boolean'] %}
 		<input type="checkbox" name="row[{{ column.name }}]" {% if value %}checked="checked"{% endif %}/>
 	{% elseif column.type in ['date'] %}
@@ -28,26 +33,30 @@
 {% endmacro %}
 
 {% macro column_show(column, value, html) %}
-	{% set value = value|striptags %}
-	{% if column.type in ['boolean'] %}
-		{% if html %}<b style="color:{% if value %}green{% else %}crimson{% endif %}">{% endif %}
-			&#x{% if value %}2713{% else %}2717{% endif %};
-		{% if html %}</b>{% endif %}
-	{% elseif column.type in ['blob'] %}
-		Binary ({{ value|length }} bytes)
-	{% elseif column.type in ['datetime', 'datetimez'] %}
-		{{ value|date("M jS Y \\a\\t g:ia") }}
-	{% elseif column.type in ['date'] %}
-		{{ value|date("M jS Y") }}
-	{% elseif column.type in ['decimal', 'float', 'integer', 'smallint', 'bigint'] %}
-		{{ value|number_format }}
-	{% elseif column.type in ['time'] %}
-		{{ value|date("g:ia") }}
+	{% if value == '' %}
+		<span class="gray">Empty</span>
 	{% else %}
-		{% if value|length > 32 %}
-			{{ value[:32] }}...
+		{% set value = value|striptags %}
+		{% if column.type in ['boolean'] %}
+			{% if html %}<b style="color:{% if value %}green{% else %}crimson{% endif %}">{% endif %}
+				&#x{% if value %}2713{% else %}2717{% endif %};
+			{% if html %}</b>{% endif %}
+		{% elseif column.type in ['blob'] %}
+			Binary ({{ value|length }} bytes)
+		{% elseif column.type in ['datetime', 'datetimez'] %}
+			{{ value|date("M jS Y \\a\\t g:ia") }}
+		{% elseif column.type in ['date'] %}
+			{{ value|date("M jS Y") }}
+		{% elseif column.type in ['decimal', 'float', 'integer', 'smallint', 'bigint'] %}
+			{{ value|number_format }}
+		{% elseif column.type in ['time'] %}
+			{{ value|date("g:ia") }}
 		{% else %}
-			{{ value }}
+			{% if value|length > 32 %}
+				{{ value[:32] }}...
+			{% else %}
+				{{ value }}
+			{% endif %}
 		{% endif %}
 	{% endif %}
 {% endmacro %}

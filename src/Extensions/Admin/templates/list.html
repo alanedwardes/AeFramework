@@ -40,11 +40,17 @@
 					{% for column in table.columns %}
 						<td>
 							{% if column.isPrimary %}
+								{% set primary_key = column.name %}
+								{% set primary_value = row[column.name] %}
 								<a href="./edit/{{ column.name }}/{{ row[column.name] }}/">Edit</a> &bull; <a href="./delete/{{ column.name }}/{{ row[column.name] }}/">Delete</a>
 							{% elseif column.isForeign %}
 								{% if row[column.name] %}
-								<a href="../{{ column.foreignTable }}/edit/{{ column.foreignColumn }}/{{ row[column.name] }}/">{{ column.foreignTable }} #{{ row[column.name] }}</a>
+									<a href="../{{ column.foreignTable }}/edit/{{ column.foreignColumn }}/{{ row[column.name] }}/">View &raquo;</a>
+								{% else %}
+									<span class="gray">None</span>
 								{% endif %}
+							{% elseif column.type == 'blob' %}
+								<a href="../{{ table.name }}/blob/{{ primary_key }}/{{ primary_value }}/{{ column.name }}/">View &raquo;</a>
 							{% else %}
 								{{ model.column_show(column, row[column.name], true) }}
 							{% endif %}
@@ -60,9 +66,9 @@
 				<th colspan="{{ table.columns|length }}">
 					{{ rows|length }} {{ table }} Items
 					|
-					Show: <a href="{{ macros.filtering(order, direction, 20, start) }}">20</a>
-					<a href="{{ macros.filtering(order, direction, 50, start) }}">50</a>
-					<a href="{{ macros.filtering(order, direction, 100, start) }}">100</a>
+					Show: <a href="{{ macros.filtering(order, direction, 20, start) }}">20</a>,
+					<a href="{{ macros.filtering(order, direction, 50, start) }}">50</a>,
+					<a href="{{ macros.filtering(order, direction, 100, start) }}">100</a>,
 					<a href="{{ macros.filtering(order, direction, 500, start) }}">500</a>
 					|
 					{% if start != 0 %}

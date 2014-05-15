@@ -92,7 +92,7 @@ class SchemaInformation
 				}
 				else
 				{
-					$foreign_table->links[] = new OneToManyLinkInformation($table, $foreign_table, $column);
+					//$foreign_table->links[] = new OneToManyLinkInformation($table, $foreign_table, $column);
 				}
 			}
 		}

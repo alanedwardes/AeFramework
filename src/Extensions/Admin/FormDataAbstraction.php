@@ -23,11 +23,14 @@ class FormDataAbstraction
 			if ($column->isAutoIncrement)
 				continue;
 			
+			if (!$column->isNotNull and $column->isForeign and !isset($input[$column->name]))
+				continue;
+			
 			if ($column->type !== Type::BLOB)
-				$data[$column->name] = $this->getColumnInputData($column->type, @$input[$column->name]);
+				$data[$column->name] = $this->getColumnInputData($column, @$input[$column->name]);
 			
 			if (isset($files['tmp_name'][$column->name]) and $files['error'][$column->name] === UPLOAD_ERR_OK)
-				$data[$column->name] = $this->getColumnFileData($column->type, $files['tmp_name'][$column->name]);
+				$data[$column->name] = $this->getColumnFileData($column, $files['tmp_name'][$column->name]);
 		}
 		
 		$this->database->update($table, $data, [$primary_key => $primary_value]);
@@ -51,12 +54,15 @@ class FormDataAbstraction
 			
 			if ($column->isAutoIncrement)
 				continue;
+			
+			if (!$column->isNotNull && $column->isForeign)
+				continue;
 		
 			if ($column->type !== Type::BLOB)
-				$data[$column->name] = $this->getColumnInputData($column->type, @$input[$column->name]);
+				$data[$column->name] = $this->getColumnInputData($column, @$input[$column->name]);
 			
 			if (isset($files['tmp_name'][$column->name]) and $files['error'][$column->name] === UPLOAD_ERR_OK)
-				$data[$column->name] = $this->getColumnFileData($column->type, $files['tmp_name'][$column->name]);
+				$data[$column->name] = $this->getColumnFileData($column, $files['tmp_name'][$column->name]);
 		}
 		
 		$this->database->insert($table, $data);
@@ -72,23 +78,20 @@ class FormDataAbstraction
 		}
 	}
 	
-	private function getColumnInputData($type, $input)
+	private function getColumnInputData($column, $input)
 	{
-		switch ($type)
-		{
-			case Type::BOOLEAN:
-				return ($input === 'on');
-			default:
-				return html_entity_decode($input);
-		}
+		if ($column->type == Type::BOOLEAN)
+			return ($input === 'on');
+		
+		if ($column->isForeign)
+			return empty($input) ? null : $input;
+		
+		return $input;
 	}
 	
-	private function getColumnFileData($type, $file)
+	private function getColumnFileData($column, $file)
 	{
-		switch ($type)
-		{
-			case Type::BLOB:
-				return file_get_contents($file);
-		}
+		if ($column->type == Type::BLOB)
+			return file_get_contents($file);
 	}
 }
