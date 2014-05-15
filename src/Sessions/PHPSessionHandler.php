@@ -5,13 +5,15 @@ class PHPSessionHandler extends SessionHandler
 {
 	const Index = __NAMESPACE__;
 	
-	public function __construct($name = '', $timeout = 0)
+	public function __construct($name = '', $timeout = 0, $cache_limiter = '')
 	{
 		if (session_status() == PHP_SESSION_NONE)
 		{
 			if ($name) session_name($name);
 			
 			if ($timeout) session_set_cookie_params($timeout);
+			
+			session_cache_limiter($cache_limiter);
 			
 			session_start();
 		}
