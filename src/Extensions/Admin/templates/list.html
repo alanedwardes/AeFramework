@@ -6,9 +6,9 @@
 {% block title %}{{ table }} List{% endblock %}
 
 {% block body %}
-	<h1>{{ table }} List</h1>
+	<h2>{{ table }} List</h2>
 	<p><a href="../">&laquo; Back to Models</a> | <a href="./create/">Create {{ table }}</a></p>
-	<table>
+	<table class="full">
 		<thead>
 			<tr>
 				{% for column in table.columns %}
@@ -38,23 +38,7 @@
 			{% for row in rows %}
 				<tr>
 					{% for column in table.columns %}
-						<td>
-							{% if column.isPrimary %}
-								{% set primary_key = column.name %}
-								{% set primary_value = row[column.name] %}
-								<a href="./edit/{{ column.name }}/{{ row[column.name] }}/">Edit</a> &bull; <a href="./delete/{{ column.name }}/{{ row[column.name] }}/">Delete</a>
-							{% elseif column.isForeign %}
-								{% if row[column.name] %}
-									<a href="../{{ column.foreignTable }}/edit/{{ column.foreignColumn }}/{{ row[column.name] }}/">View &raquo;</a>
-								{% else %}
-									<span class="gray">None</span>
-								{% endif %}
-							{% elseif column.type == 'blob' %}
-								<a href="../{{ table.name }}/blob/{{ primary_key }}/{{ primary_value }}/{{ column.name }}/">View &raquo;</a>
-							{% else %}
-								{{ model.column_show(column, row[column.name], true) }}
-							{% endif %}
-						</td>
+						<td>{{ model.column_show('.', column, row, table.columns, table.columns) }}</td>
 					{% endfor %}
 				</tr>
 			{% else %}

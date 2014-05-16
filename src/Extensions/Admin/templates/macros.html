@@ -25,37 +25,65 @@
 	{% for row in link.all %}
 		<option value="{{ row[link.info.localColumn] }}" {% if row[link.info.localColumn] in link.selected %}selected="selected"{% endif %}>
 			{% for column in link.info.remoteTable.columns if not column.isAutoIncrement and not column.isForeign %}
-				{% if not loop.first %}&bull;{% endif %}
-				{{ column }}: {{ _self.column_show(column, row[column.name]) }}
+				{% if row[column.name] %}
+					{{ column }}: {{ _self.column_show_plain(column, row[column.name]) }}
+				{% endif %}
 			{% endfor %}
 		</option>
 	{% endfor %}
 {% endmacro %}
 
-{% macro column_show(column, value, html) %}
-	{% if value == '' %}
-		<span class="gray">Empty</span>
-	{% else %}
-		{% set value = value|striptags %}
-		{% if column.type in ['boolean'] %}
-			{% if html %}<b style="color:{% if value %}green{% else %}crimson{% endif %}">{% endif %}
-				&#x{% if value %}2713{% else %}2717{% endif %};
-			{% if html %}</b>{% endif %}
-		{% elseif column.type in ['blob'] %}
-			Binary ({{ value|length }} bytes)
-		{% elseif column.type in ['datetime', 'datetimez'] %}
-			{{ value|date("M jS Y \\a\\t g:ia") }}
-		{% elseif column.type in ['date'] %}
-			{{ value|date("M jS Y") }}
-		{% elseif column.type in ['decimal', 'float', 'integer', 'smallint', 'bigint'] %}
-			{{ value|number_format }}
-		{% elseif column.type in ['time'] %}
-			{{ value|date("g:ia") }}
+{% macro column_show_plain(column, value) %}
+	{% if column.type in ['boolean'] %}
+		&#x{% if value %}2713{% else %}2717{% endif %};
+	{% elseif column.type in ['datetime', 'datetimez'] %}
+		{{ value|date("M jS Y \\a\\t g:ia") }}
+	{% elseif column.type in ['date'] %}
+		{{ value|date("M jS Y") }}
+	{% elseif column.type in ['decimal', 'float', 'integer', 'smallint', 'bigint'] %}
+		{{ value|number_format }}
+	{% elseif column.type in ['time'] %}
+		{{ value|date("g:ia") }}
+	{% elseif column.type in ['text', 'string'] %}
+		{% set stripped_value = value|striptags %}
+		{% if stripped_value %}
+			{% if stripped_value|length > 32 %}
+				{{ stripped_value[:32] }}...
+			{% else %}
+				{{ stripped_value }}
+			{% endif %}
 		{% else %}
 			{% if value|length > 32 %}
 				{{ value[:32] }}...
 			{% else %}
 				{{ value }}
+			{% endif %}
+		{% endif %}
+	{% endif %}
+{% endmacro %}
+
+{% macro column_show(path, column, row, all_columns) %}
+	{% set value = row[column.name] %}
+	{% if column.isPrimary %}
+		<a href="./edit/{{ column.name }}/{{ value }}/">Edit</a> | <a href="./delete/{{ column.name }}/{{ value }}/">Delete</a>
+	{% elseif column.isForeign %}
+		{% if value %}
+			<a href="../{{ column.foreignTable }}/edit/{{ column.foreignColumn }}/{{ value }}/">View</a>
+		{% else %}
+			<span class="gray">None</span>
+		{% endif %}
+	{% else %}
+		{% if value == '' %}
+			<span class="gray">Empty</span>
+		{% else %}
+			{% if column.type in ['boolean'] %}
+				<b style="color:{% if value %}green{% else %}crimson{% endif %}">{{ _self.column_show_plain(column, value) }}</b>
+			{% elseif column.type in ['blob'] %}
+				{% for c in all_columns if c.isPrimary %}
+					<a target="_blank" href="{{ path }}/blob/{{ c.name }}/{{ row[c.name] }}/{{ column.name }}/">View</a>
+				{% endfor %}
+			{% else %}
+				{{ _self.column_show_plain(column, value) }}
 			{% endif %}
 		{% endif %}
 	{% endif %}

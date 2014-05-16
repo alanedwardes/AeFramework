@@ -25,13 +25,14 @@ abstract class AdminView extends \Carbo\Views\TemplateView implements \Carbo\Vie
 					$this->table = $table;
 		
 			if ($this->table == null)
-				throw new Carbo\Http\CodeException(Carbo\Http\Code::NotFound);
+				throw new \Carbo\Http\CodeException(Carbo\Http\Code::NotFound);
 		}
 	}
 	
 	public function response($template_params = [])
 	{
-		$template_params['table'] = $this->table;
-		return parent::response($template_params);
+		return parent::response($template_params += [
+			'table' => $this->table
+		]);
 	}
 }

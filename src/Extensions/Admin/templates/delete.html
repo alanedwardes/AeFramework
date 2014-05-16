@@ -3,16 +3,17 @@
 {% block title %}Delete {{ table }}{% endblock %}
 
 {% block body %}
-	<h1>Delete {{ table }}</h1>
+	<h2>Delete {{ table }}</h2>
+	<p><a href="../../..">&laquo; Back to {{ table }} list</a></p>
 	<table>
 		<tbody>
 			{% for column in table.columns if not column.isAutoIncrement and not column.isForeign %}
 				<tr>
 					<th>{{ column }}</th>
-					<td>{{ model.column_show(column, row[column.name], true) }}</td>
+					<td>{{ model.column_show('../../..', column, row, table.columns) }}</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
-	<p><form action="." method="post"><button>Delete</button></form> <form action="../../.." method="get"><button>Cancel</button></form></p>
+	<form action="." method="post"><p><button>Delete</button></p></form>
 {% endblock %}

@@ -4,9 +4,14 @@
 
 {% block body %}
 	<div class="slim center wrap">
-		<h1>Login</h1>		
-		{% if login_attempted %}<p class="error">You entered invalid credentials.</p>{% endif %}
-		{% if login_attempted_token %}<p class="error">You entered an invalid multi-factor authentication token.</p>{% endif %}
+		<h2>Login</h2>
+		{% if login_attempted %}
+			<p class="error">You entered invalid credentials.</p>
+		{% elseif login_attempted_token %}
+			<p class="error">You entered an invalid multi-factor authentication token.</p>
+		{% else %}
+			<p>Enter your username and password to continue.</p>
+		{% endif %}
 		<form action="" method="post">
 			<label>
 				<span><b>Username</b></span>
@@ -25,9 +30,7 @@
 					<input type="text" name="token" required autofocus autocomplete="off"/>
 				</label>
 			{% endif %}
-			<div>
-				<button>Login</button>
-			</div>
+			<p><button>Login</button></p>
 		</form>
 	</div>
 	<script>

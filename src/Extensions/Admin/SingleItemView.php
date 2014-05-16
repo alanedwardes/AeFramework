@@ -17,7 +17,7 @@ class SingleItemView extends AdminView
 					$this->key = $column->name;
 		
 		if ($this->key == null)
-			throw new Carbo\Http\CodeException(Carbo\Http\Code::NotFound);
+			throw new \Carbo\Http\CodeException(\Carbo\Http\Code::NotFound);
 		
 		if (isset($params['value']))
 			$this->value = $params['value'];
@@ -28,7 +28,7 @@ class SingleItemView extends AdminView
 		$template_params['row'] = $this->da->selectOne($this->table, "{$this->key} = ?", [$this->value]);
 		
 		if (!$template_params['row'])
-			throw new Carbo\Http\CodeException(Carbo\Http\Code::NotFound);
+			throw new \Carbo\Http\CodeException(\Carbo\Http\Code::NotFound);
 		
 		$template_params['links'] = [];
 		foreach ($this->table->links as $link)
