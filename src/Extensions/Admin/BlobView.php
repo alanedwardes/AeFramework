@@ -1,7 +1,7 @@
 <?php
 namespace Carbo\Extensions\Admin;
 
-class BlobView extends SingleItemView
+class BlobView extends TableView
 {
 	private $field;
 	

@@ -1,7 +1,7 @@
 <?php
 namespace Carbo\Extensions\Admin;
 
-class SingleItemView extends AdminView
+class SingleItemView extends TableView
 {
 	protected $key = null;
 	protected $value;

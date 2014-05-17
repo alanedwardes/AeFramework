@@ -197,7 +197,7 @@
 			{% block body %}{% endblock %}
 		</div>
 		<div class="footer">
-			<p>Powered by <a target="new" href="https://github.com/alanedwardes/carbo">Carbo</a>.</p>
+			<p>Powered by <a target="new" href="{{ repository }}">Carbo</a>{% if revision %}, version <a target="new" href="{{ repository }}/commit/{{ revision }}">{{ revision[:10] }}</a>{% else %} and <a href="{{ author }}">&hearts;</a>{% endif %}</p>
 		</div>
 	</body>
 </html>

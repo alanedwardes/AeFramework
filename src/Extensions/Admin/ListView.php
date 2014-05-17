@@ -1,7 +1,7 @@
 <?php
 namespace Carbo\Extensions\Admin;
 
-class ListView extends AdminView
+class ListView extends TableView
 {
 	public function __construct($connection)
 	{

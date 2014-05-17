@@ -5,7 +5,7 @@ use Carbo\Auth\IAuthenticator;
 use Carbo\Auth\IPasswordAuthenticator;
 use Carbo\Auth\IPasswordTokenAuthenticator;
 
-class LoginView extends \Carbo\Views\TemplateView
+class LoginView extends AdminView
 {
 	private $username = '';
 	private $password = '';
@@ -15,7 +15,7 @@ class LoginView extends \Carbo\Views\TemplateView
 
 	public function __construct()
 	{
-		parent::__construct(__DIR__ . DIRECTORY_SEPARATOR . 'templates/login.html');
+		parent::__construct('templates/login.html');
 	}
 	
 	public function request($verb, array $params = [])
