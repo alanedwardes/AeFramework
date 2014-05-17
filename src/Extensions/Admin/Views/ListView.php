@@ -1,13 +1,8 @@
 <?php
-namespace Carbo\Extensions\Admin;
+namespace Carbo\Extensions\Admin\Views;
 
 class ListView extends TableView
 {
-	public function __construct($connection)
-	{
-		parent::__construct('templates/list.html', $connection);
-	}
-	
 	public function response()
 	{
 		$user_order = @$_GET['order'];

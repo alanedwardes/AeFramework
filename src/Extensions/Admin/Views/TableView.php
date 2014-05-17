@@ -1,5 +1,7 @@
 <?php
-namespace Carbo\Extensions\Admin;
+namespace Carbo\Extensions\Admin\Views;
+use Carbo\Extensions\Admin\DatabaseAbstraction;
+use Carbo\Extensions\Admin\FormDataAbstraction;
 
 abstract class TableView extends AdminView implements \Carbo\Views\IAuthenticated
 {
@@ -7,13 +9,13 @@ abstract class TableView extends AdminView implements \Carbo\Views\IAuthenticate
 	protected $da = null;
 	protected $form_data = null;
 	
-	public function __construct($template, $connection)
+	public function __construct($template, $template_dir, $connection)
 	{
 		$this->da = new DatabaseAbstraction($connection);
 		
 		$this->form_data = new FormDataAbstraction($this->da);
 		
-		parent::__construct($template);
+		parent::__construct($template, $template_dir);
 	}
 	
 	public function request($verb, array $params = [])
@@ -25,7 +27,7 @@ abstract class TableView extends AdminView implements \Carbo\Views\IAuthenticate
 					$this->table = $table;
 		
 			if ($this->table == null)
-				throw new \Carbo\Http\CodeException(Carbo\Http\Code::NotFound);
+				throw new \Carbo\Http\CodeException(\Carbo\Http\Code::NotFound);
 		}
 	}
 	

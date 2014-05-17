@@ -1,13 +1,8 @@
 <?php
-namespace Carbo\Extensions\Admin;
+namespace Carbo\Extensions\Admin\Views;
 
 class CreateView extends TableView
 {
-	public function __construct($connection)
-	{
-		parent::__construct('templates/create.html', $connection);
-	}
-	
 	public function request($verb, array $params = [])
 	{
 		parent::request($verb, $params);
@@ -26,14 +21,14 @@ class CreateView extends TableView
 		
 		foreach ($this->table->links as $link)
 		{
-			if ($link instanceof LinkInformation)
+			if ($link instanceof \Carbo\Extensions\Admin\LinkInformation)
 			{
 				$template_params['links'][] = [
 					'all' => $this->da->select($link->remoteTable),
 					'info' => $link
 				];
 			}
-			elseif ($link instanceof OneToManyLinkInformation)
+			elseif ($link instanceof \Carbo\Extensions\Admin\OneToManyLinkInformation)
 			{
 				$template_params['links'][] = [
 					'all' => $this->da->select($link->remoteTable),
@@ -49,7 +44,7 @@ class CreateView extends TableView
 				$foreign_table = $this->da->schema->tables[$column->foreignTable];
 				$template_params['row'][$column->name] = [
 					'all' => $this->da->select($foreign_table),
-					'info' => new OneToManyLinkInformation($foreign_table, $this->table, $column)
+					'info' => new \Carbo\Extensions\Admin\OneToManyLinkInformation($foreign_table, $this->table, $column)
 				];
 			}
 		}

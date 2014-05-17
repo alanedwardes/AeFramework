@@ -1,5 +1,5 @@
 <?php
-namespace Carbo\Extensions\Admin;
+namespace Carbo\Extensions\Admin\Views;
 
 use Carbo\Auth\IAuthenticator;
 use Carbo\Auth\IPasswordAuthenticator;
@@ -12,11 +12,6 @@ class LoginView extends AdminView
 	private $needs_token = false;
 	private $login_attempted = false;
 	private $login_attempted_token = false;
-
-	public function __construct()
-	{
-		parent::__construct('templates/login.html');
-	}
 	
 	public function request($verb, array $params = [])
 	{

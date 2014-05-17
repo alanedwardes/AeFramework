@@ -1,14 +1,9 @@
 <?php
-namespace Carbo\Extensions\Admin;
+namespace Carbo\Extensions\Admin\Views;
 
 class BlobView extends SingleItemView
 {
 	private $field;
-	
-	public function __construct($connection)
-	{
-		parent::__construct('templates/blob.html', $connection);
-	}
 	
 	public function request($verb, array $params = [])
 	{

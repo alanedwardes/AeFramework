@@ -1,5 +1,5 @@
 <?php
-namespace Carbo\Extensions\Admin;
+namespace Carbo\Extensions\Admin\Views;
 
 class SingleItemView extends TableView
 {
@@ -33,7 +33,7 @@ class SingleItemView extends TableView
 		$template_params['links'] = [];
 		foreach ($this->table->links as $link)
 		{
-			if ($link instanceof LinkInformation)
+			if ($link instanceof \Carbo\Extensions\Admin\LinkInformation)
 			{
 				$template_params['links'][] = [
 					'all' => $this->da->select($link->remoteTable),
@@ -41,7 +41,7 @@ class SingleItemView extends TableView
 					'info' => $link
 				];
 			}
-			elseif ($link instanceof OneToManyLinkInformation)
+			elseif ($link instanceof \Carbo\Extensions\Admin\OneToManyLinkInformation)
 			{
 				$template_params['links'][] = [
 					'all' => $this->da->select($link->remoteTable),
@@ -59,7 +59,7 @@ class SingleItemView extends TableView
 				$template_params['row'][$column->name] = [
 					'all' => $this->da->select($foreign_table),
 					'selected' => [$template_params['row'][$column->name]],
-					'info' => new OneToManyLinkInformation($foreign_table, $this->table, $column)
+					'info' => new \Carbo\Extensions\Admin\OneToManyLinkInformation($foreign_table, $this->table, $column)
 				];
 			}
 		}

@@ -1,13 +1,8 @@
 <?php
-namespace Carbo\Extensions\Admin;
+namespace Carbo\Extensions\Admin\Views;
 
 class ModelsView extends TableView
 {
-	public function __construct($connection)
-	{
-		parent::__construct('templates/models.html', $connection);
-	}
-	
 	public function response()
 	{
 		$tables = [];

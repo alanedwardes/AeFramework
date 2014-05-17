@@ -1,14 +1,9 @@
 <?php
-namespace Carbo\Extensions\Admin;
+namespace Carbo\Extensions\Admin\Views;
 
 class DeleteView extends SingleItemView
 {
 	private $deleted = false;
-	
-	public function __construct($connection)
-	{
-		parent::__construct('templates/delete.html', $connection);
-	}
 	
 	public function request($verb, array $params = [])
 	{

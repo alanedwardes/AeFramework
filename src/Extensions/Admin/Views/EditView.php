@@ -1,13 +1,8 @@
 <?php
-namespace Carbo\Extensions\Admin;
+namespace Carbo\Extensions\Admin\Views;
 
 class EditView extends SingleItemView
 {
-	public function __construct($connection)
-	{
-		parent::__construct('templates/edit.html', $connection);
-	}
-	
 	public function request($verb, array $params = [])
 	{	
 		parent::request($verb, $params);

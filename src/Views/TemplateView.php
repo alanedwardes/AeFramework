@@ -7,10 +7,18 @@ class TemplateView extends View
 	public $template;
 	protected $twig;
 
-	public function __construct($template)
+	public function __construct($template, $template_dir = '')
 	{
-		$this->template_dir = dirname($template);
-		$this->template = basename($template);
+		if ($template_dir)
+		{
+			$this->template_dir = $template_dir;
+			$this->template = $template;
+		}
+		else
+		{
+			$this->template_dir = dirname($template);
+			$this->template = basename($template);
+		}
 		
 		$loader = new \Twig_Loader_Filesystem($this->template_dir);
 		$this->twig = new \Twig_Environment($loader);

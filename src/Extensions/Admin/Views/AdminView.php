@@ -1,13 +1,8 @@
 <?php
-namespace Carbo\Extensions\Admin;
+namespace Carbo\Extensions\Admin\Views;
 
-abstract class AdminView extends \Carbo\Views\TemplateView
+class AdminView extends \Carbo\Views\TemplateView
 {
-	public function __construct($template)
-	{
-		parent::__construct(__DIR__ . DIRECTORY_SEPARATOR . $template);
-	}
-	
 	private function findGitRevision($path)
 	{
 		$head = @file_get_contents(sprintf('%s/HEAD', $path));
@@ -35,8 +30,8 @@ abstract class AdminView extends \Carbo\Views\TemplateView
 		# Change to the current directory
 		chdir(__DIR__);
 		
-		# Move up 3 directories (to carbo)
-		chdir('../../..');
+		# Move up 4 directories (to carbo)
+		chdir('../../../..');
 		
 		# Store the carbo directory
 		$carbo_directory = getcwd();

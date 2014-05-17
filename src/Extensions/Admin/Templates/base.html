@@ -1,0 +1,20 @@
+{% import 'macros.html' as model %}
+<!doctype html>
+<html>
+	<head>
+		<title>{% block title %}{% endblock %}</title>
+		<meta charset="utf-8">
+		<link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+		<style>{% include 'style.css' %}</style>
+		<script>{% include 'script.js' %}</script>
+	</head>
+	<body>
+		<div class="header"></div>
+		<div class="content">
+			{% block body %}{% endblock %}
+		</div>
+		<div class="footer">
+			<p>Powered by <a target="new" href="{{ repository }}">Carbo</a>{% if revision %}, revision <a target="new" href="{{ repository }}/commit/{{ revision }}">{{ revision[:10] }}</a>{% else %} and <a target="new" href="{{ author }}">&hearts;</a>{% endif %}</p>
+		</div>
+	</body>
+</html>
