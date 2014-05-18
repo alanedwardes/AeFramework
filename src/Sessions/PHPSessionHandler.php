@@ -19,6 +19,11 @@ class PHPSessionHandler extends SessionHandler
 		}
 	}
 	
+	public function id()
+	{
+		return session_id();
+	}
+	
 	public function &getSession()
 	{
 		if (!isset($_SESSION[self::Index]))

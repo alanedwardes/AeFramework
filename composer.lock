@@ -3,8 +3,47 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "71cc1169bbf1d28d754df72c0d585f88",
+    "hash": "ec9c8ced608e18fc7b43a6e3ce548513",
     "packages": [
+        {
+            "name": "cbschuld/browser.php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cbschuld/browser.php.git",
+                "reference": "5bb913fdaa87f2ccc09d42b5a2ca52a0bb158fc3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cbschuld/browser.php/zipball/5bb913fdaa87f2ccc09d42b5a2ca52a0bb158fc3",
+                "reference": "5bb913fdaa87f2ccc09d42b5a2ca52a0bb158fc3",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "lib/Browser.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Schuld",
+                    "email": "chris@chrisschuld.com",
+                    "homepage": "http://chrisschuld.com"
+                }
+            ],
+            "homepage": "http://chrisschuld.com/projects/browser-php-detecting-a-users-browser-from-php.html",
+            "keywords": [
+                "browser",
+                "detection",
+                "user agent"
+            ],
+            "time": "2013-12-13 17:39:43"
+        },
         {
             "name": "christian-riesen/base32",
             "version": "1.1",
@@ -634,9 +673,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "cbschuld/browser.php": 20
+    },
     "platform": {
         "php": ">=5.4.0"
     },
