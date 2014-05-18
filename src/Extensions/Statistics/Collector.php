@@ -11,11 +11,11 @@ class Collector
 	private $generated = 0.0;
 	private $session_id = null;
 	
-	public function __construct($connection, $table_prefix = null, $session_id = null)
+	public function __construct($connection, $session_id = null)
 	{
 		$config = new \Doctrine\DBAL\Configuration;
 		$this->db = \Doctrine\DBAL\DriverManager::getConnection($connection, $config);
-		$this->curator = new SchemaCurator($this->db->getSchemaManager(), $table_prefix);
+		$this->curator = new SchemaCurator($this->db->getSchemaManager(), @$connection['prefix']);
 		$this->session_id = $session_id;
 	}
 	

@@ -53,7 +53,8 @@ class AdminView extends \Carbo\Views\TemplateView
 	{
 		return parent::response($template_params += [
 			'repository' => 'https://github.com/alanedwardes/carbo',
-			'author' => 'http://alanedwardes.com/'
+			'author' => 'http://alanedwardes.com/',
+			'revision' => ($this instanceof \Carbo\Views\IAuthenticated) ? $this->findRevision() : false
 		]);
 	}
 }
