@@ -6,8 +6,7 @@ use Doctrine\DBAL\Types\Type;
 
 class SchemaCurator
 {
-	const ARCHIVE_TABLE = 'carbo_archive';
-	const VISIT_TABLE = 'carbo_visitor';
+	const VISIT_TABLE = 'carbo_visit';
 	const ADDRESS_TABLE = 'carbo_address';
 	const HOST_TABLE = 'carbo_host';
 	const PATH_TABLE = 'carbo_path';
@@ -53,13 +52,17 @@ class SchemaCurator
 	{
 		$visitor = $this->createTable(self::VISIT_TABLE);
 		
-		$visitor->addColumn('time', Type::TIME);
-		$visitor->addColumn('date', Type::DATE);
+		$visitor->addColumn('datetime', Type::DATETIME);
 		$visitor->addColumn('port', Type::SMALLINT, ['unsigned' => true]);
 		$visitor->addColumn('verb', Type::STRING, ['length' => 16]);
 		$visitor->addColumn('status', Type::SMALLINT, ['unsigned' => true]);
 		$visitor->addColumn('memory', Type::INTEGER, ['unsigned' => true]);
 		$visitor->addColumn('generate', Type::DECIMAL, ['scale' => 3, 'precision' => 5]);
+		$visitor->addColumn('is_unique', Type::BOOLEAN);
+		$visitor->addColumn('is_secure', Type::BOOLEAN);
+		$visitor->addColumn('is_internal', Type::BOOLEAN);
+		
+		$visitor->addIndex(['datetime', 'is_unique']);
 		
 		$this->linkResourceTableToField(self::ADDRESS_TABLE, 'address_id', $visitor);
 		$this->linkResourceTableToField(self::HOST_TABLE, 'host_id', $visitor);
@@ -75,7 +78,7 @@ class SchemaCurator
 	
 	public function curate()
 	{
-		$this->curateTable($this->createLinkedResourceTable(self::ADDRESS_TABLE, 'ip'));
+		$this->curateTable($this->createLinkedResourceTable(self::ADDRESS_TABLE, 'address'));
 		$this->curateTable($this->createLinkedResourceTable(self::HOST_TABLE, 'host'));
 		$this->curateTable($this->createLinkedResourceTable(self::PATH_TABLE, 'path'));
 		$this->curateTable($this->createLinkedResourceTable(self::REFERER_TABLE, 'referer'));

@@ -1,7 +1,81 @@
 {% extends "base.html" %}
 
-{% block title %}Login{% endblock %}
+{% block head %}
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+	  google.load("visualization", "1", {packages:["corechart"]});
+	  google.setOnLoadCallback(drawChart);
+	  function drawChart() {
+		var data = new google.visualization.DataTable();
+
+		// Declare columns
+		data.addColumn('string', 'Time');
+		data.addColumn('number', 'Total');
+		data.addColumn('number', 'Unique');
+
+		data.addRows({{ archive|json_encode(constant('JSON_NUMERIC_CHECK'))|raw }});
+
+		var options = {
+			title: 'Visitors',
+			fontName: 'Lato',
+			backgroundColor: '#F5F5F5',
+			chartArea: {
+				width:'75%',
+				height:'70%'
+			}
+		};
+
+		var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+		chart.draw(data, options);
+	  }
+	</script>
+{% endblock %}
+
+{% block title %}Statistics{% endblock %}
 
 {% block body %}
 	<h2>Statistics</h2>
+	<div id="chart_div" style="width: 500px; height: 200px;"></div>
+	<table>
+		<thead>
+			<tr>
+				<th>Unique Referers</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for referer in referers %}
+				<tr>
+					<td><a href="{{ referer.referer }}">{{ referer.referer }}</a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+		<thead>
+			<tr>
+				<th>Time</th>
+				<th>Session</th>
+				<th>Visit</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for visit in visits %}
+				<tr>
+					<td>{{ visit.datetime|date('H:i:m') }}</td>
+					<td>{{ visit.session_id }}</td>
+					<td>
+						<b>{{ visit.address }}</b> on <b><a target="new" href="http://{{ visit.host }}{{ visit.path }}">{{ visit.path }}</a></b> <small>{{ visit.verb }}, {{ visit.status }}</code>
+						<br/>
+						<small>
+							{% if visit.referer %}came from <a target="new" href="{{ visit.referer }}">{{ visit.referer }}</a>{% endif %}
+							{% if visit.browser %}using {{ visit.browser }} {{ visit.browser_version }}{% endif %}
+							{% if visit.platform %}on {{ visit.platform }}{% endif %}.
+						</small>
+						<br/>
+						<small>
+							page was generated in {{ visit.generate }} seconds using {{ model.bytes_to_string(visit.memory) }} of memory.
+						</small>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}
