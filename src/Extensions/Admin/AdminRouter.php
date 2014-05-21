@@ -16,14 +16,14 @@ class AdminRouter extends \Carbo\Routing\AuthenticatedRouter
 		
 		if ($this->stats_connection)
 		{
-			\Carbo\Routing\RouteMap::map($this, [
+			\Carbo\Mapping\Map::create($this, [
 				['stats/', '\Carbo\Extensions\Admin\Views\StatsView', 'stats.html', $template_dir, $this->stats_connection]
 			]);
 		}
 		
 		if ($this->model_connection)
 		{
-			\Carbo\Routing\RouteMap::map($this, [
+			\Carbo\Mapping\Map::create($this, [
 				['', '\Carbo\Extensions\Admin\Views\ModelsView', 'models.html', $template_dir, $this->model_connection],
 				['logout/', '\Carbo\Extensions\Admin\Views\LogoutView'],
 				['r^(?P<table>.*)/delete/(?P<key>.*)/(?P<value>.*)/$', '\Carbo\Extensions\Admin\Views\DeleteView', 'delete.html', $template_dir, $this->model_connection],
