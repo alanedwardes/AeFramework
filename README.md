@@ -10,6 +10,7 @@ Features:
 ### Basic Usage
 
 ```php
+<?php
 # Without composer: require_once 'carbo/loader.php';
 require_once 'vendor/autoload.php';
 
