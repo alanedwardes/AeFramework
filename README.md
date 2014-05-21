@@ -18,7 +18,7 @@ require_once 'vendor/autoload.php';
 $router = new Carbo\Routing\Router;
 
 Carbo\Routing\RouteMap::map($router, [
-  # Map / to a simple text view
+	# Map / to a simple text view
 	['/', 'Carbo\Views\TextView', 'Hello, world!'],
 	# Map 404 to another simple text view
 	[Carbo\Http\Code::NotFound, 'Carbo\Views\TextView', 'Not found.']
@@ -31,7 +31,7 @@ echo $router->despatch();
 ### Composer
 ```json
 {
-	"requre":	{
+	"requre": {
 		"alanedwardes/carbo": "dev-master"
 	}
 }
