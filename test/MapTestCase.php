@@ -5,7 +5,7 @@ use Carbo\Routing as Routing;
 use Carbo\Mapping as Mapping;
 use Carbo\Views as Views;
 
-class RouteMapTestCase extends PHPUnit_Framework_TestCase
+class MapTestCase extends PHPUnit_Framework_TestCase
 {
 	private $router;
 	
@@ -16,7 +16,7 @@ class RouteMapTestCase extends PHPUnit_Framework_TestCase
 
 	public function testMap()
 	{
-		Routing\RouteMap::map($this->router, [
+		Mapping\Map::create($this->router, [
 			[new Mapping\StringMapper('/testing/', new Views\TextView('test_view'))]
 		]);
 		
@@ -27,7 +27,7 @@ class RouteMapTestCase extends PHPUnit_Framework_TestCase
 	
 	public function testDeferredMapperForObject()
 	{
-		Routing\RouteMap::map($this->router, [
+		Mapping\Map::create($this->router, [
 			['/testing/', new Views\TextView('test_view')]
 		]);
 		
@@ -38,7 +38,7 @@ class RouteMapTestCase extends PHPUnit_Framework_TestCase
 	
 	public function testMapDeferredView()
 	{
-		Routing\RouteMap::map($this->router, [
+		Mapping\Map::create($this->router, [
 			[new Mapping\StringMapper('/testing/', ['Carbo\Views\TextView', 'test_view'])]
 		]);
 		
@@ -49,7 +49,7 @@ class RouteMapTestCase extends PHPUnit_Framework_TestCase
 	
 	public function testStringMapperFromString()
 	{
-		Routing\RouteMap::map($this->router, [
+		Mapping\Map::create($this->router, [
 			['/testing/', 'Carbo\Views\TextView', 'test_view']
 		]);
 		
@@ -60,7 +60,7 @@ class RouteMapTestCase extends PHPUnit_Framework_TestCase
 	
 	public function testRegexMapperFromString()
 	{
-		Routing\RouteMap::map($this->router, [
+		Mapping\Map::create($this->router, [
 			['r^/testing/$', 'Carbo\Views\TextView', 'test_view']
 		]);
 		
