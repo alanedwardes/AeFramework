@@ -10,37 +10,28 @@ Features:
 ### Basic Usage
 
 ```php
-# For composer: require_once 'vendor/autoload.php';
-require_once 'carbo/loader.php';
+# Without composer: require_once 'carbo/loader.php';
+require_once 'vendor/autoload.php';
 
-# Create a cache
-# for memcache: $cache = new Carbo\Caching\Memcache;
-$cache = new Carbo\Caching\FileCache('.\cache');
+# Create a router
+$router = new Carbo\Routing\Router;
 
-# Create a cached router
-# for no cache: $router = new Carbo\Routing\Router;
-$router = new Carbo\Routing\CachedRouter($cache);
-
-# Create a simple view
-# for twig: $hello_view = new Carbo\Views\TwigView('templates/hello_world.html');
-$hello_view = new Carbo\Views\TextView('Hello, world!');
-
-# Create a simple path mapper
-# for a regex: $mapper = new Carbo\Mapping\RegexMapper('^/posts/(?P<slug>.*)/$', $this->hello_view);
-$mapper = new Carbo\Mapping\StringMapper('/', $hello_view);
-
-# Map URL "/" to a simple text view saying "Hello, world!"
-$router->route($mapper);
-
-# Create a simple not found view
-$notfound_view = new Carbo\Views\TextView('File not found');
-
-# Set the not found view
-$router->error(Carbo\Http\Code::NotFound, $notfound_view);
+Carbo\Routing\RouteMap::map($router, [
+  # Map / to a simple text view
+	['/', 'Carbo\Views\TextView', 'Hello, world!'],
+	# Map 404 to another simple text view
+	[Carbo\Http\Code::NotFound, 'Carbo\Views\TextView', 'Not found.']
+]);
 
 # Despatch
 echo $router->despatch();
 ```
 
 ### Composer
-Package [`alanedwardes/carbo`](https://packagist.org/packages/alanedwardes/carbo)
+```json
+{
+	"requre":	{
+		"alanedwardes/carbo": "dev-master"
+	}
+}
+```
