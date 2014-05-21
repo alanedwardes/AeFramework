@@ -25,6 +25,10 @@ class RouteMap
 				{
 					$router->error($route, $view);
 				}
+				else if (!is_string($view[0]))
+				{
+					$router->route(self::constructMapperFromRoute($route, $view[0]));
+				}
 				else
 				{
 					$router->route(self::constructMapperFromRoute($route, $view));

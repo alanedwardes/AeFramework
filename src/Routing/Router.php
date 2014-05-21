@@ -40,7 +40,7 @@ class Router
 	protected function serveFromMapper($mapper)
 	{
 		$target = $this->constructMapperTarget($mapper->target);
-	
+		
 		if ($target instanceof Router)
 		{
 			$target->despatch($mapper->remaining);

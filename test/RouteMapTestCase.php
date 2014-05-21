@@ -25,6 +25,17 @@ class RouteMapTestCase extends PHPUnit_Framework_TestCase
 		$this->assertSame('test_view', $this->router->served_view->response());
 	}
 	
+	public function testDeferredMapperForObject()
+	{
+		Routing\RouteMap::map($this->router, [
+			['/testing/', new Views\TextView('test_view')]
+		]);
+		
+		$this->router->despatch('/testing/');
+		
+		$this->assertSame('test_view', $this->router->served_view->response());
+	}
+	
 	public function testMapDeferredView()
 	{
 		Routing\RouteMap::map($this->router, [
