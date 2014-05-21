@@ -4,7 +4,6 @@ namespace Carbo\Views;
 class TextView extends View
 {
 	public $text;
-	public $code;
 	
 	public function __construct($text)
 	{
