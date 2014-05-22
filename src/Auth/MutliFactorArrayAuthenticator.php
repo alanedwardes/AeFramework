@@ -11,6 +11,8 @@ class MutliFactorArrayAuthenticator implements IAuthenticator, IPasswordTokenAut
 	private $credentials = [];
 	private $session = null;
 	
+	public function session() { return $this->session; }
+	
 	public function __construct(array $credentials, SessionHandler $session)
 	{
 		$this->credentials = $credentials;

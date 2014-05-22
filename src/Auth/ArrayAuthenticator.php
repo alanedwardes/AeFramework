@@ -8,6 +8,8 @@ class ArrayAuthenticator implements IAuthenticator, IPasswordAuthenticator
 	private $credentials = [];
 	private $session = null;
 	
+	public function session() { return $this->session; }
+	
 	public function __construct(array $credentials, SessionHandler $session)
 	{
 		$this->credentials = $credentials;
