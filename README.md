@@ -17,7 +17,7 @@ require_once 'vendor/autoload.php';
 # Create a router
 $router = new Carbo\Routing\Router;
 
-Carbo\Routing\RouteMap::map($router, [
+Carbo\Mapping\Map::create($router, [
 	# Map / to a simple text view
 	['/', 'Carbo\Views\TextView', 'Hello, world!'],
 	# Map 404 to another simple text view
