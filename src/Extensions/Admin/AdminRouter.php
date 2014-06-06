@@ -24,7 +24,7 @@ class AdminRouter extends \Carbo\Routing\AuthenticatedRouter
 		if ($this->model_connection)
 		{
 			\Carbo\Mapping\Map::create($this, [
-				['', '\Carbo\Extensions\Admin\Views\ModelsView', 'models.html', $template_dir, $this->model_connection],
+				['', '\Carbo\Extensions\Admin\Views\IndexView', 'index.html', $template_dir, $this->model_connection],
 				['logout/', '\Carbo\Extensions\Admin\Views\LogoutView'],
 				['r^(?P<table>.*)/delete/(?P<key>.*)/(?P<value>.*)/$', '\Carbo\Extensions\Admin\Views\DeleteView', 'delete.html', $template_dir, $this->model_connection],
 				['r^(?P<table>.*)/blob/(?P<key>.*)/(?P<value>.*)/(?P<field>.*)/$', '\Carbo\Extensions\Admin\Views\BlobView', 'blob.html', $template_dir, $this->model_connection],
