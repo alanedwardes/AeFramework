@@ -16,9 +16,9 @@
 		<tbody>
 			{% for table_info in tables if not table_info.table.isLink %}
 				<tr>
-					<td><a href="{{ table_info.table.name }}/">{{ table_info.table }} List</a></td>
+					<td><a href="./table/{{ table_info.table.name }}/">{{ table_info.table }} List</a></td>
 					<td>{{ table_info.rows|number_format }}</td>
-					<td><a href="{{ table_info.table.name }}/create/">Create</a></td>
+					<td><a href="./table/{{ table_info.table.name }}/create/">Create</a></td>
 				</tr>
 			{% endfor %}
 		</tbody>
@@ -34,11 +34,11 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for directory in directories %}
+			{% for folder in folders %}
 				<tr>
-					<td><a href="{{ directory.name }}/">{{ directory.name }}</a></td>
+					<td><a href="./directory/{{ folder.path }}/">{{ folder }}</a></td>
 					<td>{{ directory.items }}</td>
-					<td><a href="{{ directory.name }}/create/">Create</a></td>
+					<td><a href="./directory/{{ folder.path }}/create/">Create</a></td>
 				</tr>
 			{% endfor %}
 		</tbody>

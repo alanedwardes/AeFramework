@@ -1,8 +1,21 @@
 <?php
 namespace Carbo\Extensions\Admin\Views;
+use Carbo\Extensions\Admin\DatabaseAbstraction;
+use Carbo\Extensions\Admin\FolderInformation;
 
-class IndexView extends TableView
+class IndexView extends AdminView implements \Carbo\Views\IAuthenticated
 {
+	private $da = null;
+	private $ti = null;
+
+	public function __construct($template, $template_dir, $connection)
+	{
+		$this->da = new DatabaseAbstraction($connection);
+		$this->fi = new FolderInformation();
+		
+		parent::__construct($template, $template_dir);
+	}
+
 	public function response()
 	{
 		$tables = [];
@@ -14,21 +27,18 @@ class IndexView extends TableView
 			];
 		}
 		
-		$directories = [];
-		foreach (glob('*', GLOB_ONLYDIR) as $directory)
+		$folders = [];
+		foreach ($this->fi->folders as $folder)
 		{
-			if (is_writable($directory))
+			if ($folder->isWritable())
 			{
-				$directories[] = [
-					'name' => $directory,
-					'items' => @count(glob($directory . '/*'))
-				];
+				$folders[] = $folder;
 			}
 		}
 		
 		return parent::response([
 			'tables' => $tables,
-			'directories' => $directories
+			'folders' => $folders
 		]);
 	}
 }

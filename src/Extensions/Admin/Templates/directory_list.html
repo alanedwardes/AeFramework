@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}{{ folder }} List{% endblock %}
+
+{% block body %}
+	<h2>{{ folder }} List</h2>
+	<p><a href="../..">&laquo; Back</a> | <a href="./create/">Create {{ table }}</a></p>
+	<table class="full">
+		<thead>
+			<tr>
+				<th>Name</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% if folder.parent != '' %}
+				<tr>
+					<td>&larr; <a href="./..">Back to {{ folder.parent }}</a></td>
+				</tr>
+			{% endif %}
+			{% for child in folder.folders %}
+				<tr>
+					<td><a href="./{{ child.name }}/">{{ child }}</a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

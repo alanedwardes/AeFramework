@@ -26,11 +26,13 @@ class AdminRouter extends \Carbo\Routing\AuthenticatedRouter
 			\Carbo\Mapping\Map::create($this, [
 				['', '\Carbo\Extensions\Admin\Views\IndexView', 'index.html', $template_dir, $this->model_connection],
 				['logout/', '\Carbo\Extensions\Admin\Views\LogoutView'],
-				['r^(?P<table>.*)/delete/(?P<key>.*)/(?P<value>.*)/$', '\Carbo\Extensions\Admin\Views\DeleteView', 'delete.html', $template_dir, $this->model_connection],
-				['r^(?P<table>.*)/blob/(?P<key>.*)/(?P<value>.*)/(?P<field>.*)/$', '\Carbo\Extensions\Admin\Views\BlobView', 'blob.html', $template_dir, $this->model_connection],
-				['r^(?P<table>.*)/edit/(?P<key>.*)/(?P<value>.*)/$', '\Carbo\Extensions\Admin\Views\EditView', 'edit.html', $template_dir, $this->model_connection],
-				['r^(?P<table>.*)/create/$', '\Carbo\Extensions\Admin\Views\CreateView', 'create.html', $template_dir, $this->model_connection],
-				['r^(?P<table>.*)/$', '\Carbo\Extensions\Admin\Views\ListView', 'list.html', $template_dir, $this->model_connection],
+				['r^table/(?P<table>.*)/delete/(?P<key>.*)/(?P<value>.*)/$', '\Carbo\Extensions\Admin\Views\DeleteView', 'delete.html', $template_dir, $this->model_connection],
+				['r^table/(?P<table>.*)/blob/(?P<key>.*)/(?P<value>.*)/(?P<field>.*)/$', '\Carbo\Extensions\Admin\Views\BlobView', 'blob.html', $template_dir, $this->model_connection],
+				['r^table/(?P<table>.*)/edit/(?P<key>.*)/(?P<value>.*)/$', '\Carbo\Extensions\Admin\Views\EditView', 'edit.html', $template_dir, $this->model_connection],
+				['r^table/(?P<table>.*)/create/$', '\Carbo\Extensions\Admin\Views\CreateView', 'create.html', $template_dir, $this->model_connection],
+				['r^table/(?P<table>.*)/$', '\Carbo\Extensions\Admin\Views\ListView', 'list.html', $template_dir, $this->model_connection],
+				['r^directory/(?P<directory>.*)/create/$', '\Carbo\Extensions\Admin\Views\DirectoryCreateView', 'directory_create.html', $template_dir],
+				['r^directory/(?P<directory>.*)/$', '\Carbo\Extensions\Admin\Views\DirectoryListView', 'directory_list.html', $template_dir],
 			]);
 		}
 		

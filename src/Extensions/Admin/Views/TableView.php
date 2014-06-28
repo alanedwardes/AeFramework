@@ -33,7 +33,7 @@ abstract class TableView extends AdminView implements \Carbo\Views\IAuthenticate
 	
 	public function response($template_params = [])
 	{
-		return parent::response($template_params += [
+		return parent::response($template_params + [
 			'table' => $this->table
 		]);
 	}
