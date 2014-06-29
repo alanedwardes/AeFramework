@@ -28,17 +28,24 @@ class IndexView extends AdminView implements \Carbo\Views\IAuthenticated
 		}
 		
 		$folders = [];
-		foreach ($this->fi->folders as $folder)
-		{
-			if ($folder->isWritable())
-			{
-				$folders[] = $folder;
-			}
-		}
+		self::recurseWritableFolders($this->fi, $folders);
 		
 		return parent::response([
 			'tables' => $tables,
 			'folders' => $folders
 		]);
+	}
+	
+	public static function recurseWritableFolders($parent, &$folders)
+	{
+		foreach ($parent->folders as $child)
+		{
+			if ($child->isWritable() and !$parent->isWritable())
+			{
+				$folders[] = $child;
+			}
+			
+			self::recurseWritableFolders($child, $folders);
+		}
 	}
 }

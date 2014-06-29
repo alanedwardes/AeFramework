@@ -3,44 +3,49 @@
 {% block title %}Admin{% endblock %}
 
 {% block body %}
-	<h2>Admin</h2>
-	<p>List of models available for editing.</p>
-	<table>
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Items</th>
-				<th>Action</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for table_info in tables if not table_info.table.isLink %}
+	<div class="left third">
+		<h2>Models</h2>
+		<p>List of models available for editing.</p>
+		<table>
+			<thead>
 				<tr>
-					<td><a href="./table/{{ table_info.table.name }}/">{{ table_info.table }} List</a></td>
-					<td>{{ table_info.rows|number_format }}</td>
-					<td><a href="./table/{{ table_info.table.name }}/create/">Create</a></td>
+					<th>Name</th>
+					<th>Items</th>
+					<th>Action</th>
 				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-	<h2>Folders</h2>
-	<p>List of folders available for editing.</p>
-	<table>
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Items</th>
-				<th>Action</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for folder in folders %}
+			</thead>
+			<tbody>
+				{% for table_info in tables if not table_info.table.isLink %}
+					<tr>
+						<td><a href="./table/{{ table_info.table.name }}/">{{ table_info.table }} List</a></td>
+						<td>{{ table_info.rows|number_format }}</td>
+						<td><a href="./table/{{ table_info.table.name }}/create/">Create</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div class="left third">
+		<h2>Folders</h2>
+		<p>List of folders available for editing.</p>
+		<table>
+			<thead>
 				<tr>
-					<td><a href="./directory/{{ folder.path }}/">{{ folder }}</a></td>
-					<td>{{ directory.items }}</td>
-					<td><a href="./directory/{{ folder.path }}/create/">Create</a></td>
+					<th>Name</th>
+					<th>Items</th>
+					<th>Action</th>
 				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				{% for folder in folders %}
+					<tr>
+						<td><a href="./directory/{{ folder.path }}/">{{ folder }}</a></td>
+						<td>{{ folder.items|number_format }}</td>
+						<td><a href="./directory/{{ folder.path }}/create/">Create</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div class="clear"></div>
 {% endblock %}

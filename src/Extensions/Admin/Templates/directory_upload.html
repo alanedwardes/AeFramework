@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Upload File to {{ folder }}{% endblock %}
+
+{% block body %}
+	<h2>Upload File to {{ folder }}</h2>
+	<form action="." method="post" enctype="multipart/form-data">
+		<p><a href="..">&laquo; Back to {{ folder }} list</a></p>
+		<div>
+			<label>
+				<span><b>File(s)</b></span>
+				<input multiple required type="file" name="file"/>
+			</label>
+		</div>
+		<p><button>Upload</button></p>
+	</form>
+{% endblock %}

@@ -23,6 +23,7 @@ body
 }
 .full { width:100%; }
 .half { width:50%; }
+.third { width:33%; }
 em { font-style:italic }
 p { padding:10px 0px; }
 h1 { font-size:2.0em; }
@@ -45,6 +46,7 @@ th a
 }
 table
 {
+	width:100%;
 	border-collapse:collapse;
 }
 th, td
