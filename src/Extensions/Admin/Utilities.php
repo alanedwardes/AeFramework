@@ -19,8 +19,8 @@ class Utilities
 		// Find common prefixes to table names
 		$common = self::findCommonStrings($similar_names);
 		
-		// Remove the common prefixes, replace underscore with a space
-		$name = str_replace([$common, '_'], ['', ' '], $name);
+		// Remove the common prefixes, replace underscore and period with a space
+		$name = str_replace([$common, '_', '.'], ['', ' ', ' '], $name);
 		
 		// Return title case
 		return ucwords($name);

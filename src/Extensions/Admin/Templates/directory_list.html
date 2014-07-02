@@ -28,7 +28,7 @@
 			{% endfor %}
 			{% for child in folder.files %}
 				<tr>
-					<td><a href="./{{ child.name }}">{{ child }}</a></td>
+					<td>{{ child }}</td>
 					<td>{{ model.bytes_to_string(child.size) }}</td>
 					<td><a href="./delete/{{ child.name }}/">Delete</a></td>
 				</tr>
