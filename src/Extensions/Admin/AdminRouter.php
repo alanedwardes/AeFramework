@@ -8,7 +8,7 @@ class AdminRouter extends \Carbo\Routing\AuthenticatedRouter
 	public $directory = '';
 	public $template_dir = null;
 
-	public function __construct(\Carbo\Auth\IAuthenticator $authenticator, array $model_connection = [], array $stats_connection = [], $directory = '')
+	public function __construct(\Carbo\Auth\IAuthenticator $authenticator, array $model_connection = [], array $stats_connection = [], $directory = '.')
 	{
 		$this->model_connection = $model_connection;
 		$this->stats_connection = $stats_connection;
