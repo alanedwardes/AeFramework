@@ -8,9 +8,13 @@ class IndexView extends AdminView implements \Carbo\Views\IAuthenticated
 	private $da = null;
 	private $ti = null;
 
-	public function __construct($template, $template_dir, $connection)
+	public function __construct($template, $template_dir, $connection = null)
 	{
-		$this->da = new DatabaseAbstraction($connection);
+		if ($connection)
+		{
+			$this->da = new DatabaseAbstraction($connection);
+		}
+		
 		$this->fi = new FolderInformation();
 		
 		parent::__construct($template, $template_dir);
@@ -19,12 +23,15 @@ class IndexView extends AdminView implements \Carbo\Views\IAuthenticated
 	public function response()
 	{
 		$tables = [];
-		foreach ($this->da->schema->tables as $table)
+		if ($this->da)
 		{
-			$tables[] = [
-				'table' => $table,
-				'rows' => $this->da->count($table)
-			];
+			foreach ($this->da->schema->tables as $table)
+			{
+				$tables[] = [
+					'table' => $table,
+					'rows' => $this->da->count($table)
+				];
+			}
 		}
 		
 		$folders = [];
