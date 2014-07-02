@@ -33,4 +33,9 @@ class FileInformation
 	{
 		return $this->name;
 	}
+	
+	public function delete()
+	{
+		unlink($this->path);
+	}
 }

@@ -10,6 +10,7 @@
 			<tr>
 				<th>Name</th>
 				<th>Contents</th>
+				<th>Action</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -22,12 +23,14 @@
 				<tr>
 					<td><a href="./{{ child.name }}/">{{ child }}</a></td>
 					<td>{{ child.items|number_format }} item{{ child.items > 0 ? 's' }}</td>
+					<td><a href="./{{ child.name }}/">Delete</a></td>
 				</tr>
 			{% endfor %}
 			{% for child in folder.files %}
 				<tr>
 					<td><a href="./{{ child.name }}">{{ child }}</a></td>
 					<td>{{ model.bytes_to_string(child.size) }}</td>
+					<td><a href="./delete/{{ child.name }}/">Delete</a></td>
 				</tr>
 			{% endfor %}
 		</tbody>
