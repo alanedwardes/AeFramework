@@ -31,7 +31,7 @@ echo $router->despatch();
 ### Composer
 ```json
 {
-	"requre": {
+	"require": {
 		"alanedwardes/carbo": "dev-master"
 	}
 }
