@@ -6,16 +6,19 @@ use Carbo\Extensions\Admin\FolderInformation;
 class IndexView extends AdminView implements \Carbo\Views\IAuthenticated
 {
 	private $da = null;
-	private $ti = null;
+	private $fi = null;
 
-	public function __construct($template, $template_dir, $connection = null)
+	public function __construct($template, $template_dir, $connection, $directory)
 	{
 		if ($connection)
 		{
 			$this->da = new DatabaseAbstraction($connection);
 		}
 		
-		$this->fi = new FolderInformation();
+		if ($directory)
+		{
+			$this->fi = new FolderInformation($directory);
+		}
 		
 		parent::__construct($template, $template_dir);
 	}
@@ -45,14 +48,17 @@ class IndexView extends AdminView implements \Carbo\Views\IAuthenticated
 	
 	public static function recurseWritableFolders($parent, &$folders)
 	{
-		foreach ($parent->folders as $child)
+		if ($parent)
 		{
-			if ($child->isWritable() and !$parent->isWritable())
+			foreach ($parent->folders as $child)
 			{
-				$folders[] = $child;
+				if ($child->isWritable())
+				{
+					$folders[] = $child;
+				}
+				
+				self::recurseWritableFolders($child, $folders);
 			}
-			
-			self::recurseWritableFolders($child, $folders);
 		}
 	}
 }

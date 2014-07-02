@@ -5,14 +5,21 @@ class AdminRouter extends \Carbo\Routing\AuthenticatedRouter
 {
 	public $model_connection = [];
 	public $stats_connection = [];
+	public $directory = '';
 	public $template_dir = null;
 
-	public function __construct(\Carbo\Auth\IAuthenticator $authenticator, array $model_connection = [], array $stats_connection = [])
+	public function __construct(\Carbo\Auth\IAuthenticator $authenticator, array $model_connection = [], array $stats_connection = [], $directory = '')
 	{
 		$this->model_connection = $model_connection;
 		$this->stats_connection = $stats_connection;
+		$this->directory = $directory;
 		
 		$template_dir = $this->template_dir ? $this->template_dir : __DIR__ . DIRECTORY_SEPARATOR . 'Templates';
+		
+		\Carbo\Mapping\Map::create($this, [
+			['', '\Carbo\Extensions\Admin\Views\IndexView', 'index.html', $template_dir, $this->model_connection, $this->directory],
+			['logout/', '\Carbo\Extensions\Admin\Views\LogoutView'],
+		]);
 		
 		if ($this->stats_connection)
 		{
@@ -32,13 +39,14 @@ class AdminRouter extends \Carbo\Routing\AuthenticatedRouter
 			]);
 		}
 		
-		\Carbo\Mapping\Map::create($this, [
-			['', '\Carbo\Extensions\Admin\Views\IndexView', 'index.html', $template_dir, $this->model_connection],
-			['logout/', '\Carbo\Extensions\Admin\Views\LogoutView'],
-			['r^directory/(?P<directory>.*)/create/$', '\Carbo\Extensions\Admin\Views\DirectoryCreateView', 'directory_create.html', $template_dir],
-			['r^directory/(?P<directory>.*)/upload/$', '\Carbo\Extensions\Admin\Views\DirectoryUploadView', 'directory_upload.html', $template_dir],
-			['r^directory/(?P<directory>.*)/$', '\Carbo\Extensions\Admin\Views\DirectoryListView', 'directory_list.html', $template_dir],
-		]);
+		if ($this->directory)
+		{
+			\Carbo\Mapping\Map::create($this, [
+				['r^directory/(?P<directory>.*)/create/$', '\Carbo\Extensions\Admin\Views\DirectoryCreateView', 'directory_create.html', $template_dir],
+				['r^directory/(?P<directory>.*)/upload/$', '\Carbo\Extensions\Admin\Views\DirectoryUploadView', 'directory_upload.html', $template_dir],
+				['r^directory/(?P<directory>.*)/$', '\Carbo\Extensions\Admin\Views\DirectoryListView', 'directory_list.html', $template_dir],
+			]);
+		}
 		
 		$this->error(\Carbo\Http\Code::Forbidden, ['\Carbo\Extensions\Admin\Views\LoginView', 'login.html', $template_dir]);
 		
