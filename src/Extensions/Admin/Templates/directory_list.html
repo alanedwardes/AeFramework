@@ -4,7 +4,7 @@
 
 {% block body %}
 	<h2>{{ folder }} List</h2>
-	<p><a href="../..">&laquo; Back</a> | <a href="./create/">Create Folder</a> | <a href="./upload/">Upload File</a></p>
+	<p><a href="{{ folder.parent.writable ? '..' : '../..' }}">&laquo; Back</a> | <a href="./create/">Create Folder</a> | <a href="./upload/">Upload File</a></p>
 	<table class="full">
 		<thead>
 			<tr>
@@ -14,11 +14,6 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% if folder.parent.writable %}
-				<tr>
-					<td>&larr; <a href="./..">Back to {{ folder.parent }}</a></td>
-				</tr>
-			{% endif %}
 			{% for child in folder.folders %}
 				<tr>
 					<td><a href="./{{ child.name }}/">{{ child }}</a></td>
