@@ -40,7 +40,7 @@ class LoginView extends AdminView
 	{
 		if ($authenticator->authenticate($_POST['username'], $_POST['password']))
 		{
-			$this->headers['Location'] = '.';
+			$this->headers['Location'] = $_SERVER['REQUEST_URI'];
 		}
 		else
 		{
@@ -54,7 +54,7 @@ class LoginView extends AdminView
 		{
 			if ($authenticator->authenticate($_POST['username'], $_POST['password'], $_POST['token']))
 			{
-				$this->headers['Location'] = '.';
+				$this->headers['Location'] = $_SERVER['REQUEST_URI'];
 			}
 			else
 			{
