@@ -31,6 +31,7 @@ class MutliFactorArrayAuthenticator implements IAuthenticator, IPasswordTokenAut
 				if ($otp->checkTotp(Base32::decode($user_htop_secret), $htop_value))
 				{
 					$this->session->username = $username;
+					$this->session->valid_host = $_SERVER['HTTP_HOST'];
 					$this->session->authenticated = true;
 					return true;
 				}
@@ -52,6 +53,6 @@ class MutliFactorArrayAuthenticator implements IAuthenticator, IPasswordTokenAut
 	
 	public function isAuthenticated()
 	{
-		return ($this->session->authenticated === true);
+		return ($this->session->authenticated === true && in_array($this->session->username, array_keys($this->credentials)) && $this->session->valid_host === $_SERVER['HTTP_HOST']);
 	}
 }
