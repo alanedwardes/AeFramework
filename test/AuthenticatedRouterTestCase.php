@@ -29,6 +29,8 @@ class TestAuthenticator implements \Carbo\Auth\IAuthenticator
 {
 	private $authenticated = false;
 	
+	public function session() { return null; }
+	
 	public function authenticate($username, $password)
 	{
 		return ($this->authenticated = ($username == 'user' and $password == 'pass'));
