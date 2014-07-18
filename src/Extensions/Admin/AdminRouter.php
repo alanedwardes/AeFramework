@@ -45,7 +45,7 @@ class AdminRouter extends \Carbo\Routing\AuthenticatedRouter
 				['r^directory/(?P<directory>.*)/create/$', '\Carbo\Extensions\Admin\Views\DirectoryCreateView', 'directory_create.html', $template_dir],
 				['r^directory/(?P<directory>.*)/upload/$', '\Carbo\Extensions\Admin\Views\DirectoryUploadView', 'directory_upload.html', $template_dir],
 				['r^directory/(?P<directory>.*)/delete/(?P<file>.*)/$', '\Carbo\Extensions\Admin\Views\DirectoryDeleteView', 'item_delete.html', $template_dir],
-				['r^directory/(?P<directory>.*)/download/(?P<file>.*)/$', '\Carbo\Extensions\Admin\Views\DirectoryDownloadView', 'blob.html', $template_dir],
+				['r^directory/(?P<directory>.*)/download/(?P<file>.*)$', '\Carbo\Extensions\Admin\Views\DirectoryDownloadView', 'blob.html', $template_dir],
 				['r^directory/(?P<directory>.*)/$', '\Carbo\Extensions\Admin\Views\DirectoryListView', 'directory_list.html', $template_dir],
 			]);
 		}

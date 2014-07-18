@@ -25,7 +25,7 @@
 				<tr>
 					<td>{{ child }}</td>
 					<td>{{ model.bytes_to_string(child.size) }}</td>
-					<td><a href="./download/{{ child.name }}/">Download</a> | <a href="./delete/{{ child.name }}/">Delete</a></td>
+					<td><a href="./download/{{ child.name }}">Download</a> | <a href="./delete/{{ child.name }}/">Delete</a></td>
 				</tr>
 			{% endfor %}
 		</tbody>
